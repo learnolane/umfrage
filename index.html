@@ -1,687 +1,1031 @@
+```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3 Minuten — Wie tickst du beruflich?</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@600;700;800&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg: #faf8f5;
-  --card: #ffffff;
-  --text: #1a1a1a;
-  --dim: #6b6b6b;
-  --accent: #e85d26;
-  --accent-light: #fff0eb;
-  --accent-hover: #d14d1a;
-  --green: #1a9960;
-  --green-light: #e8f7f0;
-  --border: #e8e4df;
-  --shadow: 0 2px 16px rgba(0,0,0,0.06);
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wie tickst du beruflich?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@600;700;800&display=swap" rel="stylesheet">
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+  <style>
+    :root {
+      --bg: #f6f1ea;
+      --card: #fffdf9;
+      --text: #1f1c18;
+      --muted: #6f665d;
+      --border: #e5dbcf;
+      --accent: #b86a3d;
+      --accent-dark: #98542d;
+      --accent-soft: #f4e7dd;
+      --green: #2f7a57;
+      --green-soft: #e8f3ed;
+      --shadow: 0 10px 30px rgba(45, 31, 20, 0.08);
+    }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 24px 16px 80px;
-}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
-.survey {
-  max-width: 560px;
-  width: 100%;
-  margin-top: 40px;
-}
+    body {
+      background: radial-gradient(circle at top, #fbf7f1 0%, var(--bg) 48%), var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      padding: 22px 16px 70px;
+    }
 
-/* Progress */
-.progress-bar {
-  width: 100%;
-  height: 4px;
-  background: var(--border);
-  border-radius: 4px;
-  margin-bottom: 40px;
-  overflow: hidden;
-}
+    .wrap {
+      max-width: 620px;
+      margin: 0 auto;
+    }
 
-.progress-fill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 4px;
-  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
+    .survey-shell {
+      margin-top: 22px;
+    }
 
-/* Screen */
-.screen {
-  display: none;
-  animation: fadeUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
+    .topline {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
 
-.screen.active { display: block; }
+    .progress-wrap {
+      margin-bottom: 18px;
+    }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
 
-/* Intro */
-.intro-badge {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--accent);
-  background: var(--accent-light);
-  padding: 6px 14px;
-  border-radius: 20px;
-  margin-bottom: 20px;
-  letter-spacing: 0.5px;
-}
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #eadfd3;
+      border-radius: 999px;
+      overflow: hidden;
+    }
 
-.intro h1 {
-  font-family: 'Fraunces', serif;
-  font-size: 32px;
-  font-weight: 800;
-  line-height: 1.2;
-  margin-bottom: 16px;
-  color: var(--text);
-}
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), #cb8458);
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
 
-.intro p {
-  font-size: 16px;
-  color: var(--dim);
-  line-height: 1.7;
-  margin-bottom: 32px;
-}
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 26px 22px;
+    }
 
-/* Question */
-.question-num {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--accent);
-  margin-bottom: 8px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
+    .screen {
+      display: none;
+      animation: fadeUp 0.28s ease;
+    }
 
-.question-text {
-  font-family: 'Fraunces', serif;
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 1.3;
-  margin-bottom: 24px;
-}
+    .screen.active {
+      display: block;
+    }
 
-.question-hint {
-  font-size: 13px;
-  color: var(--dim);
-  margin-bottom: 20px;
-  font-style: italic;
-}
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-/* Options */
-.options {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+    h1, h2, h3 {
+      font-family: 'Fraunces', serif;
+      letter-spacing: -0.02em;
+    }
 
-.option {
-  background: var(--card);
-  border: 2px solid var(--border);
-  border-radius: 12px;
-  padding: 16px 20px;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-}
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
 
-.option:hover {
-  border-color: var(--accent);
-  background: var(--accent-light);
-}
+    .hero-title {
+      font-size: 34px;
+      line-height: 1.08;
+      margin-bottom: 14px;
+    }
 
-.option:active {
-  transform: scale(0.98);
-}
+    .hero-text {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.72;
+      margin-bottom: 22px;
+    }
 
-.option.selected {
-  border-color: var(--accent);
-  background: var(--accent-light);
-  color: var(--accent-hover);
-  font-weight: 600;
-}
+    .mini-note {
+      margin-top: 14px;
+      font-size: 14px;
+      color: var(--muted);
+      background: #fbf7f2;
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      line-height: 1.6;
+    }
 
-.option.selected::after {
-  content: '✓';
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 18px;
-  color: var(--accent);
-}
+    .question-num {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
 
-/* Multi select */
-.multi-hint {
-  font-size: 12px;
-  color: var(--dim);
-  margin-bottom: 12px;
-}
+    .question-text {
+      font-size: 28px;
+      line-height: 1.18;
+      margin-bottom: 14px;
+    }
 
-/* Buttons */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--accent);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 14px 28px;
-  font-size: 15px;
-  font-weight: 600;
-  font-family: 'DM Sans', sans-serif;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-top: 24px;
-  -webkit-tap-highlight-color: transparent;
-}
+    .question-subtext {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
 
-.btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
-.btn:active { transform: scale(0.98); }
-.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .insight-box {
+      background: #faf5ef;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
+      color: #5e5349;
+      margin-bottom: 18px;
+      line-height: 1.55;
+    }
 
-.btn-start {
-  font-size: 17px;
-  padding: 16px 36px;
-}
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-/* Contact input */
-.contact-input {
-  width: 100%;
-  padding: 14px 18px;
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  font-size: 15px;
-  font-family: 'DM Sans', sans-serif;
-  background: var(--card);
-  transition: border-color 0.2s;
-  margin-top: 12px;
-}
+    .option {
+      background: #fffdfb;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 18px;
+      font-size: 15px;
+      line-height: 1.45;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      position: relative;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-.contact-input:focus {
-  outline: none;
-  border-color: var(--accent);
-}
+    .option:hover {
+      border-color: #d7b7a1;
+      background: #fff8f3;
+      transform: translateY(-1px);
+    }
 
-/* Thank you */
-.thankyou {
-  text-align: center;
-  padding: 40px 0;
-}
+    .option.selected {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: #7f421f;
+      padding-right: 46px;
+    }
 
-.thankyou .emoji {
-  font-size: 56px;
-  margin-bottom: 20px;
-}
+    .option.selected::after {
+      content: "✓";
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-weight: 800;
+      color: var(--accent);
+      font-size: 18px;
+    }
 
-.thankyou h2 {
-  font-family: 'Fraunces', serif;
-  font-size: 28px;
-  font-weight: 800;
-  margin-bottom: 12px;
-}
+    .helper {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
 
-.thankyou p {
-  font-size: 15px;
-  color: var(--dim);
-  line-height: 1.7;
-}
+    .btn {
+      border: 0;
+      background: var(--accent);
+      color: #fff;
+      padding: 15px 22px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'DM Sans', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+    }
 
-.share-box {
-  background: var(--card);
-  border: 2px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-  margin-top: 24px;
-  text-align: left;
-}
+    .btn:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+    }
 
-.share-box .share-title {
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+    }
 
-.share-text {
-  font-size: 13px;
-  color: var(--dim);
-  line-height: 1.6;
-  background: var(--bg);
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 12px;
-}
+    .btn-secondary {
+      background: #2a241f;
+    }
 
-.btn-copy {
-  background: var(--text);
-  font-size: 13px;
-  padding: 10px 20px;
-  margin-top: 8px;
-}
+    .btn-secondary:hover {
+      background: #171310;
+    }
 
-/* Responsive */
-@media (max-width: 480px) {
-  .intro h1 { font-size: 26px; }
-  .question-text { font-size: 19px; }
-  .survey { margin-top: 20px; }
-}
-</style>
+    .contact-wrap {
+      margin-top: 14px;
+      display: none;
+    }
+
+    .contact-input {
+      width: 100%;
+      border: 2px solid var(--border);
+      background: #fff;
+      border-radius: 14px;
+      padding: 15px 16px;
+      font-size: 15px;
+      font-family: 'DM Sans', sans-serif;
+      margin-bottom: 12px;
+      transition: border-color 0.18s ease;
+    }
+
+    .contact-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .result-card {
+      background: linear-gradient(180deg, #fffaf5 0%, #fffdfb 100%);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      margin: 18px 0;
+    }
+
+    .result-tag {
+      display: inline-block;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 7px 12px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .result-title {
+      font-family: 'Fraunces', serif;
+      font-size: 24px;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .result-text, .result-compare, .result-more {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .result-compare {
+      margin-top: 12px;
+    }
+
+    .share-box {
+      margin-top: 22px;
+      background: #faf6f0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .share-title {
+      font-weight: 800;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .share-text {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--muted);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .tiny {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    .status {
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--green);
+      display: none;
+    }
+
+    @media (max-width: 560px) {
+      .hero-title { font-size: 28px; }
+      .question-text { font-size: 24px; }
+      .card { padding: 22px 18px; }
+    }
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <div class="survey-shell">
+      <div class="topline">ehrlich, direkt, anonym</div>
 
-<div class="survey">
-  <div class="progress-bar">
-    <div class="progress-fill" id="progress" style="width: 0%"></div>
-  </div>
+      <div class="progress-wrap">
+        <div class="progress-top">
+          <div id="progressLabel">Bereit?</div>
+          <div id="progressCount">0%</div>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
 
-  <!-- ============ INTRO ============ -->
-  <div class="screen active" id="intro">
-    <div class="intro">
-      <span class="intro-badge">⏱ Max. 3 Minuten</span>
-      <h1>Wie tickst du beruflich?</h1>
-      <p>Ich arbeite gerade an einem Projekt rund um Berufseinstieg und Selbständigkeit im Handwerk und Gewerbe. Dafür brauche ich echte Meinungen von echten Leuten.<br><br>Komplett anonym. Wenn du es weiterleiten magst — umso besser. Merci!</p>
-      <button class="btn btn-start" onclick="startSurvey()">Los geht's →</button>
-    </div>
-  </div>
+      <div class="card">
 
-  <!-- ============ SCREEN 1: Filter ============ -->
-  <div class="screen" id="s1">
-    <div class="question-num">Frage 1 von ~6</div>
-    <div class="question-text">Hand aufs Herz — wo stehst du gerade?</div>
-    <div class="options" data-key="gruppe" data-type="single" data-next="s2">
-      <div class="option" data-value="angestellt_happy" data-branch="a">Angestellt, passt für mich</div>
-      <div class="option" data-value="angestellt_traum" data-branch="b">Angestellt, aber der Traum von «meinem eigenen Ding» lässt mich nicht los</div>
-      <div class="option" data-value="selbstaendig" data-branch="c">Selbständig — mit allen Höhen und Tiefen</div>
-    </div>
-  </div>
+        <!-- INTRO -->
+        <section class="screen active" id="intro">
+          <div class="hero-badge">⏱ dauert ca. 3–4 Minuten</div>
+          <h1 class="hero-title">Wie tickst du beruflich – wirklich?</h1>
+          <p class="hero-text">
+            Ich habe lange angestellt gearbeitet und nebenbei eigene Aufträge gemacht.
+            Dabei ist mir aufgefallen: Egal ob angestellt, mit Wechselgedanken, mit Selbständigkeits-Ideen oder schon selbständig –
+            viele hängen an ähnlichen Punkten fest.
+          </p>
+          <p class="hero-text">
+            Ich will verstehen, <strong>wo wirklich Bedarf besteht</strong> und was Menschen in ihrer Situation tatsächlich hilft.
+            Keine Sales-Show, kein Bullshit, keine falschen Versprechen.
+          </p>
+          <div class="mini-note">
+            Am Ende bekommst du eine kurze Einordnung, wie dein beruflicher Stand grob wirkt –
+            und wenn du willst, kannst du sehen, was ich aus den Ergebnissen daraus entwickle.
+          </div>
+          <button class="btn" onclick="startSurvey()">Los geht’s →</button>
+        </section>
 
-  <!-- ============ SCREEN 2: Bereich ============ -->
-  <div class="screen" id="s2">
-    <div class="question-num">Frage 2</div>
-    <div class="question-text">Was machst du beruflich?</div>
-    <div class="options" data-key="bereich" data-type="single" data-next="s3">
-      <div class="option" data-value="bau_handwerk">Bau / Handwerk</div>
-      <div class="option" data-value="gewerbe_produktion">Gewerbe / Produktion</div>
-      <div class="option" data-value="dienstleistung">Dienstleistung</div>
-      <div class="option" data-value="kreativ_design">Kreativ / Design</div>
-      <div class="option" data-value="anderes">Was ganz anderes</div>
-    </div>
-  </div>
+        <!-- Q1 -->
+        <section class="screen" id="s1">
+          <div class="question-num">Frage 1</div>
+          <h2 class="question-text">Wo stehst du aktuell beruflich?</h2>
+          <p class="question-subtext">Einfach ehrlich. Genau hier beginnt die eigentliche Einordnung.</p>
+          <div class="options" data-key="gruppe" data-type="single" data-next="s2">
+            <div class="option" data-value="angestellt_zufrieden" data-branch="a">Ich bin angestellt und zufrieden</div>
+            <div class="option" data-value="angestellt_will_wechseln" data-branch="b">Ich bin angestellt, aber will etwas verändern / die Stelle wechseln</div>
+            <div class="option" data-value="angestellt_will_selbstaendig" data-branch="c">Ich bin angestellt und würde gerne mein eigenes Ding machen</div>
+            <div class="option" data-value="selbstaendig" data-branch="d">Ich bin selbständig</div>
+          </div>
+        </section>
 
-  <!-- ============ SCREEN 3: Alter ============ -->
-  <div class="screen" id="s3">
-    <div class="question-num">Frage 3</div>
-    <div class="question-text">Wie alt bist du?</div>
-    <div class="options" data-key="alter" data-type="single" data-next="branch">
-      <div class="option" data-value="18-25">18–25</div>
-      <div class="option" data-value="26-35">26–35</div>
-      <div class="option" data-value="36-45">36–45</div>
-      <div class="option" data-value="46+">46+</div>
-    </div>
-  </div>
+        <!-- Q2 -->
+        <section class="screen" id="s2">
+          <div class="question-num">Frage 2</div>
+          <h2 class="question-text">In welchem Bereich bist du unterwegs?</h2>
+          <p class="question-subtext">Nur grob – damit ich Zusammenhänge besser erkenne.</p>
+          <div class="options" data-key="bereich" data-type="single" data-next="s3">
+            <div class="option" data-value="bau_handwerk">Bau / Handwerk</div>
+            <div class="option" data-value="gewerbe_produktion">Gewerbe / Produktion</div>
+            <div class="option" data-value="dienstleistung">Dienstleistung</div>
+            <div class="option" data-value="kreativ">Kreativ / Design</div>
+            <div class="option" data-value="andere">Etwas anderes</div>
+          </div>
+        </section>
 
-  <!-- ============================================ -->
-  <!-- GRUPPE A: Angestellt & happy -->
-  <!-- ============================================ -->
-  <div class="screen" id="a4">
-    <div class="question-num">Frage 4 von 5</div>
-    <div class="question-text">Selbständigkeit — was löst das Wort bei dir aus?</div>
-    <div class="options" data-key="frage4" data-type="single" data-next="a5">
-      <div class="option" data-value="stress_risiko">Stress und Risiko, nein danke</div>
-      <div class="option" data-value="spannend_nicht_fuer_mich">Spannend, aber nichts für mich</div>
-      <div class="option" data-value="vielleicht_irgendwann">Vielleicht irgendwann mal</div>
-      <div class="option" data-value="reizt_bleib_safe">Reizt mich, aber ich bleib lieber safe</div>
-    </div>
-  </div>
+        <!-- Q3 -->
+        <section class="screen" id="s3">
+          <div class="question-num">Frage 3</div>
+          <h2 class="question-text">Wie alt bist du?</h2>
+          <p class="question-subtext">Hilft mir einzuordnen, in welcher Lebensphase gewisse Themen besonders drücken.</p>
+          <div class="options" data-key="alter" data-type="single" data-next="common1">
+            <div class="option" data-value="18_25">18–25</div>
+            <div class="option" data-value="26_35">26–35</div>
+            <div class="option" data-value="36_45">36–45</div>
+            <div class="option" data-value="46_plus">46+</div>
+          </div>
+        </section>
 
-  <div class="screen" id="a5">
-    <div class="question-num">Frage 5 von 5</div>
-    <div class="question-text">Was müsste passieren, damit du es trotzdem wagst?</div>
-    <div class="multi-hint">Wähle bis zu 2</div>
-    <div class="options" data-key="frage5" data-type="multi" data-max="2" data-next="contact">
-      <div class="option" data-value="bombensichere_idee">Eine bombensichere Geschäftsidee</div>
-      <div class="option" data-value="genug_geld">Genug Geld auf der Seite</div>
-      <div class="option" data-value="jemand_zeigt">Jemand der mir zeigt wie es geht</div>
-      <div class="option" data-value="will_nicht">Gar nichts, ich will einfach nicht</div>
-      <div class="option" data-value="kuendigung">Kündigung — dann hätte ich keine Wahl</div>
-    </div>
-    <button class="btn" id="btn-a5" onclick="submitMulti('a5')" disabled>Weiter →</button>
-  </div>
+        <!-- COMMON 1 -->
+        <section class="screen" id="common1">
+          <div class="question-num">Kernfrage 1</div>
+          <h2 class="question-text">Was kostet dich beruflich aktuell am meisten Energie?</h2>
+          <div class="insight-box">Hier werden die Antworten meistens plötzlich konkret. Genau solche Muster suche ich.</div>
+          <div class="options" data-key="energie" data-type="single" data-next="common2">
+            <div class="option" data-value="planung_organisation">Planung / Organisation / Überblick behalten</div>
+            <div class="option" data-value="kunden_auftraege">Kunden / Aufträge / genug Arbeit</div>
+            <div class="option" data-value="zeit_ueberlastung">Zu wenig Zeit / Überlastung</div>
+            <div class="option" data-value="unsicherheit_entscheidungen">Unsicherheit / Entscheidungen / nächster Schritt</div>
+            <div class="option" data-value="geld_finanzen">Geld / Finanzen / Kalkulation</div>
+          </div>
+        </section>
 
-  <!-- ============================================ -->
-  <!-- GRUPPE B: Will selbständig werden -->
-  <!-- ============================================ -->
-  <div class="screen" id="b4">
-    <div class="question-num">Frage 4 von 7</div>
-    <div class="question-text">Wie lange geistert die Idee schon in deinem Kopf rum?</div>
-    <div class="options" data-key="frage4" data-type="single" data-next="b5">
-      <div class="option" data-value="ganz_frisch">Ganz frisch, seit ein paar Wochen</div>
-      <div class="option" data-value="paar_monate">Ein paar Monate, wird langsam konkreter</div>
-      <div class="option" data-value="1_3_jahre">1–3 Jahre, ich drehe mich im Kreis</div>
-      <div class="option" data-value="schon_ewig">Schon ewig, ich komme einfach nicht ins Tun</div>
-    </div>
-  </div>
+        <!-- COMMON 2 -->
+        <section class="screen" id="common2">
+          <div class="question-num">Kernfrage 2</div>
+          <h2 class="question-text">Wie gehst du aktuell meistens damit um?</h2>
+          <p class="question-subtext">Nicht idealisiert – eher so, wie es wirklich läuft.</p>
+          <div class="options" data-key="umgang" data-type="single" data-next="common3">
+            <div class="option" data-value="im_kopf">Ich trage vieles im Kopf mit mir herum</div>
+            <div class="option" data-value="improvisiert">Ich improvisiere von Tag zu Tag</div>
+            <div class="option" data-value="notizen_excel">Mit Notizen, Excel oder Google Sheets</div>
+            <div class="option" data-value="tool_software">Mit Tools / Software / festen Abläufen</div>
+            <div class="option" data-value="verdraenge">Ich ignoriere es eher, bis es weh tut</div>
+          </div>
+        </section>
 
-  <div class="screen" id="b5">
-    <div class="question-num">Frage 5 von 7</div>
-    <div class="question-text">Was bremst dich aus?</div>
-    <div class="multi-hint">Wähle bis zu 2</div>
-    <div class="options" data-key="frage5" data-type="multi" data-max="2" data-next="b6">
-      <div class="option" data-value="weiss_nicht_wo">Ich weiss nicht wo anfangen</div>
-      <div class="option" data-value="geld_unsicher">Das Geld fehlt oder ist zu unsicher</div>
-      <div class="option" data-value="kein_plan">Ich hab keinen klaren Plan</div>
-      <div class="option" data-value="angst_nase">Die Angst auf die Nase zu fallen</div>
-      <div class="option" data-value="umfeld_dagegen">Mein Umfeld findet es keine gute Idee</div>
-      <div class="option" data-value="keine_zeit">Keine Zeit neben dem Job</div>
-    </div>
-    <button class="btn" id="btn-b5" onclick="submitMulti('b5')" disabled>Weiter →</button>
-  </div>
+        <!-- COMMON 3 -->
+        <section class="screen" id="common3">
+          <div class="question-num">Kernfrage 3</div>
+          <h2 class="question-text">Was würde dir davon am ehesten helfen?</h2>
+          <div class="insight-box">Das ist keine Kauf-Frage. Mich interessiert nur, welche Art von Lösung intuitiv Sinn macht.</div>
+          <div class="options" data-key="hilfe" data-type="single" data-next="branch">
+            <div class="option" data-value="klarer_plan">Ein klarer Schritt-für-Schritt-Plan</div>
+            <div class="option" data-value="einfaches_tool">Ein einfaches Tool, das mich organisiert</div>
+            <div class="option" data-value="vorlagen_checklisten">Vorlagen / Checklisten / Struktur</div>
+            <div class="option" data-value="austausch">Austausch mit Leuten in ähnlicher Situation</div>
+            <div class="option" data-value="begleitung">Jemand, der mitdenkt oder drüberschaut</div>
+          </div>
+        </section>
 
-  <div class="screen" id="b6">
-    <div class="question-num">Frage 6 von 7</div>
-    <div class="question-text">Was würde den Unterschied machen?</div>
-    <div class="multi-hint">Wähle bis zu 2</div>
-    <div class="options" data-key="frage6" data-type="multi" data-max="2" data-next="b7">
-      <div class="option" data-value="fahrplan">Ein klarer Fahrplan, Schritt für Schritt</div>
-      <div class="option" data-value="begleitung">Jemand der schon dort war und mich begleitet</div>
-      <div class="option" data-value="tool">Ein einfaches Tool das mich organisiert</div>
-      <div class="option" data-value="austausch">Austausch mit Leuten die das Gleiche durchmachen</div>
-      <div class="option" data-value="zahlen_hilfe">Hilfe bei Zahlen, Kalkulation, Finanzen</div>
-    </div>
-    <button class="btn" id="btn-b6" onclick="submitMulti('b6')" disabled>Weiter →</button>
-  </div>
+        <!-- A: angestellt zufrieden -->
+        <section class="screen" id="a4">
+          <div class="question-num">Deine Situation</div>
+          <h2 class="question-text">Was gibt dir dein aktueller Job, das du ungern verlieren würdest?</h2>
+          <div class="options" data-key="frage4" data-type="single" data-next="a5">
+            <div class="option" data-value="sicherheit">Sicherheit / fixes Einkommen</div>
+            <div class="option" data-value="struktur">Klare Struktur und geregelte Abläufe</div>
+            <div class="option" data-value="team">Team / Umfeld / Zugehörigkeit</div>
+            <div class="option" data-value="weniger_verantwortung">Weniger Verantwortung und weniger Risiko</div>
+            <div class="option" data-value="freizeit">Klare Trennung von Arbeit und Freizeit</div>
+          </div>
+        </section>
 
-  <div class="screen" id="b7">
-    <div class="question-num">Frage 7 von 7</div>
-    <div class="question-text">Wenn es das gäbe — wärst du bereit dafür zu investieren?</div>
-    <div class="options" data-key="frage7" data-type="single" data-next="contact">
-      <div class="option" data-value="nein_gratis">Nein, muss gratis sein</div>
-      <div class="option" data-value="bis_50">Bis CHF 50/Monat</div>
-      <div class="option" data-value="bis_100">Bis CHF 100/Monat</div>
-      <div class="option" data-value="mehr">Mehr, wenn es mich wirklich weiterbringt</div>
-    </div>
-  </div>
+        <section class="screen" id="a5">
+          <div class="question-num">Fast da</div>
+          <h2 class="question-text">Was müsste passieren, damit du Selbständigkeit überhaupt ernsthaft anschauen würdest?</h2>
+          <div class="helper">Wähle bis zu 2</div>
+          <div class="options" data-key="frage5" data-type="multi" data-max="2" data-next="contact">
+            <div class="option" data-value="klare_idee">Eine glasklare, gute Idee</div>
+            <div class="option" data-value="mehr_geld">Genug Geld als Polster</div>
+            <div class="option" data-value="klarer_weg">Ein klarer Weg statt nur diffuse Gedanken</div>
+            <div class="option" data-value="richtiger_moment">Der richtige Moment im Leben</div>
+            <div class="option" data-value="gar_nicht">Ehrlich gesagt: eher gar nichts</div>
+          </div>
+          <button class="btn" id="btn-a5" onclick="submitMulti('a5')" disabled>Weiter →</button>
+        </section>
 
-  <!-- ============================================ -->
-  <!-- GRUPPE C: Selbständig -->
-  <!-- ============================================ -->
-  <div class="screen" id="c4">
-    <div class="question-num">Frage 4 von 9</div>
-    <div class="question-text">Seit wann machst du dein Ding?</div>
-    <div class="options" data-key="frage4" data-type="single" data-next="c5">
-      <div class="option" data-value="unter_1_jahr">Unter 1 Jahr — noch ganz frisch</div>
-      <div class="option" data-value="1_3_jahre">1–3 Jahre — läuft so langsam</div>
-      <div class="option" data-value="3_plus">3+ Jahre — ich kenne das Spiel</div>
-    </div>
-  </div>
+        <!-- B: angestellt will wechseln -->
+        <section class="screen" id="b4">
+          <div class="question-num">Deine Situation</div>
+          <h2 class="question-text">Was passt aktuell am wenigsten an deiner Stelle?</h2>
+          <div class="options" data-key="frage4" data-type="single" data-next="b5">
+            <div class="option" data-value="inhalt">Die Arbeit selbst passt nicht mehr</div>
+            <div class="option" data-value="umfeld">Das Umfeld / Team / die Kultur</div>
+            <div class="option" data-value="entwicklung">Zu wenig Entwicklung oder Perspektive</div>
+            <div class="option" data-value="bezahlung">Bezahlung / Wertschätzung</div>
+            <div class="option" data-value="sinn">Es fühlt sich einfach nicht mehr richtig an</div>
+          </div>
+        </section>
 
-  <div class="screen" id="c5">
-    <div class="question-num">Frage 5 von 9</div>
-    <div class="question-text">Ehrliche Bestandesaufnahme — wie läufts?</div>
-    <div class="options" data-key="frage5" data-type="single" data-next="c6">
-      <div class="option" data-value="richtig_gut">Richtig gut, ich kann nicht klagen</div>
-      <div class="option" data-value="okay_mehr_drin">Okay, aber da wäre mehr drin</div>
-      <div class="option" data-value="harzig">Harzig, ich beisse mich durch</div>
-      <div class="option" data-value="ueberlege_aufhoeren">Ich überlege ehrlich gesagt aufzuhören</div>
-    </div>
-  </div>
+        <section class="screen" id="b5">
+          <div class="question-num">Wird interessant</div>
+          <h2 class="question-text">Was hält dich aktuell am meisten davon ab, wirklich zu wechseln?</h2>
+          <div class="helper">Wähle bis zu 2</div>
+          <div class="options" data-key="frage5" data-type="multi" data-max="2" data-next="b6">
+            <div class="option" data-value="unsicherheit">Unsicherheit, was der richtige nächste Schritt wäre</div>
+            <div class="option" data-value="sicherheit">Sicherheit / Einkommen / Risiko</div>
+            <div class="option" data-value="keine_zeit">Keine Zeit oder Energie neben dem Alltag</div>
+            <div class="option" data-value="keine_klarheit">Mir fehlt Klarheit, was ich überhaupt will</div>
+            <div class="option" data-value="bequemlichkeit">Ich bleibe aus Gewohnheit hängen</div>
+          </div>
+          <button class="btn" id="btn-b5" onclick="submitMulti('b5')" disabled>Weiter →</button>
+        </section>
 
-  <div class="screen" id="c6">
-    <div class="question-num">Frage 6 von 9</div>
-    <div class="question-text">Was nervt dich am meisten?</div>
-    <div class="multi-hint">Wähle bis zu 3</div>
-    <div class="options" data-key="frage6" data-type="multi" data-max="3" data-next="c7">
-      <div class="option" data-value="kunden_finden">Neue Kunden finden</div>
-      <div class="option" data-value="preise_offerten">Preise setzen und Offerten schreiben</div>
-      <div class="option" data-value="admin_papierkram">Admin und Papierkram</div>
-      <div class="option" data-value="nie_genug_zeit">Nie genug Zeit für alles</div>
-      <div class="option" data-value="social_media">Social Media und Sichtbarkeit</div>
-      <div class="option" data-value="kein_ueberblick">Keinen Überblick über meine Zahlen</div>
-      <div class="option" data-value="keine_strategie">Keine klare Strategie</div>
-      <div class="option" data-value="work_life">Arbeit und Privatleben trennen</div>
-    </div>
-    <button class="btn" id="btn-c6" onclick="submitMulti('c6')" disabled>Weiter →</button>
-  </div>
+        <section class="screen" id="b6">
+          <div class="question-num">Letzte Fachfrage</div>
+          <h2 class="question-text">Was würde dir am ehesten helfen, aus diesem Schwebezustand rauszukommen?</h2>
+          <div class="options" data-key="frage6" data-type="single" data-next="contact">
+            <div class="option" data-value="klarheit">Mehr Klarheit, was wirklich zu mir passt</div>
+            <div class="option" data-value="fahrplan">Ein klarer Plan für den nächsten Schritt</div>
+            <div class="option" data-value="struktur_tool">Etwas, das meine Gedanken strukturiert</div>
+            <div class="option" data-value="austausch">Austausch mit Leuten in ähnlicher Lage</div>
+            <div class="option" data-value="ermutigung">Ein kleiner realistischer Start statt grosser Veränderung</div>
+          </div>
+        </section>
 
-  <div class="screen" id="c7">
-    <div class="question-num">Frage 7 von 9</div>
-    <div class="question-text">Wie organisierst du deinen Laden?</div>
-    <div class="options" data-key="frage7" data-type="single" data-next="c8">
-      <div class="option" data-value="im_kopf">Alles im Kopf — bis jetzt gings</div>
-      <div class="option" data-value="notizbuch">Notizbuch oder Zettelwirtschaft</div>
-      <div class="option" data-value="excel">Excel oder Google Sheets</div>
-      <div class="option" data-value="tool">Ein richtiges Tool</div>
-      <div class="option" data-value="naja">Organisieren? Naja...</div>
-    </div>
-  </div>
+        <!-- C: angestellt will selbständig -->
+        <section class="screen" id="c4">
+          <div class="question-num">Deine Situation</div>
+          <h2 class="question-text">Wie lange begleitet dich der Gedanke schon?</h2>
+          <div class="options" data-key="frage4" data-type="single" data-next="c5">
+            <div class="option" data-value="frisch">Ganz frisch – seit kurzem</div>
+            <div class="option" data-value="monate">Schon einige Monate</div>
+            <div class="option" data-value="1_3_jahre">1–3 Jahre</div>
+            <div class="option" data-value="ewig">Schon ewig, aber ohne echten Schritt</div>
+          </div>
+        </section>
 
-  <div class="screen" id="c8">
-    <div class="question-num">Frage 8 von 9</div>
-    <div class="question-text">Stell dir vor: Ein Tool das dir morgens sagt wen du anrufen sollst, wie deine Zahlen stehen und was diese Woche dran ist. Einfach, lokal, kein Cloud-Quatsch.</div>
-    <div class="options" data-key="frage8" data-type="single" data-next="c9">
-      <div class="option" data-value="ja_sofort">Ja, das will ich sofort</div>
-      <div class="option" data-value="klingt_gut">Klingt gut, muss aber einfach sein</div>
-      <div class="option" data-value="vielleicht">Vielleicht, müsste ich sehen</div>
-      <div class="option" data-value="nein">Nein, brauche ich nicht</div>
-    </div>
-  </div>
+        <section class="screen" id="c5">
+          <div class="question-num">Wird spannend</div>
+          <h2 class="question-text">Was passiert meistens, wenn du darüber nachdenkst?</h2>
+          <div class="options" data-key="frage5" data-type="single" data-next="c6">
+            <div class="option" data-value="nichts">Ich mache am Ende nichts</div>
+            <div class="option" data-value="recherchieren">Ich recherchiere und verliere mich darin</div>
+            <div class="option" data-value="planen">Ich plane kurz etwas, ziehe es aber nicht durch</div>
+            <div class="option" data-value="kleine_schritte">Ich setze kleine Schritte um</div>
+            <div class="option" data-value="auftraege_nebenbei">Ich mache bereits kleine Sachen nebenbei</div>
+          </div>
+        </section>
 
-  <div class="screen" id="c9">
-    <div class="question-num">Frage 9 von 9</div>
-    <div class="question-text">Was wäre dir das wert?</div>
-    <div class="options" data-key="frage9" data-type="single" data-next="contact">
-      <div class="option" data-value="gratis">Nichts, muss gratis sein</div>
-      <div class="option" data-value="bis_30">Bis CHF 30/Monat</div>
-      <div class="option" data-value="bis_50">Bis CHF 50/Monat</div>
-      <div class="option" data-value="bis_100">Bis CHF 100/Monat</div>
-      <div class="option" data-value="mehr">Mehr, wenn es wirklich funktioniert</div>
-    </div>
-  </div>
+        <section class="screen" id="c6">
+          <div class="question-num">Fast geschafft</div>
+          <h2 class="question-text">Was bremst dich im Kern aus?</h2>
+          <div class="helper">Wähle bis zu 2</div>
+          <div class="options" data-key="frage6" data-type="multi" data-max="2" data-next="c7">
+            <div class="option" data-value="kein_startpunkt">Ich weiss nicht, wo ich anfangen soll</div>
+            <div class="option" data-value="geld_risiko">Geld / Risiko / Unsicherheit</div>
+            <div class="option" data-value="kein_plan">Ich habe keinen klaren Plan</div>
+            <div class="option" data-value="angst">Angst zu scheitern</div>
+            <div class="option" data-value="keine_zeit">Neben dem Job fehlt Zeit und Fokus</div>
+          </div>
+          <button class="btn" id="btn-c6" onclick="submitMulti('c6')" disabled>Weiter →</button>
+        </section>
 
-  <!-- ============ CONTACT (optional) ============ -->
-  <div class="screen" id="contact">
-    <div class="question-text">Fast geschafft!</div>
-    <p style="color:var(--dim);font-size:15px;line-height:1.7;margin-bottom:24px;">Ich arbeite an etwas für Leute die beruflich mehr wollen. Wenn dich das interessiert, lass mir eine Nummer oder dein Insta da — kein Spam, versprochen.</p>
-    <div class="options" data-key="kontakt_wahl" data-type="single">
-      <div class="option" data-value="nein" onclick="submitSurvey('')">Nein danke, fertig</div>
-      <div class="option" data-value="ja" id="opt-contact" onclick="showContactField()">Ja gerne</div>
-    </div>
-    <div id="contact-field" style="display:none;margin-top:16px;">
-      <input type="text" class="contact-input" id="contact-input" placeholder="Telefon, Insta oder beides...">
-      <button class="btn" onclick="submitSurvey(document.getElementById('contact-input').value)">Abschicken →</button>
-    </div>
-  </div>
+        <section class="screen" id="c7">
+          <div class="question-num">Letzter Block</div>
+          <h2 class="question-text">Was würde dich am ehesten ins Tun bringen?</h2>
+          <div class="options" data-key="frage7" data-type="single" data-next="contact">
+            <div class="option" data-value="fahrplan">Ein klarer Fahrplan</div>
+            <div class="option" data-value="begleitung">Jemand, der mich begleitet</div>
+            <div class="option" data-value="tool_struktur">Ein einfaches Tool für Struktur und Überblick</div>
+            <div class="option" data-value="praxisbeispiele">Praxisnahe Beispiele statt Theorie</div>
+            <div class="option" data-value="erster_kleiner_schritt">Ein erster kleiner Schritt, der machbar wirkt</div>
+          </div>
+        </section>
 
-  <!-- ============ THANK YOU ============ -->
-  <div class="screen" id="thankyou">
-    <div class="thankyou">
-      <div class="emoji">🤙</div>
-      <h2>Merci vielmal!</h2>
-      <p>Du hilfst mir damit echt weiter. Wenn du jemanden kennst den das auch interessiert — leite es gerne weiter.</p>
-      <div class="share-box">
-        <div class="share-title">📋 Zum Kopieren und Weiterleiten:</div>
-        <div class="share-text" id="share-text">Hey, ein Kollege von mir macht ein Projekt zum Thema Selbständigkeit und braucht kurz deine Meinung. 3 Minuten, anonym: </div>
-        <button class="btn btn-copy" onclick="copyShare()">Text kopieren 📋</button>
-        <span id="copied" style="display:none;margin-left:12px;font-size:13px;color:var(--green);">✓ Kopiert!</span>
+        <!-- D: selbständig -->
+        <section class="screen" id="d4">
+          <div class="question-num">Deine Situation</div>
+          <h2 class="question-text">Seit wann bist du selbständig?</h2>
+          <div class="options" data-key="frage4" data-type="single" data-next="d5">
+            <div class="option" data-value="unter_1_jahr">Unter 1 Jahr</div>
+            <div class="option" data-value="1_3_jahre">1–3 Jahre</div>
+            <div class="option" data-value="3_plus">Mehr als 3 Jahre</div>
+          </div>
+        </section>
+
+        <section class="screen" id="d5">
+          <div class="question-num">Real Talk</div>
+          <h2 class="question-text">Wie läuft es aktuell – ganz ehrlich?</h2>
+          <div class="options" data-key="frage5" data-type="single" data-next="d6">
+            <div class="option" data-value="laeuft_gut">Läuft gut</div>
+            <div class="option" data-value="okay_aber_luft_nach_oben">Okay, aber da liegt mehr drin</div>
+            <div class="option" data-value="harzig">Eher harzig</div>
+            <div class="option" data-value="ueberforderung">Ich bin oft überfordert</div>
+          </div>
+        </section>
+
+        <section class="screen" id="d6">
+          <div class="question-num">Hier liegt oft der Hebel</div>
+          <h2 class="question-text">Wo verlierst du am meisten Zeit oder Nerven?</h2>
+          <div class="helper">Wähle bis zu 3</div>
+          <div class="options" data-key="frage6" data-type="multi" data-max="3" data-next="d7">
+            <div class="option" data-value="kunden_finden">Kunden finden</div>
+            <div class="option" data-value="offerten_preise">Offerten / Preise / Kalkulation</div>
+            <div class="option" data-value="admin">Admin / Papierkram</div>
+            <div class="option" data-value="planung">Planung / Überblick</div>
+            <div class="option" data-value="zahlen">Zahlen / Finanzen im Griff behalten</div>
+            <div class="option" data-value="sichtbarkeit">Sichtbarkeit / online präsent sein</div>
+            <div class="option" data-value="alles_gleichzeitig">Alles gleichzeitig</div>
+          </div>
+          <button class="btn" id="btn-d6" onclick="submitMulti('d6')" disabled>Weiter →</button>
+        </section>
+
+        <section class="screen" id="d7">
+          <div class="question-num">Letzte Fachfrage</div>
+          <h2 class="question-text">Wie organisierst du deinen Alltag heute?</h2>
+          <div class="options" data-key="frage7" data-type="single" data-next="contact">
+            <div class="option" data-value="kopf">Vieles im Kopf</div>
+            <div class="option" data-value="zettel">Zettel / Notizen</div>
+            <div class="option" data-value="excel_sheets">Excel / Google Sheets</div>
+            <div class="option" data-value="software">Mit Software / Tools</div>
+            <div class="option" data-value="chaotisch">Eher chaotisch, ehrlich gesagt</div>
+          </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="screen" id="contact">
+          <div class="question-num">Fast geschafft</div>
+          <h2 class="question-text">Willst du sehen, was aus den Ergebnissen entsteht?</h2>
+          <p class="question-subtext">
+            Ich sammle hier nicht einfach Daten. Ich will daraus etwas Konkretes bauen.
+            Wenn du willst, halte ich dich auf dem Laufenden.
+          </p>
+
+          <div class="options" data-key="kontakt_wahl" data-type="single">
+            <div class="option" data-value="nein" onclick="submitSurvey('')">Nein danke, passt für mich</div>
+            <div class="option" data-value="ja" id="contact-yes" onclick="showContactField()">Ja, gerne – zeig mir später, was daraus wird</div>
+          </div>
+
+          <div class="contact-wrap" id="contactWrap">
+            <input
+              type="text"
+              id="contactInput"
+              class="contact-input"
+              placeholder="WhatsApp, Insta, Mail oder was für dich passt"
+            />
+            <button class="btn" onclick="submitSurvey(document.getElementById('contactInput').value)">Abschicken →</button>
+            <div class="tiny">Kein Spam. Nur wenn wirklich etwas Konkretes daraus entsteht.</div>
+          </div>
+        </section>
+
+        <!-- THANK YOU -->
+        <section class="screen" id="thankyou">
+          <div class="hero-badge">deine kurze einordnung</div>
+          <h2 class="question-text">Das fällt bei dir auf:</h2>
+
+          <div class="result-card">
+            <div class="result-tag" id="resultTag">Profil</div>
+            <div class="result-title" id="resultTitle">–</div>
+            <div class="result-text" id="resultText">–</div>
+            <div class="result-compare" id="resultCompare"></div>
+            <div class="result-more" id="resultMore" style="margin-top: 12px;"></div>
+          </div>
+
+          <p class="question-subtext">
+            Genau solche Muster interessieren mich: nicht nur Ideen, sondern wo im Alltag wirklich Reibung entsteht.
+          </p>
+
+          <div class="share-box">
+            <div class="share-title">Wenn du willst: weiterleiten</div>
+            <div class="share-text" id="shareText">
+              Hey, ich habe gerade eine ehrliche 3-Minuten-Umfrage zu Job, Wechselgedanken, Selbständigkeit und beruflichem Alltag ausgefüllt. Ist angenehm gemacht und am Ende bekommt man eine kurze Einordnung:
+            </div>
+            <button class="btn btn-secondary" onclick="copyShare()">Text kopieren</button>
+            <div class="status" id="copyStatus">✓ Kopiert</div>
+          </div>
+
+          <div class="tiny" style="margin-top:16px;">
+            Merci. Jede ehrliche Antwort hilft, aus losen Ideen etwas Sinnvolles zu machen.
+          </div>
+        </section>
+
       </div>
     </div>
   </div>
-</div>
 
-<script>
-// ============================================
-// KONFIGURATION
-// ============================================
-// WICHTIG: Ersetze diese URL mit deiner Google Apps Script Web-App URL
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyLjszqjOYgAv8yhGjKWBdhSvR_aQ4C3ITr-OCt8HBZihkQ9dn3pG7Jkyv6D_hguAIt/exec';
+  <script>
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyLjszqjOYgAv8yhGjKWBdhSvR_aQ4C3ITr-OCt8HBZihkQ9dn3pG7Jkyv6D_hguAIt/exec";
 
-// ============================================
-// STATE
-// ============================================
-let answers = {};
-let branch = ''; // a, b, c
-let totalScreens = 5; // wird dynamisch angepasst
+    const answers = {};
+    let branch = "";
+    let totalSteps = 8;
+    let currentStep = 0;
 
-// Screen counts per branch
-const branchScreens = { a: 5, b: 7, c: 9 };
+    const totalStepsByBranch = {
+      a: 8,
+      b: 9,
+      c: 10,
+      d: 10
+    };
 
-// ============================================
-// FUNCTIONS
-// ============================================
-
-function startSurvey() {
-  document.getElementById('intro').classList.remove('active');
-  document.getElementById('s1').classList.add('active');
-  updateProgress(1);
-}
-
-function updateProgress(current) {
-  const pct = Math.round((current / totalScreens) * 100);
-  document.getElementById('progress').style.width = pct + '%';
-}
-
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// Single select
-document.querySelectorAll('.options[data-type="single"] .option').forEach(opt => {
-  opt.addEventListener('click', function() {
-    const container = this.closest('.options');
-    const key = container.dataset.key;
-    const nextScreen = container.dataset.next;
-    const value = this.dataset.value;
-    
-    // Store branch if this is the group filter
-    if (this.dataset.branch) {
-      branch = this.dataset.branch;
-      totalScreens = branchScreens[branch];
+    function startSurvey() {
+      showScreen("s1");
+      currentStep = 1;
+      updateProgress();
     }
-    
-    // Visual feedback
-    container.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-    this.classList.add('selected');
-    
-    // Store answer
-    answers[key] = value;
-    
-    // Navigate after short delay
-    setTimeout(() => {
-      if (nextScreen === 'branch') {
-        // Route to group-specific screen
-        showScreen(branch + '4');
-        updateProgress(4);
-      } else if (nextScreen === 'contact') {
-        showScreen('contact');
-        updateProgress(totalScreens);
-      } else if (nextScreen) {
-        showScreen(nextScreen);
-        // Calculate progress
-        const num = parseInt(nextScreen.replace(/\D/g, '')) || 3;
-        updateProgress(num);
+
+    function showScreen(id) {
+      document.querySelectorAll(".screen").forEach(screen => screen.classList.remove("active"));
+      const el = document.getElementById(id);
+      if (el) el.classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function updateProgress() {
+      const pct = Math.max(0, Math.min(100, Math.round((currentStep / totalSteps) * 100)));
+      document.getElementById("progressFill").style.width = pct + "%";
+      document.getElementById("progressCount").textContent = pct + "%";
+
+      let label = "Bereit?";
+      const remaining = Math.max(totalSteps - currentStep, 0);
+
+      if (currentStep === 0) {
+        label = "Bereit?";
+      } else if (remaining >= 4) {
+        label = "Du bist gut drin";
+      } else if (remaining >= 2) {
+        label = "Noch " + remaining + " Fragen";
+      } else if (remaining === 1) {
+        label = "Letzter Schritt";
+      } else {
+        label = "Geschafft";
       }
-    }, 300);
-  });
-});
 
-// Multi select
-document.querySelectorAll('.options[data-type="multi"] .option').forEach(opt => {
-  opt.addEventListener('click', function() {
-    const container = this.closest('.options');
-    const max = parseInt(container.dataset.max);
-    const selected = container.querySelectorAll('.option.selected');
-    const screenId = this.closest('.screen').id;
-    const btn = document.getElementById('btn-' + screenId);
-    
-    if (this.classList.contains('selected')) {
-      this.classList.remove('selected');
-    } else {
-      if (selected.length >= max) return;
-      this.classList.add('selected');
+      document.getElementById("progressLabel").textContent = label;
     }
-    
-    // Enable/disable button
-    const currentSelected = container.querySelectorAll('.option.selected');
-    if (btn) btn.disabled = currentSelected.length === 0;
-  });
-});
 
-function submitMulti(screenId) {
-  const screen = document.getElementById(screenId);
-  const container = screen.querySelector('.options');
-  const key = container.dataset.key;
-  const nextScreen = container.dataset.next;
-  const selected = container.querySelectorAll('.option.selected');
-  
-  answers[key] = Array.from(selected).map(o => o.dataset.value).join(', ');
-  
-  if (nextScreen === 'contact') {
-    showScreen('contact');
-    updateProgress(totalScreens);
-  } else {
-    showScreen(nextScreen);
-    const num = parseInt(nextScreen.replace(/\D/g, '')) || 5;
-    updateProgress(num);
-  }
-}
+    function incrementStep() {
+      currentStep += 1;
+      updateProgress();
+    }
 
-function showContactField() {
-  document.getElementById('contact-field').style.display = 'block';
-  document.getElementById('opt-contact').classList.add('selected');
-  document.getElementById('contact-input').focus();
-}
+    function goToBranchStart() {
+      if (branch === "a") showScreen("a4");
+      if (branch === "b") showScreen("b4");
+      if (branch === "c") showScreen("c4");
+      if (branch === "d") showScreen("d4");
+      incrementStep();
+    }
 
-function submitSurvey(kontakt) {
-  answers.kontakt = kontakt;
-  
-  // Update share text with current URL
-  const shareText = document.getElementById('share-text');
-  shareText.textContent = 'Hey, ein Kollege von mir macht ein Projekt zum Thema Selbständigkeit und braucht kurz deine Meinung. 3 Minuten, anonym: ' + window.location.href;
-  
-  // Send to Google Sheets
-  if (GOOGLE_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbyLjszqjOYgAv8yhGjKWBdhSvR_aQ4C3ITr-OCt8HBZihkQ9dn3pG7Jkyv6D_hguAIt/exec') {
-    fetch(GOOGLE_SCRIPT_URL, {
-      method: 'POST',
-      body: JSON.stringify(answers)
-    }).catch(err => console.log('Submit error:', err));
-  }
-  
-  showScreen('thankyou');
-  document.getElementById('progress').style.width = '100%';
-}
+    document.querySelectorAll('.options[data-type="single"] .option').forEach(option => {
+      option.addEventListener("click", function() {
+        const container = this.closest(".options");
+        const key = container.dataset.key;
+        const next = container.dataset.next;
+        const value = this.dataset.value;
 
-function copyShare() {
-  const text = document.getElementById('share-text').textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    document.getElementById('copied').style.display = 'inline';
-    setTimeout(() => {
-      document.getElementById('copied').style.display = 'none';
-    }, 2000);
-  });
-}
-</script>
+        if (this.dataset.branch) {
+          branch = this.dataset.branch;
+          totalSteps = totalStepsByBranch[branch];
+        }
+
+        container.querySelectorAll(".option").forEach(opt => opt.classList.remove("selected"));
+        this.classList.add("selected");
+
+        answers[key] = value;
+
+        setTimeout(() => {
+          if (next === "branch") {
+            goToBranchStart();
+          } else if (next === "contact") {
+            showScreen("contact");
+            incrementStep();
+          } else if (next) {
+            showScreen(next);
+            incrementStep();
+          }
+        }, 220);
+      });
+    });
+
+    document.querySelectorAll('.options[data-type="multi"] .option').forEach(option => {
+      option.addEventListener("click", function() {
+        const container = this.closest(".options");
+        const max = parseInt(container.dataset.max || "1", 10);
+        const selected = container.querySelectorAll(".option.selected");
+        const screen = this.closest(".screen");
+        const button = document.getElementById("btn-" + screen.id);
+
+        if (this.classList.contains("selected")) {
+          this.classList.remove("selected");
+        } else {
+          if (selected.length >= max) return;
+          this.classList.add("selected");
+        }
+
+        if (button) {
+          button.disabled = container.querySelectorAll(".option.selected").length === 0;
+        }
+      });
+    });
+
+    function submitMulti(screenId) {
+      const screen = document.getElementById(screenId);
+      const container = screen.querySelector(".options");
+      const key = container.dataset.key;
+      const next = container.dataset.next;
+      const selected = Array.from(container.querySelectorAll(".option.selected")).map(el => el.dataset.value);
+
+      answers[key] = selected.join(", ");
+
+      if (next === "contact") {
+        showScreen("contact");
+      } else {
+        showScreen(next);
+      }
+
+      incrementStep();
+    }
+
+    function showContactField() {
+      document.getElementById("contactWrap").style.display = "block";
+      document.getElementById("contact-yes").classList.add("selected");
+      document.getElementById("contactInput").focus();
+    }
+
+    function buildProfile() {
+      if (branch === "a") {
+        if (answers.frage5 && answers.frage5.includes("gar_nicht")) {
+          return {
+            tag: "Profil A",
+            title: "Eher klar verankert",
+            text: "Du wirkst nicht wie jemand, der einfach nur aus Unruhe etwas anderes will. Für dich zählen Stabilität, Klarheit und ein Setup, das verlässlich funktioniert.",
+            compare: "Im Vergleich zu anderen in dieser Gruppe wirkst du eher gefestigt als suchend.",
+            more: "Falls bei dir überhaupt Bedarf entsteht, dann eher dort, wo etwas einfacher, klarer oder stressfreier werden könnte – nicht aus Abenteuerlust."
+          };
+        }
+
+        return {
+          tag: "Profil A",
+          title: "Offen, aber nicht getrieben",
+          text: "Du wirkst nicht grundsätzlich abgeneigt, aber Veränderung ist für dich aktuell kein innerer Muss-Punkt. Eher etwas, das nur unter sehr guten Bedingungen interessant würde.",
+          compare: "Im Vergleich zu anderen Angestellten wirkst du eher vorsichtig-pragmatisch als wechselbereit.",
+          more: "Bedarf liegt bei dir eher in Orientierung und Klarheit – nicht in radikaler Veränderung."
+        };
+      }
+
+      if (branch === "b") {
+        if ((answers.frage5 || "").includes("keine_klarheit") || answers.frage6 === "klarheit") {
+          return {
+            tag: "Profil B",
+            title: "Im Umbruch, aber noch unscharf",
+            text: "Du spürst relativ klar, dass etwas nicht mehr passt, aber der nächste Schritt ist noch nicht greifbar. Das ist oft kein Motivationsproblem, sondern ein Klarheitsproblem.",
+            compare: "Im Vergleich zu anderen Wechselwilligen wirkst du eher suchend als blockiert.",
+            more: "Wenn hier Bedarf besteht, dann wahrscheinlich bei Einordnung, Struktur und der Frage: Was passt wirklich zu mir?"
+          };
+        }
+
+        if ((answers.frage5 || "").includes("sicherheit") || (answers.frage5 || "").includes("unsicherheit")) {
+          return {
+            tag: "Profil B",
+            title: "Gebremst durch Risiko und Unsicherheit",
+            text: "Der Wunsch nach Veränderung ist da, aber Sicherheit zieht stark mit. Das wirkt weniger wie fehlender Wille und mehr wie verständliche Vorsicht.",
+            compare: "Im Vergleich zu anderen in dieser Lage wirkst du nicht sprunghaft, sondern abwägend.",
+            more: "Ein echter Hebel könnte hier weniger Motivation sein – und mehr ein klarer, realistischer nächster Schritt."
+          };
+        }
+
+        return {
+          tag: "Profil B",
+          title: "Wechselbereit, aber noch im Schwebezustand",
+          text: "Du wirkst nicht festgefahren, aber auch noch nicht ganz in Bewegung. Genau in diesem Zwischenraum bleiben viele länger hängen, als ihnen lieb ist.",
+          compare: "Im Vergleich zu anderen Angestellten mit Wechselgedanken wirkst du näher an Bewegung als an Resignation.",
+          more: "Falls ich aus den Antworten etwas entwickle, wäre für Menschen wie dich wahrscheinlich Klarheit plus einfacher Umsetzungsrahmen zentral."
+        };
+      }
+
+      if (branch === "c") {
+        if (answers.frage5 === "nichts" || answers.frage5 === "recherchieren") {
+          return {
+            tag: "Profil C",
+            title: "Der Denker",
+            text: "Du trägst den Gedanken schon mit dir herum, aber der Schritt vom Nachdenken ins Tun bleibt schwierig. Das ist kein seltenes Muster.",
+            compare: "Im Vergleich zu anderen in deiner Situation wirkst du eher reflektiert als entschlossen.",
+            more: "Wenn hier Bedarf besteht, dann wahrscheinlich bei Struktur, ersten machbaren Schritten und weniger bei Motivation."
+          };
+        }
+
+        if ((answers.frage6 || "").includes("angst") || (answers.frage6 || "").includes("geld_risiko")) {
+          return {
+            tag: "Profil C",
+            title: "Gebremst durch Unsicherheit",
+            text: "Der Wunsch ist da, aber Unsicherheit zieht stark mit. Das wirkt weniger wie fehlender Wille und mehr wie fehlende Sicherheit in die nächsten Schritte.",
+            compare: "Im Vergleich zu anderen angehenden Selbständigen wirkst du eher blockiert als planlos.",
+            more: "Ein echter Hebel könnte hier weniger Inspiration sein – und mehr ein klarer, risikoärmer wirkender Weg."
+          };
+        }
+
+        return {
+          tag: "Profil C",
+          title: "Näher dran als viele andere",
+          text: "Du wirkst nicht nur interessiert, sondern schon relativ nah an echter Bewegung. Bei dir geht es eher um Umsetzung als um Grundsatzfragen.",
+          compare: "Im Vergleich zu vielen anderen in dieser Gruppe wirkst du konkreter und handlungsnäher.",
+          more: "Falls ich aus den Antworten etwas baue, wäre für Menschen wie dich wahrscheinlich Praxis, Struktur und ein klarer erster Schritt zentral."
+        };
+      }
+
+      if ((answers.frage6 || "").includes("alles_gleichzeitig") || answers.frage7 === "kopf" || answers.frage7 === "chaotisch") {
+        return {
+          tag: "Profil D",
+          title: "Der Kämpfer im Alltag",
+          text: "Du bist drin, aber vieles läuft offenbar parallel, ungeordnet oder mit viel mentaler Last. Das ist oft weniger ein Kompetenz- als ein Strukturproblem.",
+          compare: "Im Vergleich zu anderen Selbständigen wirkst du eher belastet durch Komplexität als durch fehlenden Einsatz.",
+          more: "Wenn hier Bedarf besteht, dann wahrscheinlich bei Überblick, Priorisierung und Entlastung im Alltag."
+        };
+      }
+
+      if (answers.frage5 === "laeuft_gut" || answers.frage5 === "okay_aber_luft_nach_oben") {
+        return {
+          tag: "Profil D",
+          title: "Der Optimierer",
+          text: "Es wirkt nicht nach Chaos, sondern eher nach dem Wunsch, Dinge sauberer, effizienter oder klarer zu machen.",
+          compare: "Im Vergleich zu anderen Selbständigen wirkst du stabiler und reflektierter als viele.",
+          more: "Für Menschen wie dich liegt Bedarf eher nicht im Überleben, sondern in Vereinfachung und besserem Überblick."
+        };
+      }
+
+      return {
+        tag: "Profil D",
+        title: "Unter Druck, aber dran",
+        text: "Es wirkt, als ob du vieles trägst und gleichzeitig funktionieren musst. Der Bedarf liegt hier wahrscheinlich nicht bei noch mehr Input, sondern bei Entlastung.",
+        compare: "Im Vergleich zu anderen in dieser Gruppe wirkt dein Alltag eher dicht und fordernd.",
+        more: "Wenn ich daraus etwas entwickle, wäre für diese Lage vor allem Einfachheit entscheidend."
+      };
+    }
+
+    function showResult() {
+      const result = buildProfile();
+      document.getElementById("resultTag").textContent = result.tag;
+      document.getElementById("resultTitle").textContent = result.title;
+      document.getElementById("resultText").textContent = result.text;
+      document.getElementById("resultCompare").textContent = result.compare;
+      document.getElementById("resultMore").textContent = result.more;
+    }
+
+    async function submitSurvey(kontakt) {
+      answers.kontakt = (kontakt || "").trim();
+      answers.timestamp_client = new Date().toISOString();
+      answers.branch = branch;
+
+      showResult();
+
+      const shareText = document.getElementById("shareText");
+      shareText.textContent =
+        "Hey, ich habe gerade eine ehrliche 3-Minuten-Umfrage zu Job, Wechselgedanken, Selbständigkeit und beruflichem Alltag ausgefüllt. Ist angenehm gemacht und am Ende bekommt man eine kurze Einordnung: " +
+        window.location.href;
+
+      if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "HIER_DEINE_GOOGLE_APPS_SCRIPT_URL_EINFUEGEN") {
+        try {
+          const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify(answers)
+          });
+
+          const result = await response.json();
+          console.log("Server response:", result);
+
+          if (result.status !== "ok") {
+            console.warn("Apps Script error:", result.message);
+          }
+        } catch (error) {
+          console.warn("Submit failed:", error);
+        }
+      }
+
+      showScreen("thankyou");
+      currentStep = totalSteps;
+      updateProgress();
+    }
+
+    async function copyShare() {
+      const text = document.getElementById("shareText").textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        const status = document.getElementById("copyStatus");
+        status.style.display = "block";
+        setTimeout(() => {
+          status.style.display = "none";
+        }, 1800);
+      } catch (e) {
+        console.warn("Copy failed", e);
+      }
+    }
+  </script>
 </body>
 </html>
+```
+
