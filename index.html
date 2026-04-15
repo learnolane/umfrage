@@ -534,7 +534,7 @@ body {
 // KONFIGURATION
 // ============================================
 // WICHTIG: Ersetze diese URL mit deiner Google Apps Script Web-App URL
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzjslk_XEWnylaKoWtzALDBpLdH25_e83f5t7SBYsvz5MOFetuJvR_6-dMmM3ONJTyp/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyLjszqjOYgAv8yhGjKWBdhSvR_aQ4C3ITr-OCt8HBZihkQ9dn3pG7Jkyv6D_hguAIt/exec';
 
 // ============================================
 // STATE
@@ -662,7 +662,7 @@ function submitSurvey(kontakt) {
   shareText.textContent = 'Hey, ein Kollege von mir macht ein Projekt zum Thema Selbständigkeit und braucht kurz deine Meinung. 3 Minuten, anonym: ' + window.location.href;
   
   // Send to Google Sheets
-  if (GOOGLE_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbzjslk_XEWnylaKoWtzALDBpLdH25_e83f5t7SBYsvz5MOFetuJvR_6-dMmM3ONJTyp/exec') {
+  if (GOOGLE_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbyLjszqjOYgAv8yhGjKWBdhSvR_aQ4C3ITr-OCt8HBZihkQ9dn3pG7Jkyv6D_hguAIt/exec') {
     fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
       body: JSON.stringify(answers)
