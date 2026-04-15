@@ -988,7 +988,7 @@
         "Hey, ich habe gerade eine ehrliche 3-Minuten-Umfrage zu Job, Wechselgedanken, Selbständigkeit und beruflichem Alltag ausgefüllt. Ist angenehm gemacht und am Ende bekommt man eine kurze Einordnung: " +
         window.location.href;
 
-      if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "HIER_DEINE_GOOGLE_APPS_SCRIPT_URL_EINFUEGEN") {
+      if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "https://script.google.com/macros/s/AKfycbyLjszqjOYgAv8yhGjKWBdhSvR_aQ4C3ITr-OCt8HBZihkQ9dn3pG7Jkyv6D_hguAIt/exec") {
         try {
           const response = await fetch(GOOGLE_SCRIPT_URL, {
             method: "POST",
