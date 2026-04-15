@@ -966,6 +966,58 @@
   <script>
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxXt5TSWn8Il7PbG2opvhz8iHk1l1b0GUC6SklWby8Gv0JhAlceu97O0kI7pUH2PRcw/exec";
 
+    function getSubmissionId() {
+  let id = sessionStorage.getItem("submission_id");
+  if (!id) {
+    id = "sub_" + Date.now() + "_" + Math.random().toString(36).slice(2, 10);
+    sessionStorage.setItem("submission_id", id);
+  }
+  return id;
+}
+
+function getInterestLevelFromAnswers() {
+  const possibleScaleKeys = ["eh_4", "ec_4", "es_5", "se_3"];
+  for (const key of possibleScaleKeys) {
+    if (answers[key]) {
+      const first = String(answers[key]).split("|")[0];
+      const n = Number(first);
+      if (Number.isFinite(n)) {
+        return Math.max(0, Math.min(10, n * 2));
+      }
+    }
+  }
+  return 0;
+}
+
+function extractEmail(value) {
+  const text = String(value || "").trim();
+  if (!text) return "";
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text) ? text : "";
+}
+
+function getEntryPoint() {
+  const branchMap = {
+    employed_happy: "angestellt_zufrieden",
+    employed_change: "wechselwunsch",
+    employed_self: "selbststaendig_interesse",
+    self_employed: "selbststaendig"
+  };
+  return branchMap[answers.gruppe] || "unbekannt";
+}
+
+  function detectContactChannel(value) {
+  const text = String(value || "").trim().toLowerCase();
+  if (!text) return "";
+
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) return "email";
+  if (text.includes("instagram") || text.includes("insta") || text.startsWith("@")) return "instagram";
+ if (text.includes("whatsapp") || text.includes("wa") || text.includes("wa.me"))
+  if (text.includes("telegram")) return "telegram";
+  if (/^\+?[0-9\s/()-]{6,}$/.test(text)) return "phone";
+
+  return "other";
+}
+    
     const answers = {
       kontakt: "",
       notiz: ""
@@ -2085,29 +2137,52 @@
     }
 
     async function sendToBackend() {
-      try {
-        const payload = {
-          ...answers,
-          kontakt: answers.kontakt || "",
-          notiz: answers.notiz || "",
-          branch: answers.gruppe || ""
-        };
+  try {
+    const contactValue = answers.kontakt || "";
+    const noteValue = answers.notiz || "";
 
-        if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "https://script.google.com/macros/s/AKfycbxXt5TSWn8Il7PbG2opvhz8iHk1l1b0GUC6SklWby8Gv0JhAlceu97O0kI7pUH2PRcw/exec") {
-          const response = await fetch(GOOGLE_SCRIPT_URL, {
-            method: "POST",
-            body: JSON.stringify(payload)
-          });
+    const rawAnswers = {
+      ...answers,
+      branch_label: branchLabels[answers.gruppe] || "",
+      submitted_from: window.location.href
+    };
 
-          const result = await response.json();
-          if (result.status !== "ok") {
-            console.warn("Apps Script error:", result.message);
-          }
-        }
-      } catch (error) {
-        console.warn("Submit failed:", error);
-      }
+    const payload = {
+  submission_id: getSubmissionId(),
+  user_type: answers.gruppe || "",
+  entry_point: getEntryPoint(),
+  pain_points: JSON.stringify(rawAnswers),
+  motivation: noteValue || "",
+  interest_level: getInterestLevelFromAnswers(),
+  contact_opt_in: contactValue ? "yes" : "no",
+  contact_channel: detectContactChannel(contactValue),
+  contact_value: contactValue,
+  contact_email: extractEmail(contactValue),
+  honeypot: ""
+};
+
+    if (!GOOGLE_SCRIPT_URL) {
+      console.warn("No Google Script URL configured.");
+      return;
     }
+
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+
+    if (result.status !== "ok") {
+      console.warn("Apps Script error:", result.message);
+    }
+  } catch (error) {
+    console.warn("Submit failed:", error);
+  }
+}
 
     async function finishWithoutContact() {
       answers.kontakt = "";
@@ -2139,6 +2214,7 @@
       state.questions = [];
       state.currentIndex = -1;
       state.history = [];
+      sessionStorage.removeItem("submission_id");
       document.getElementById("contactArea").classList.remove("show");
       showScreen("screen-intro");
       document.getElementById("progressFill").style.width = "0%";
