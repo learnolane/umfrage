@@ -2167,13 +2167,10 @@ function getEntryPoint() {
     }
 
     const response = await fetch(GOOGLE_SCRIPT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
-
+  method: "POST",
+  body: JSON.stringify(payload)
+});
+    
     const result = await response.json();
 
     if (result.status !== "ok") {
