@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
+ <link rel="icon" type="image/png" href="./favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Arbeitsrealität – Kurz-Analyse</title>
 
@@ -2181,19 +2182,21 @@ function getEntryPoint() {
   }
 }
 
-    async function finishWithoutContact() {
-      answers.kontakt = "";
-      answers.notiz = "";
-      await sendToBackend();
-      showScreen("screen-thanks");
-    }
+    function finishWithoutContact() {
+  answers.kontakt = "";
+  answers.notiz = "";
 
-    async function submitWithContact() {
-      answers.kontakt = document.getElementById("contactInput").value.trim();
-      answers.notiz = document.getElementById("notesInput").value.trim();
-      await sendToBackend();
-      showScreen("screen-thanks");
-    }
+  showScreen("screen-thanks");
+  sendToBackend();
+}
+
+function submitWithContact() {
+  answers.kontakt = document.getElementById("contactInput").value.trim();
+  answers.notiz = document.getElementById("notesInput").value.trim();
+
+  showScreen("screen-thanks");
+  sendToBackend();
+}
 
     async function copyShareText() {
       try {
