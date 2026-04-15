@@ -3,96 +3,158 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wie tickst du beruflich?</title>
+  <title>Arbeitsrealität – Kurz-Analyse</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Fraunces:wght@600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #f6f1ea;
+      --bg: #f7f1e8;
+      --bg-2: #fbf7f1;
       --card: #fffdf9;
-      --text: #1f1c18;
-      --muted: #6f665d;
-      --border: #e5dbcf;
-      --accent: #b86a3d;
-      --accent-dark: #98542d;
-      --accent-soft: #f4e7dd;
-      --green: #2f7a57;
-      --green-soft: #e8f3ed;
-      --shadow: 0 10px 30px rgba(45, 31, 20, 0.08);
+      --text: #231f1a;
+      --muted: #6d6258;
+      --border: #e6dbcf;
+      --accent: #bf6a3c;
+      --accent-2: #df9d66;
+      --accent-soft: #f4e6dc;
+      --green: #2f7c59;
+      --green-soft: #e7f3ec;
+      --shadow: 0 14px 34px rgba(51, 34, 19, 0.08);
+      --danger-soft: #f7e8e4;
+      --gold-soft: #f7f0df;
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --transition: 180ms ease;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
-      background: radial-gradient(circle at top, #fbf7f1 0%, var(--bg) 48%), var(--bg);
+      margin: 0;
+      font-family: "DM Sans", sans-serif;
+      background:
+        radial-gradient(circle at top, #fffaf4 0%, var(--bg) 48%),
+        linear-gradient(180deg, #fffaf4 0%, #f4ede3 100%);
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
       min-height: 100vh;
-      padding: 22px 16px 70px;
     }
 
     .wrap {
-      max-width: 620px;
+      max-width: 760px;
       margin: 0 auto;
+      padding: 20px 16px 72px;
     }
 
-    .survey-shell {
-      margin-top: 22px;
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
-    .topline {
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent);
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
       font-weight: 700;
-      margin-bottom: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
     }
 
-    .progress-wrap {
+    .brand-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .progress-shell {
       margin-bottom: 18px;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      backdrop-filter: blur(8px);
+      padding-top: 2px;
+    }
+
+    .progress-card {
+      background: rgba(255, 252, 247, 0.86);
+      border: 1px solid rgba(230, 219, 207, 0.86);
+      box-shadow: 0 10px 24px rgba(50, 34, 18, 0.05);
+      border-radius: 18px;
+      padding: 12px 14px;
     }
 
     .progress-top {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
       align-items: center;
-      margin-bottom: 10px;
+      gap: 12px;
       font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .progress-label {
+      font-weight: 700;
+    }
+
+    .progress-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 7px 12px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 700;
       color: var(--muted);
     }
 
-    .progress-bar {
+    .progress-track {
+      height: 10px;
       width: 100%;
-      height: 8px;
-      background: #eadfd3;
       border-radius: 999px;
+      background: #eaded1;
       overflow: hidden;
     }
 
     .progress-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, var(--accent), #cb8458);
       border-radius: 999px;
-      transition: width 0.35s ease;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      padding: 26px 22px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width 320ms cubic-bezier(.2,.8,.2,1);
     }
 
     .screen {
       display: none;
-      animation: fadeUp 0.28s ease;
+      animation: fadeUp .28s ease;
     }
 
     .screen.active {
@@ -100,933 +162,1990 @@
     }
 
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    h1, h2, h3 {
-      font-family: 'Fraunces', serif;
-      letter-spacing: -0.02em;
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 24px;
     }
 
     .hero-badge {
-      display: inline-block;
-      background: var(--accent-soft);
-      color: var(--accent-dark);
-      padding: 8px 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 9px 14px;
       font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 18px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    h1, h2, h3 {
+      font-family: "Fraunces", serif;
+      margin: 0;
+      letter-spacing: -.02em;
     }
 
     .hero-title {
-      font-size: 34px;
-      line-height: 1.08;
+      font-size: 36px;
+      line-height: 1.02;
       margin-bottom: 14px;
     }
 
-    .hero-text {
+    .hero-copy {
+      font-size: 17px;
+      line-height: 1.7;
       color: var(--muted);
-      font-size: 16px;
-      line-height: 1.72;
-      margin-bottom: 22px;
+      margin-bottom: 16px;
     }
 
-    .mini-note {
-      margin-top: 14px;
-      font-size: 14px;
-      color: var(--muted);
-      background: #fbf7f2;
+    .hero-focus {
+      display: grid;
+      gap: 10px;
+      margin: 18px 0 8px;
+    }
+
+    .focus-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
       border: 1px dashed var(--border);
-      border-radius: 14px;
-      padding: 12px 14px;
-      line-height: 1.6;
-    }
-
-    .question-num {
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .question-text {
-      font-size: 28px;
-      line-height: 1.18;
-      margin-bottom: 14px;
-    }
-
-    .question-subtext {
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.65;
-      margin-bottom: 18px;
-    }
-
-    .insight-box {
-      background: #faf5ef;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 12px 14px;
+      background: #fcf8f2;
+      border-radius: 16px;
+      color: #5a5147;
       font-size: 14px;
-      color: #5e5349;
-      margin-bottom: 18px;
       line-height: 1.55;
     }
 
-    .options {
-      display: flex;
-      flex-direction: column;
+    .focus-icon {
+      width: 30px;
+      height: 30px;
+      min-width: 30px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      border: 1px solid var(--border);
+      font-size: 16px;
+    }
+
+    .start-actions {
+      margin-top: 18px;
+      display: grid;
       gap: 10px;
     }
 
-    .option {
-      background: #fffdfb;
-      border: 2px solid var(--border);
-      border-radius: 16px;
-      padding: 16px 18px;
+    .question-head {
+      margin-bottom: 18px;
+    }
+
+    .question-step {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 8px;
+    }
+
+    .question-title {
+      font-size: 30px;
+      line-height: 1.12;
+      margin-bottom: 10px;
+    }
+
+    .question-copy {
+      color: var(--muted);
+      line-height: 1.65;
       font-size: 15px;
-      line-height: 1.45;
-      font-weight: 600;
+    }
+
+    .micro-note {
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: var(--green);
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .choices {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .choice {
+      width: 100%;
+      border: 2px solid var(--border);
+      background: #fffdfb;
+      border-radius: 18px;
+      padding: 16px 18px;
+      text-align: left;
       cursor: pointer;
-      transition: all 0.18s ease;
+      transition: transform var(--transition), border-color var(--transition), background var(--transition), box-shadow var(--transition);
+      color: var(--text);
       position: relative;
       user-select: none;
-      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
     }
 
-    .option:hover {
-      border-color: #d7b7a1;
-      background: #fff8f3;
+    .choice:hover {
       transform: translateY(-1px);
+      border-color: #d7b89f;
+      background: #fff9f4;
     }
 
-    .option.selected {
-      border-color: var(--accent);
+    .choice.selected {
       background: var(--accent-soft);
-      color: #7f421f;
-      padding-right: 46px;
+      border-color: var(--accent);
+      box-shadow: 0 10px 18px rgba(191, 106, 60, 0.08);
     }
 
-    .option.selected::after {
+    .choice.selected::after {
       content: "✓";
       position: absolute;
       right: 16px;
       top: 50%;
       transform: translateY(-50%);
-      font-weight: 800;
-      color: var(--accent);
       font-size: 18px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .choice-emoji {
+      font-size: 24px;
+      margin-right: 8px;
+    }
+
+    .choice-label {
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .choice-sub {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      margin-top: 4px;
+      font-weight: 500;
+      max-width: calc(100% - 28px);
+    }
+
+    .cards-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .cards-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .mini-card {
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .mini-card .choice-label {
+      font-size: 14px;
     }
 
     .helper {
       font-size: 12px;
       color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .btn {
-      border: 0;
-      background: var(--accent);
-      color: #fff;
-      padding: 15px 22px;
-      border-radius: 14px;
       font-weight: 700;
-      font-size: 15px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: 'DM Sans', sans-serif;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 20px;
+      margin-top: 4px;
     }
 
-    .btn:hover {
-      background: var(--accent-dark);
+    .slider-box {
+      margin-top: 18px;
+      background: #fcf7f0;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .slider-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .slider-value {
+      min-width: 58px;
+      text-align: center;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 800;
+      padding: 8px 10px;
+      font-size: 14px;
+    }
+
+    .range-wrap {
+      padding: 8px 2px 2px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      appearance: none;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #e8d4c7 0%, #f0dfd3 100%);
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 4px solid #fff;
+      box-shadow: 0 4px 12px rgba(191, 106, 60, .3);
+      cursor: pointer;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 4px solid #fff;
+      box-shadow: 0 4px 12px rgba(191, 106, 60, .3);
+      cursor: pointer;
+    }
+
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .dart-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .dart {
+      border-radius: 20px;
+      padding: 18px 12px;
+      background: #fffdfb;
+      border: 2px solid var(--border);
+      text-align: center;
+      cursor: pointer;
+      transition: transform var(--transition), border-color var(--transition), background var(--transition);
+    }
+
+    .dart:hover {
       transform: translateY(-1px);
     }
 
+    .dart.selected {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .dart-ring {
+      width: 84px;
+      height: 84px;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      position: relative;
+      background: #fff;
+      border: 1px solid var(--border);
+    }
+
+    .dart-ring::before,
+    .dart-ring::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid currentColor;
+      opacity: .25;
+    }
+
+    .dart-ring::before {
+      inset: 9px;
+    }
+
+    .dart-ring::after {
+      inset: 21px;
+    }
+
+    .dart-ring span {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: currentColor;
+      display: inline-block;
+    }
+
+    .dart.low { color: #9a8f84; }
+    .dart.mid { color: #c98a4b; }
+    .dart.high { color: #b24d2c; }
+
+    .bar-vis {
+      margin-top: 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .bar-row {
+      background: #fcf7f0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 14px;
+    }
+
+    .bar-row-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .mini-track {
+      width: 100%;
+      height: 10px;
+      background: #eaded1;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .mini-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #d49569, var(--accent));
+      transition: width 220ms ease;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: 0;
+      border-radius: 16px;
+      padding: 15px 18px;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform var(--transition), background var(--transition), opacity var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 52px;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      flex: 1 1 260px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #f8f1e8;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      flex: 0 0 auto;
+    }
+
+    .btn-dark {
+      background: #2a241f;
+      color: #fff;
+      flex: 1 1 220px;
+    }
+
     .btn:disabled {
-      opacity: 0.45;
+      opacity: .45;
       cursor: not-allowed;
       transform: none;
     }
 
-    .btn-secondary {
-      background: #2a241f;
+    .result-wrap {
+      display: grid;
+      gap: 16px;
     }
 
-    .btn-secondary:hover {
-      background: #171310;
-    }
-
-    .contact-wrap {
-      margin-top: 14px;
-      display: none;
-    }
-
-    .contact-input {
-      width: 100%;
-      border: 2px solid var(--border);
-      background: #fff;
-      border-radius: 14px;
-      padding: 15px 16px;
-      font-size: 15px;
-      font-family: 'DM Sans', sans-serif;
-      margin-bottom: 12px;
-      transition: border-color 0.18s ease;
-    }
-
-    .contact-input:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-
-    .result-card {
-      background: linear-gradient(180deg, #fffaf5 0%, #fffdfb 100%);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 18px;
-      margin: 18px 0;
+    .result-hero {
+      display: grid;
+      gap: 12px;
     }
 
     .result-tag {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      border-radius: 999px;
       background: var(--green-soft);
       color: var(--green);
+      padding: 8px 13px;
       font-size: 12px;
       font-weight: 800;
-      border-radius: 999px;
-      padding: 7px 12px;
-      margin-bottom: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: .08em;
     }
 
     .result-title {
-      font-family: 'Fraunces', serif;
+      font-size: 30px;
+      line-height: 1.08;
+    }
+
+    .result-copy,
+    .result-compare,
+    .result-intent {
+      color: var(--muted);
+      line-height: 1.72;
+      font-size: 15px;
+    }
+
+    .analysis-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .analysis-box {
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      padding: 16px;
+      background: #fcf7f0;
+    }
+
+    .analysis-box h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .summary-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .summary-pill {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 9px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #5f564d;
+    }
+
+    .cta-panel {
+      margin-top: 18px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #fff9f3 0%, #fffdfb 100%);
+      border: 1px solid var(--border);
+      padding: 18px;
+    }
+
+    .cta-title {
       font-size: 24px;
-      line-height: 1.2;
+      line-height: 1.15;
       margin-bottom: 10px;
     }
 
-    .result-text, .result-compare, .result-more {
+    .cta-copy {
       color: var(--muted);
       line-height: 1.7;
       font-size: 15px;
     }
 
-    .result-compare {
+    .contact-options {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .contact-area {
+      display: none;
+      margin-top: 14px;
+    }
+
+    .contact-area.show {
+      display: block;
+      animation: fadeUp .22s ease;
+    }
+
+    .input, .textarea {
+      width: 100%;
+      border: 2px solid var(--border);
+      background: #fff;
+      border-radius: 16px;
+      padding: 15px 16px;
+      font-family: inherit;
+      font-size: 15px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      color: var(--text);
+    }
+
+    .input:focus, .textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(191,106,60,.08);
+    }
+
+    .textarea {
+      min-height: 106px;
+      resize: vertical;
+      margin-top: 10px;
+    }
+
+    .contact-tip {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .small-fine {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
       margin-top: 12px;
     }
 
     .share-box {
-      margin-top: 22px;
-      background: #faf6f0;
+      margin-top: 16px;
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
+      background: #fcf7f0;
+      border-radius: 18px;
+      padding: 14px;
     }
 
-    .share-title {
-      font-weight: 800;
-      font-size: 14px;
-      margin-bottom: 8px;
+    .share-box h4 {
+      margin: 0 0 8px;
+      font-size: 15px;
     }
 
     .share-text {
-      font-size: 14px;
-      line-height: 1.65;
-      color: var(--muted);
       background: #fff;
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
       margin-bottom: 10px;
     }
 
-    .tiny {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 10px;
-      line-height: 1.6;
+    .hidden {
+      display: none !important;
     }
 
-    .status {
-      margin-top: 12px;
-      font-size: 14px;
-      color: var(--green);
-      display: none;
-    }
+    @media (max-width: 640px) {
+      .hero-title, .question-title, .result-title {
+        font-size: 28px;
+      }
 
-    @media (max-width: 560px) {
-      .hero-title { font-size: 28px; }
-      .question-text { font-size: 24px; }
-      .card { padding: 22px 18px; }
+      .card {
+        padding: 20px;
+      }
+
+      .cards-2, .cards-3, .dart-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mini-card {
+        min-height: auto;
+      }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="survey-shell">
-      <div class="topline">ehrlich, direkt, anonym</div>
 
-      <div class="progress-wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-badge">🧭</div>
+        <span>Arbeitsrealität Analyse</span>
+      </div>
+    </div>
+
+    <div class="progress-shell">
+      <div class="progress-card">
         <div class="progress-top">
-          <div id="progressLabel">Bereit?</div>
-          <div id="progressCount">0%</div>
+          <div class="progress-label" id="progressLabel">Bereit?</div>
+          <div class="progress-meta">
+            <div class="pill" id="progressPill">0%</div>
+            <div class="pill" id="sectionPill">Start</div>
+          </div>
         </div>
-        <div class="progress-bar">
+        <div class="progress-track">
           <div class="progress-fill" id="progressFill"></div>
         </div>
       </div>
-
-      <div class="card">
-
-        <!-- INTRO -->
-        <section class="screen active" id="intro">
-          <div class="hero-badge">⏱ dauert ca. 3–4 Minuten</div>
-          <h1 class="hero-title">Wie tickst du beruflich – wirklich?</h1>
-          <p class="hero-text">
-            Ich habe lange angestellt gearbeitet und nebenbei eigene Aufträge gemacht.
-            Dabei ist mir aufgefallen: Egal ob angestellt, mit Wechselgedanken, mit Selbständigkeits-Ideen oder schon selbständig –
-            viele hängen an ähnlichen Punkten fest.
-          </p>
-          <p class="hero-text">
-            Ich will verstehen, <strong>wo wirklich Bedarf besteht</strong> und was Menschen in ihrer Situation tatsächlich hilft.
-            Keine Sales-Show, kein Bullshit, keine falschen Versprechen.
-          </p>
-          <div class="mini-note">
-            Am Ende bekommst du eine kurze Einordnung, wie dein beruflicher Stand grob wirkt –
-            und wenn du willst, kannst du sehen, was ich aus den Ergebnissen daraus entwickle.
-          </div>
-          <button class="btn" onclick="startSurvey()">Los geht’s →</button>
-        </section>
-
-        <!-- Q1 -->
-        <section class="screen" id="s1">
-          <div class="question-num">Frage 1</div>
-          <h2 class="question-text">Wo stehst du aktuell beruflich?</h2>
-          <p class="question-subtext">Einfach ehrlich. Genau hier beginnt die eigentliche Einordnung.</p>
-          <div class="options" data-key="gruppe" data-type="single" data-next="s2">
-            <div class="option" data-value="angestellt_zufrieden" data-branch="a">Ich bin angestellt und zufrieden</div>
-            <div class="option" data-value="angestellt_will_wechseln" data-branch="b">Ich bin angestellt, aber will etwas verändern / die Stelle wechseln</div>
-            <div class="option" data-value="angestellt_will_selbstaendig" data-branch="c">Ich bin angestellt und würde gerne mein eigenes Ding machen</div>
-            <div class="option" data-value="selbstaendig" data-branch="d">Ich bin selbständig</div>
-          </div>
-        </section>
-
-        <!-- Q2 -->
-        <section class="screen" id="s2">
-          <div class="question-num">Frage 2</div>
-          <h2 class="question-text">In welchem Bereich bist du unterwegs?</h2>
-          <p class="question-subtext">Nur grob – damit ich Zusammenhänge besser erkenne.</p>
-          <div class="options" data-key="bereich" data-type="single" data-next="s3">
-            <div class="option" data-value="bau_handwerk">Bau / Handwerk</div>
-            <div class="option" data-value="gewerbe_produktion">Gewerbe / Produktion</div>
-            <div class="option" data-value="dienstleistung">Dienstleistung</div>
-            <div class="option" data-value="kreativ">Kreativ / Design</div>
-            <div class="option" data-value="andere">Etwas anderes</div>
-          </div>
-        </section>
-
-        <!-- Q3 -->
-        <section class="screen" id="s3">
-          <div class="question-num">Frage 3</div>
-          <h2 class="question-text">Wie alt bist du?</h2>
-          <p class="question-subtext">Hilft mir einzuordnen, in welcher Lebensphase gewisse Themen besonders drücken.</p>
-          <div class="options" data-key="alter" data-type="single" data-next="common1">
-            <div class="option" data-value="18_25">18–25</div>
-            <div class="option" data-value="26_35">26–35</div>
-            <div class="option" data-value="36_45">36–45</div>
-            <div class="option" data-value="46_plus">46+</div>
-          </div>
-        </section>
-
-        <!-- COMMON 1 -->
-        <section class="screen" id="common1">
-          <div class="question-num">Kernfrage 1</div>
-          <h2 class="question-text">Was kostet dich beruflich aktuell am meisten Energie?</h2>
-          <div class="insight-box">Hier werden die Antworten meistens plötzlich konkret. Genau solche Muster suche ich.</div>
-          <div class="options" data-key="energie" data-type="single" data-next="common2">
-            <div class="option" data-value="planung_organisation">Planung / Organisation / Überblick behalten</div>
-            <div class="option" data-value="kunden_auftraege">Kunden / Aufträge / genug Arbeit</div>
-            <div class="option" data-value="zeit_ueberlastung">Zu wenig Zeit / Überlastung</div>
-            <div class="option" data-value="unsicherheit_entscheidungen">Unsicherheit / Entscheidungen / nächster Schritt</div>
-            <div class="option" data-value="geld_finanzen">Geld / Finanzen / Kalkulation</div>
-          </div>
-        </section>
-
-        <!-- COMMON 2 -->
-        <section class="screen" id="common2">
-          <div class="question-num">Kernfrage 2</div>
-          <h2 class="question-text">Wie gehst du aktuell meistens damit um?</h2>
-          <p class="question-subtext">Nicht idealisiert – eher so, wie es wirklich läuft.</p>
-          <div class="options" data-key="umgang" data-type="single" data-next="common3">
-            <div class="option" data-value="im_kopf">Ich trage vieles im Kopf mit mir herum</div>
-            <div class="option" data-value="improvisiert">Ich improvisiere von Tag zu Tag</div>
-            <div class="option" data-value="notizen_excel">Mit Notizen, Excel oder Google Sheets</div>
-            <div class="option" data-value="tool_software">Mit Tools / Software / festen Abläufen</div>
-            <div class="option" data-value="verdraenge">Ich ignoriere es eher, bis es weh tut</div>
-          </div>
-        </section>
-
-        <!-- COMMON 3 -->
-        <section class="screen" id="common3">
-          <div class="question-num">Kernfrage 3</div>
-          <h2 class="question-text">Was würde dir davon am ehesten helfen?</h2>
-          <div class="insight-box">Das ist keine Kauf-Frage. Mich interessiert nur, welche Art von Lösung intuitiv Sinn macht.</div>
-          <div class="options" data-key="hilfe" data-type="single" data-next="branch">
-            <div class="option" data-value="klarer_plan">Ein klarer Schritt-für-Schritt-Plan</div>
-            <div class="option" data-value="einfaches_tool">Ein einfaches Tool, das mich organisiert</div>
-            <div class="option" data-value="vorlagen_checklisten">Vorlagen / Checklisten / Struktur</div>
-            <div class="option" data-value="austausch">Austausch mit Leuten in ähnlicher Situation</div>
-            <div class="option" data-value="begleitung">Jemand, der mitdenkt oder drüberschaut</div>
-          </div>
-        </section>
-
-        <!-- A: angestellt zufrieden -->
-        <section class="screen" id="a4">
-          <div class="question-num">Deine Situation</div>
-          <h2 class="question-text">Was gibt dir dein aktueller Job, das du ungern verlieren würdest?</h2>
-          <div class="options" data-key="frage4" data-type="single" data-next="a5">
-            <div class="option" data-value="sicherheit">Sicherheit / fixes Einkommen</div>
-            <div class="option" data-value="struktur">Klare Struktur und geregelte Abläufe</div>
-            <div class="option" data-value="team">Team / Umfeld / Zugehörigkeit</div>
-            <div class="option" data-value="weniger_verantwortung">Weniger Verantwortung und weniger Risiko</div>
-            <div class="option" data-value="freizeit">Klare Trennung von Arbeit und Freizeit</div>
-          </div>
-        </section>
-
-        <section class="screen" id="a5">
-          <div class="question-num">Fast da</div>
-          <h2 class="question-text">Was müsste passieren, damit du Selbständigkeit überhaupt ernsthaft anschauen würdest?</h2>
-          <div class="helper">Wähle bis zu 2</div>
-          <div class="options" data-key="frage5" data-type="multi" data-max="2" data-next="contact">
-            <div class="option" data-value="klare_idee">Eine glasklare, gute Idee</div>
-            <div class="option" data-value="mehr_geld">Genug Geld als Polster</div>
-            <div class="option" data-value="klarer_weg">Ein klarer Weg statt nur diffuse Gedanken</div>
-            <div class="option" data-value="richtiger_moment">Der richtige Moment im Leben</div>
-            <div class="option" data-value="gar_nicht">Ehrlich gesagt: eher gar nichts</div>
-          </div>
-          <button class="btn" id="btn-a5" onclick="submitMulti('a5')" disabled>Weiter →</button>
-        </section>
-
-        <!-- B: angestellt will wechseln -->
-        <section class="screen" id="b4">
-          <div class="question-num">Deine Situation</div>
-          <h2 class="question-text">Was passt aktuell am wenigsten an deiner Stelle?</h2>
-          <div class="options" data-key="frage4" data-type="single" data-next="b5">
-            <div class="option" data-value="inhalt">Die Arbeit selbst passt nicht mehr</div>
-            <div class="option" data-value="umfeld">Das Umfeld / Team / die Kultur</div>
-            <div class="option" data-value="entwicklung">Zu wenig Entwicklung oder Perspektive</div>
-            <div class="option" data-value="bezahlung">Bezahlung / Wertschätzung</div>
-            <div class="option" data-value="sinn">Es fühlt sich einfach nicht mehr richtig an</div>
-          </div>
-        </section>
-
-        <section class="screen" id="b5">
-          <div class="question-num">Wird interessant</div>
-          <h2 class="question-text">Was hält dich aktuell am meisten davon ab, wirklich zu wechseln?</h2>
-          <div class="helper">Wähle bis zu 2</div>
-          <div class="options" data-key="frage5" data-type="multi" data-max="2" data-next="b6">
-            <div class="option" data-value="unsicherheit">Unsicherheit, was der richtige nächste Schritt wäre</div>
-            <div class="option" data-value="sicherheit">Sicherheit / Einkommen / Risiko</div>
-            <div class="option" data-value="keine_zeit">Keine Zeit oder Energie neben dem Alltag</div>
-            <div class="option" data-value="keine_klarheit">Mir fehlt Klarheit, was ich überhaupt will</div>
-            <div class="option" data-value="bequemlichkeit">Ich bleibe aus Gewohnheit hängen</div>
-          </div>
-          <button class="btn" id="btn-b5" onclick="submitMulti('b5')" disabled>Weiter →</button>
-        </section>
-
-        <section class="screen" id="b6">
-          <div class="question-num">Letzte Fachfrage</div>
-          <h2 class="question-text">Was würde dir am ehesten helfen, aus diesem Schwebezustand rauszukommen?</h2>
-          <div class="options" data-key="frage6" data-type="single" data-next="contact">
-            <div class="option" data-value="klarheit">Mehr Klarheit, was wirklich zu mir passt</div>
-            <div class="option" data-value="fahrplan">Ein klarer Plan für den nächsten Schritt</div>
-            <div class="option" data-value="struktur_tool">Etwas, das meine Gedanken strukturiert</div>
-            <div class="option" data-value="austausch">Austausch mit Leuten in ähnlicher Lage</div>
-            <div class="option" data-value="ermutigung">Ein kleiner realistischer Start statt grosser Veränderung</div>
-          </div>
-        </section>
-
-        <!-- C: angestellt will selbständig -->
-        <section class="screen" id="c4">
-          <div class="question-num">Deine Situation</div>
-          <h2 class="question-text">Wie lange begleitet dich der Gedanke schon?</h2>
-          <div class="options" data-key="frage4" data-type="single" data-next="c5">
-            <div class="option" data-value="frisch">Ganz frisch – seit kurzem</div>
-            <div class="option" data-value="monate">Schon einige Monate</div>
-            <div class="option" data-value="1_3_jahre">1–3 Jahre</div>
-            <div class="option" data-value="ewig">Schon ewig, aber ohne echten Schritt</div>
-          </div>
-        </section>
-
-        <section class="screen" id="c5">
-          <div class="question-num">Wird spannend</div>
-          <h2 class="question-text">Was passiert meistens, wenn du darüber nachdenkst?</h2>
-          <div class="options" data-key="frage5" data-type="single" data-next="c6">
-            <div class="option" data-value="nichts">Ich mache am Ende nichts</div>
-            <div class="option" data-value="recherchieren">Ich recherchiere und verliere mich darin</div>
-            <div class="option" data-value="planen">Ich plane kurz etwas, ziehe es aber nicht durch</div>
-            <div class="option" data-value="kleine_schritte">Ich setze kleine Schritte um</div>
-            <div class="option" data-value="auftraege_nebenbei">Ich mache bereits kleine Sachen nebenbei</div>
-          </div>
-        </section>
-
-        <section class="screen" id="c6">
-          <div class="question-num">Fast geschafft</div>
-          <h2 class="question-text">Was bremst dich im Kern aus?</h2>
-          <div class="helper">Wähle bis zu 2</div>
-          <div class="options" data-key="frage6" data-type="multi" data-max="2" data-next="c7">
-            <div class="option" data-value="kein_startpunkt">Ich weiss nicht, wo ich anfangen soll</div>
-            <div class="option" data-value="geld_risiko">Geld / Risiko / Unsicherheit</div>
-            <div class="option" data-value="kein_plan">Ich habe keinen klaren Plan</div>
-            <div class="option" data-value="angst">Angst zu scheitern</div>
-            <div class="option" data-value="keine_zeit">Neben dem Job fehlt Zeit und Fokus</div>
-          </div>
-          <button class="btn" id="btn-c6" onclick="submitMulti('c6')" disabled>Weiter →</button>
-        </section>
-
-        <section class="screen" id="c7">
-          <div class="question-num">Letzter Block</div>
-          <h2 class="question-text">Was würde dich am ehesten ins Tun bringen?</h2>
-          <div class="options" data-key="frage7" data-type="single" data-next="contact">
-            <div class="option" data-value="fahrplan">Ein klarer Fahrplan</div>
-            <div class="option" data-value="begleitung">Jemand, der mich begleitet</div>
-            <div class="option" data-value="tool_struktur">Ein einfaches Tool für Struktur und Überblick</div>
-            <div class="option" data-value="praxisbeispiele">Praxisnahe Beispiele statt Theorie</div>
-            <div class="option" data-value="erster_kleiner_schritt">Ein erster kleiner Schritt, der machbar wirkt</div>
-          </div>
-        </section>
-
-        <!-- D: selbständig -->
-        <section class="screen" id="d4">
-          <div class="question-num">Deine Situation</div>
-          <h2 class="question-text">Seit wann bist du selbständig?</h2>
-          <div class="options" data-key="frage4" data-type="single" data-next="d5">
-            <div class="option" data-value="unter_1_jahr">Unter 1 Jahr</div>
-            <div class="option" data-value="1_3_jahre">1–3 Jahre</div>
-            <div class="option" data-value="3_plus">Mehr als 3 Jahre</div>
-          </div>
-        </section>
-
-        <section class="screen" id="d5">
-          <div class="question-num">Real Talk</div>
-          <h2 class="question-text">Wie läuft es aktuell – ganz ehrlich?</h2>
-          <div class="options" data-key="frage5" data-type="single" data-next="d6">
-            <div class="option" data-value="laeuft_gut">Läuft gut</div>
-            <div class="option" data-value="okay_aber_luft_nach_oben">Okay, aber da liegt mehr drin</div>
-            <div class="option" data-value="harzig">Eher harzig</div>
-            <div class="option" data-value="ueberforderung">Ich bin oft überfordert</div>
-          </div>
-        </section>
-
-        <section class="screen" id="d6">
-          <div class="question-num">Hier liegt oft der Hebel</div>
-          <h2 class="question-text">Wo verlierst du am meisten Zeit oder Nerven?</h2>
-          <div class="helper">Wähle bis zu 3</div>
-          <div class="options" data-key="frage6" data-type="multi" data-max="3" data-next="d7">
-            <div class="option" data-value="kunden_finden">Kunden finden</div>
-            <div class="option" data-value="offerten_preise">Offerten / Preise / Kalkulation</div>
-            <div class="option" data-value="admin">Admin / Papierkram</div>
-            <div class="option" data-value="planung">Planung / Überblick</div>
-            <div class="option" data-value="zahlen">Zahlen / Finanzen im Griff behalten</div>
-            <div class="option" data-value="sichtbarkeit">Sichtbarkeit / online präsent sein</div>
-            <div class="option" data-value="alles_gleichzeitig">Alles gleichzeitig</div>
-          </div>
-          <button class="btn" id="btn-d6" onclick="submitMulti('d6')" disabled>Weiter →</button>
-        </section>
-
-        <section class="screen" id="d7">
-          <div class="question-num">Letzte Fachfrage</div>
-          <h2 class="question-text">Wie organisierst du deinen Alltag heute?</h2>
-          <div class="options" data-key="frage7" data-type="single" data-next="contact">
-            <div class="option" data-value="kopf">Vieles im Kopf</div>
-            <div class="option" data-value="zettel">Zettel / Notizen</div>
-            <div class="option" data-value="excel_sheets">Excel / Google Sheets</div>
-            <div class="option" data-value="software">Mit Software / Tools</div>
-            <div class="option" data-value="chaotisch">Eher chaotisch, ehrlich gesagt</div>
-          </div>
-        </section>
-
-        <!-- CONTACT -->
-        <section class="screen" id="contact">
-          <div class="question-num">Fast geschafft</div>
-          <h2 class="question-text">Willst du sehen, was aus den Ergebnissen entsteht?</h2>
-          <p class="question-subtext">
-            Ich sammle hier nicht einfach Daten. Ich will daraus etwas Konkretes bauen.
-            Wenn du willst, halte ich dich auf dem Laufenden.
-          </p>
-
-          <div class="options" data-key="kontakt_wahl" data-type="single">
-            <div class="option" data-value="nein" onclick="submitSurvey('')">Nein danke, passt für mich</div>
-            <div class="option" data-value="ja" id="contact-yes" onclick="showContactField()">Ja, gerne – zeig mir später, was daraus wird</div>
-          </div>
-
-          <div class="contact-wrap" id="contactWrap">
-            <input
-              type="text"
-              id="contactInput"
-              class="contact-input"
-              placeholder="WhatsApp, Insta, Mail oder was für dich passt"
-            />
-            <button class="btn" onclick="submitSurvey(document.getElementById('contactInput').value)">Abschicken →</button>
-            <div class="tiny">Kein Spam. Nur wenn wirklich etwas Konkretes daraus entsteht.</div>
-          </div>
-        </section>
-
-        <!-- THANK YOU -->
-        <section class="screen" id="thankyou">
-          <div class="hero-badge">deine kurze einordnung</div>
-          <h2 class="question-text">Das fällt bei dir auf:</h2>
-
-          <div class="result-card">
-            <div class="result-tag" id="resultTag">Profil</div>
-            <div class="result-title" id="resultTitle">–</div>
-            <div class="result-text" id="resultText">–</div>
-            <div class="result-compare" id="resultCompare"></div>
-            <div class="result-more" id="resultMore" style="margin-top: 12px;"></div>
-          </div>
-
-          <p class="question-subtext">
-            Genau solche Muster interessieren mich: nicht nur Ideen, sondern wo im Alltag wirklich Reibung entsteht.
-          </p>
-
-          <div class="share-box">
-            <div class="share-title">Wenn du willst: weiterleiten</div>
-            <div class="share-text" id="shareText">
-              Hey, ich habe gerade eine ehrliche 3-Minuten-Umfrage zu Job, Wechselgedanken, Selbständigkeit und beruflichem Alltag ausgefüllt. Ist angenehm gemacht und am Ende bekommt man eine kurze Einordnung:
-            </div>
-            <button class="btn btn-secondary" onclick="copyShare()">Text kopieren</button>
-            <div class="status" id="copyStatus">✓ Kopiert</div>
-          </div>
-
-          <div class="tiny" style="margin-top:16px;">
-            Merci. Jede ehrliche Antwort hilft, aus losen Ideen etwas Sinnvolles zu machen.
-          </div>
-        </section>
-
-      </div>
     </div>
+
+    <section class="screen active" id="screen-intro">
+      <div class="card">
+        <div class="hero-badge">⏱ 3–5 Minuten · anonym · klickbar</div>
+        <h1 class="hero-title">Wo hakt es in der Arbeitswelt wirklich?</h1>
+        <p class="hero-copy">
+          Fokus dieser Umfrage: herausfinden, wo im Arbeitsalltag, bei Wechselgedanken,
+          beim Schritt in die Selbständigkeit und im selbständigen Arbeiten echtes Verbesserungspotenzial liegt.
+        </p>
+        <p class="hero-copy">
+          Nicht Theorie. Nicht Blabla. Sondern Muster rund um Analyse, Strategie, Effizienz,
+          digitale Tools und die Frage, warum manche starten – und andere nicht.
+        </p>
+
+        <div class="hero-focus">
+          <div class="focus-row">
+            <div class="focus-icon">🔍</div>
+            <div>Wo entstehen Reibung, Chaos, Unsicherheit oder Leerlauf?</div>
+          </div>
+          <div class="focus-row">
+            <div class="focus-icon">⚙️</div>
+            <div>Wo würden Struktur, Beratung oder ein einfaches Tool wirklich etwas verbessern?</div>
+          </div>
+          <div class="focus-row">
+            <div class="focus-icon">📈</div>
+            <div>Was funktioniert bereits gut – und warum?</div>
+          </div>
+        </div>
+
+        <div class="start-actions">
+          <button class="btn btn-primary" onclick="startSurvey()">Starten →</button>
+          <div class="small-fine">Am Ende bekommst du eine kurze Einordnung und kannst, wenn du willst, vernetzt bleiben oder Inputs geben.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-question">
+      <div class="card">
+        <div class="question-head">
+          <div class="question-step" id="questionStep">Frage</div>
+          <h2 class="question-title" id="questionTitle">Frage</h2>
+          <div class="question-copy" id="questionCopy"></div>
+          <div class="micro-note hidden" id="microNote">🎯 Läuft</div>
+        </div>
+
+        <div id="questionBody"></div>
+
+        <div class="btn-row">
+          <button class="btn btn-secondary hidden" id="backBtn" onclick="goBack()">← Zurück</button>
+          <button class="btn btn-primary hidden" id="continueBtn" onclick="submitCurrentAnswer()">Weiter →</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-result">
+      <div class="card">
+        <div class="result-wrap">
+          <div class="result-hero">
+            <div class="result-tag" id="resultTag">Kurz-Analyse</div>
+            <h2 class="result-title" id="resultTitle">Dein Bild</h2>
+            <div class="result-copy" id="resultCopy"></div>
+            <div class="result-compare" id="resultCompare"></div>
+          </div>
+
+          <div class="analysis-grid">
+            <div class="analysis-box">
+              <h3>Was auffällt</h3>
+              <div id="analysisWhat"></div>
+              <div class="summary-pills" id="summaryPills"></div>
+            </div>
+
+            <div class="analysis-box">
+              <h3>Wo Potenzial liegt</h3>
+              <div id="analysisPotential"></div>
+            </div>
+
+            <div class="analysis-box">
+              <h3>Intention</h3>
+              <div class="result-intent" id="analysisIntent"></div>
+            </div>
+          </div>
+
+          <div class="cta-panel">
+            <h3 class="cta-title">Wenn du mehr sehen oder Input geben willst</h3>
+            <div class="cta-copy">
+              Ich sammle hier keine Ideenlisten, sondern Muster. Wenn dich interessiert,
+              was daraus entsteht, oder du einen Gedanken dazu dalassen willst, kannst du das hier tun.
+            </div>
+
+            <div class="contact-options">
+              <button class="choice" onclick="finishWithoutContact()">
+                <span class="choice-label">👍 Fertig für mich</span>
+                <span class="choice-sub">Analyse gesehen, alles gut.</span>
+              </button>
+
+              <button class="choice" onclick="openContact()">
+                <span class="choice-label">🤝 Ich will vernetzt bleiben / Input geben</span>
+                <span class="choice-sub">Optional Kontakt oder kurze Notiz dalassen.</span>
+              </button>
+            </div>
+
+            <div class="contact-area" id="contactArea">
+              <input class="input" id="contactInput" type="text" placeholder="Mail, WhatsApp, Insta oder was für dich passt" />
+              <textarea class="textarea" id="notesInput" placeholder="Optional: Noch ein Gedanke, Wunsch oder Hinweis?"></textarea>
+              <div class="btn-row">
+                <button class="btn btn-dark" onclick="submitWithContact()">Absenden →</button>
+              </div>
+              <div class="contact-tip">Ganz optional. Keine langen Erklärungen nötig.</div>
+            </div>
+
+            <div class="share-box">
+              <h4>Zum Weiterleiten</h4>
+              <div class="share-text" id="shareText">Kurze, angenehm gemachte Umfrage darüber, wo in der Arbeitswelt wirklich Verbesserungspotenzial besteht – anonym und mit kurzer Analyse am Ende:</div>
+              <div class="btn-row">
+                <button class="btn btn-secondary" onclick="copyShareText()">Text kopieren</button>
+              </div>
+            </div>
+
+            <div class="small-fine">Keine Versprechen. Nur Analyse, Richtung und die Frage, wo echte Relevanz besteht.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-thanks">
+      <div class="card">
+        <div class="hero-badge">✅ Erfasst</div>
+        <h2 class="hero-title" style="font-size:30px;">Merci.</h2>
+        <p class="hero-copy">
+          Deine Antworten sind gespeichert.
+        </p>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="restartSurvey()">Neue Runde starten</button>
+        </div>
+      </div>
+    </section>
   </div>
 
   <script>
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxXt5TSWn8Il7PbG2opvhz8iHk1l1b0GUC6SklWby8Gv0JhAlceu97O0kI7pUH2PRcw/exec";
+    const GOOGLE_SCRIPT_URL = "HIER_DEINE_GOOGLE_APPS_SCRIPT_URL_EINFUEGEN";
 
-    const answers = {};
-    let branch = "";
-    let totalSteps = 8;
-    let currentStep = 0;
+    const answers = {
+      kontakt: "",
+      notiz: ""
+    };
 
-    const totalStepsByBranch = {
-      a: 8,
-      b: 9,
-      c: 10,
-      d: 10
+    const state = {
+      branch: null,
+      questions: [],
+      currentIndex: -1,
+      history: [],
+      pendingValue: null,
+      pendingValues: [],
+      scaleValue: 3,
+      scaleLabel: "",
+      targetValue: null
+    };
+
+    const branchLabels = {
+      employed_happy: "Angestellt & zufrieden",
+      employed_change: "Angestellt & will wechseln",
+      employed_self: "Angestellt & will selbständig werden",
+      self_employed: "Selbständig"
+    };
+
+    const groupEmojis = {
+      employed_happy: "🙂",
+      employed_change: "🔄",
+      employed_self: "🚀",
+      self_employed: "🛠️"
+    };
+
+    const questionsCommon = [
+      {
+        id: "gruppe",
+        type: "singleCards",
+        title: "Wo stehst du aktuell?",
+        copy: "Damit klar ist, aus welcher Perspektive du antwortest.",
+        note: "Start 1/3",
+        section: "Start",
+        options: [
+          { value: "employed_happy", label: "Angestellt & zufrieden", sub: "Es passt grundsätzlich.", emoji: "🙂" },
+          { value: "employed_change", label: "Angestellt & will wechseln", sub: "Es passt nicht mehr richtig.", emoji: "🔄" },
+          { value: "employed_self", label: "Angestellt & will selbständig werden", sub: "Das eigene Ding zieht.", emoji: "🚀" },
+          { value: "self_employed", label: "Selbständig", sub: "Ich arbeite auf eigene Rechnung.", emoji: "🛠️" }
+        ]
+      },
+      {
+        id: "bereich",
+        type: "singleCards",
+        title: "In welchem Bereich bist du unterwegs?",
+        copy: "Nur grob. Es geht um Muster, nicht um perfekte Kategorien.",
+        note: "Start 2/3",
+        section: "Start",
+        options: [
+          { value: "handwerk_bau", label: "Handwerk / Bau", emoji: "🔧" },
+          { value: "gewerbe_produktion", label: "Gewerbe / Produktion", emoji: "🏭" },
+          { value: "dienstleistung", label: "Dienstleistung", emoji: "🧑‍💼" },
+          { value: "kreativ", label: "Kreativ / Design", emoji: "🎨" },
+          { value: "andere", label: "Etwas anderes", emoji: "🧩" }
+        ]
+      },
+      {
+        id: "alter",
+        type: "singleGrid",
+        title: "Welche Altersgruppe passt am ehesten?",
+        copy: "Hilft, Antworten besser einzuordnen.",
+        note: "Start 3/3",
+        section: "Start",
+        columns: 2,
+        options: [
+          { value: "18_25", label: "18–25" },
+          { value: "26_35", label: "26–35" },
+          { value: "36_45", label: "36–45" },
+          { value: "46_plus", label: "46+" }
+        ]
+      }
+    ];
+
+    const branchQuestions = {
+      employed_happy: [
+        {
+          id: "eh_1",
+          type: "singleCards",
+          title: "Was macht deinen Job im Kern attraktiv?",
+          copy: "Was ist der Hauptgrund, warum es für dich aktuell passt?",
+          section: "Angestellt & zufrieden",
+          options: [
+            { value: "sicherheit", label: "Sicherheit & fixes Einkommen", emoji: "🛡️" },
+            { value: "gutes_team", label: "Gutes Team & Umfeld", emoji: "🤝" },
+            { value: "interessante_arbeit", label: "Die Arbeit selbst macht Sinn", emoji: "🧠" },
+            { value: "freiheit_verantwortung", label: "Gute Balance aus Freiheit und Verantwortung", emoji: "⚖️" },
+            { value: "gute_bedingungen", label: "Lohn / Bedingungen stimmen", emoji: "💸" }
+          ]
+        },
+        {
+          id: "eh_2",
+          type: "multiSelect",
+          title: "Was nutzt du in deinem Alltag gerne?",
+          copy: "Top 2 auswählen. Mich interessiert, was wirklich hilft.",
+          section: "Angestellt & zufrieden",
+          max: 2,
+          options: [
+            { value: "klare_prozesse", label: "Klare Prozesse" },
+            { value: "gute_fuehrung", label: "Gute Führung / klare Entscheidungen" },
+            { value: "digitale_tools", label: "Digitale Tools / Software" },
+            { value: "gute_planung", label: "Saubere Planung / Übersicht" },
+            { value: "selbststaendigkeit_im_job", label: "Eigenverantwortung im Alltag" },
+            { value: "stabiler_rahmen", label: "Stabiler Rahmen ohne dauerndes Chaos" }
+          ]
+        },
+        {
+          id: "eh_3",
+          type: "singleGrid",
+          title: "Wie erlebst du dein aktuelles Verantwortungsniveau?",
+          copy: "Nicht zu wenig, nicht zu viel – was trifft am ehesten?",
+          section: "Angestellt & zufrieden",
+          columns: 2,
+          options: [
+            { value: "zu_wenig", label: "Eher zu wenig" },
+            { value: "passt_gut", label: "Passt gut" },
+            { value: "viel_aber_ok", label: "Viel, aber stimmig" },
+            { value: "zu_viel", label: "Zu viel" }
+          ]
+        },
+        {
+          id: "eh_4",
+          type: "scale",
+          title: "Wie stark trägt guter Lohn zu deiner Zufriedenheit bei?",
+          copy: "Nicht absolut – nur im Verhältnis zu den anderen Faktoren.",
+          section: "Angestellt & zufrieden",
+          minLabel: "kaum",
+          maxLabel: "sehr stark",
+          labels: ["1", "2", "3", "4", "5"],
+          defaultValue: 4
+        },
+        {
+          id: "eh_5",
+          type: "target",
+          title: "Wie sehr trifft das auf dich zu: 'Ich will aktuell nicht alles selber tragen'?",
+          copy: "Hier geht es um Risiko, Druck und operative Verantwortung.",
+          section: "Angestellt & zufrieden",
+          options: [
+            { value: "kaum", label: "Kaum", desc: "Ich hätte grundsätzlich Lust auf mehr Risiko." },
+            { value: "teils", label: "Teils", desc: "Je nach Rahmen wäre das okay." },
+            { value: "voll", label: "Trifft voll", desc: "Genau das ist ein Grund, warum ich bleibe." }
+          ]
+        },
+        {
+          id: "eh_6",
+          type: "multiSelect",
+          title: "Was nervt dich trotz Zufriedenheit trotzdem immer wieder?",
+          copy: "Top 2 auswählen.",
+          section: "Angestellt & zufrieden",
+          max: 2,
+          options: [
+            { value: "zu_viele_meetings", label: "Zu viele Meetings / Abstimmungen" },
+            { value: "langsame_entscheidungen", label: "Langsame Entscheidungen" },
+            { value: "unnoetige_admin", label: "Unnötige Admin / Bürokratie" },
+            { value: "ineffiziente_tools", label: "Schlechte oder ineffiziente Tools" },
+            { value: "politische_spiele", label: "Interne Spielchen / Politik" },
+            { value: "zu_wenig_entwicklung", label: "Zu wenig Entwicklung / Bewegung" }
+          ]
+        },
+        {
+          id: "eh_7",
+          type: "singleCards",
+          title: "Wenn etwas deinen Alltag spürbar verbessern würde – was wäre es am ehesten?",
+          copy: "Nicht Traumwelt. Nur realistisch gedacht.",
+          section: "Angestellt & zufrieden",
+          options: [
+            { value: "mehr_ueberblick", label: "Mehr Überblick & Klarheit", emoji: "🧭" },
+            { value: "weniger_reibung", label: "Weniger Reibung & Leerlauf", emoji: "⚙️" },
+            { value: "bessere_tools", label: "Bessere digitale Tools", emoji: "💻" },
+            { value: "bessere_priorisierung", label: "Bessere Priorisierung / Fokus", emoji: "🎯" },
+            { value: "gar_nicht_viel", label: "Gar nicht so viel – es läuft schon gut", emoji: "👌" }
+          ]
+        },
+        {
+          id: "eh_8",
+          type: "scaleBars",
+          title: "Wo steckt aus deiner Sicht am meisten ungenutztes Potenzial?",
+          copy: "Pro Bereich kurz einschätzen.",
+          section: "Angestellt & zufrieden",
+          bars: [
+            { key: "eh_8_strategie", label: "Strategie" },
+            { key: "eh_8_kommunikation", label: "Kommunikation" },
+            { key: "eh_8_tools", label: "Tools / Digitalisierung" },
+            { key: "eh_8_ablauf", label: "Abläufe / Effizienz" }
+          ]
+        },
+        {
+          id: "eh_9",
+          type: "singleGrid",
+          title: "Wie offen wärst du grundsätzlich für ein Tool oder Angebot, das Arbeit klarer und effizienter macht?",
+          copy: "Nicht kaufen oder nicht kaufen – nur Offenheit.",
+          section: "Angestellt & zufrieden",
+          columns: 2,
+          options: [
+            { value: "offen", label: "Grundsätzlich offen" },
+            { value: "nur_wenn_einfach", label: "Nur wenn es sehr einfach ist" },
+            { value: "nur_wenn_relevant", label: "Nur wenn es direkt relevant ist" },
+            { value: "eher_nicht", label: "Eher nicht" }
+          ]
+        },
+        {
+          id: "eh_10",
+          type: "singleCards",
+          title: "Unter welcher Bedingung würdest du überhaupt ernsthaft in Richtung Selbständigkeit denken?",
+          copy: "Nicht weil du musst – sondern wenn es wirklich Sinn ergäbe.",
+          section: "Angestellt & zufrieden",
+          options: [
+            { value: "sehr_starke_idee", label: "Mit einer wirklich starken Idee", emoji: "💡" },
+            { value: "klarer_sicherer_weg", label: "Wenn der Weg klar und abgesichert wäre", emoji: "🧱" },
+            { value: "starkes_netzwerk", label: "Mit Partner / Netzwerk / Aufträgen im Rücken", emoji: "🤝" },
+            { value: "mehr_freiheit_als_heute", label: "Wenn die Freiheit den Aufwand klar schlagen würde", emoji: "🕊️" },
+            { value: "eher_gar_nicht", label: "Eher gar nicht", emoji: "🚫" }
+          ]
+        }
+      ],
+
+      employed_change: [
+        {
+          id: "ec_1",
+          type: "singleCards",
+          title: "Was passt aktuell am wenigsten?",
+          copy: "Nicht alles. Der grösste Punkt.",
+          section: "Angestellt & will wechseln",
+          options: [
+            { value: "job_inhalt", label: "Die Arbeit selbst", emoji: "🧱" },
+            { value: "team_kultur", label: "Team / Führung / Kultur", emoji: "🫥" },
+            { value: "keine_entwicklung", label: "Zu wenig Entwicklung", emoji: "📉" },
+            { value: "zu_wenig_lohn", label: "Lohn / Wertschätzung", emoji: "💸" },
+            { value: "es_passt_einfach_nicht", label: "Es passt insgesamt einfach nicht mehr", emoji: "🧩" }
+          ]
+        },
+        {
+          id: "ec_2",
+          type: "target",
+          title: "Wie stark trifft das auf dich zu: 'Ich weiss, dass etwas nicht passt – aber noch nicht sauber, wohin'?",
+          copy: "Das ist oft der eigentliche Engpass.",
+          section: "Angestellt & will wechseln",
+          options: [
+            { value: "kaum", label: "Kaum", desc: "Ich weiss schon recht genau, wohin." },
+            { value: "teils", label: "Teils", desc: "Es ist halb klar, halb offen." },
+            { value: "voll", label: "Trifft voll", desc: "Genau das ist mein Zustand." }
+          ]
+        },
+        {
+          id: "ec_3",
+          type: "multiSelect",
+          title: "Was hält dich aktuell am stärksten fest?",
+          copy: "Top 2 auswählen.",
+          section: "Angestellt & will wechseln",
+          max: 2,
+          options: [
+            { value: "sicherheit", label: "Sicherheit / Einkommen" },
+            { value: "keine_klarheit", label: "Zu wenig Klarheit über den nächsten Schritt" },
+            { value: "zu_wenig_energie", label: "Zu wenig Energie / Fokus" },
+            { value: "fehlender_marktblick", label: "Ich weiss nicht, was wirklich passt" },
+            { value: "bequemlichkeit", label: "Gewohnheit / Trägheit" },
+            { value: "keine_zeit", label: "Zu wenig Zeit neben dem Alltag" }
+          ]
+        },
+        {
+          id: "ec_4",
+          type: "scale",
+          title: "Wie dringend willst du innerhalb der nächsten 12 Monate etwas verändern?",
+          copy: "Nicht für immer – nur aktuell.",
+          section: "Angestellt & will wechseln",
+          minLabel: "nicht dringend",
+          maxLabel: "sehr dringend",
+          labels: ["1", "2", "3", "4", "5"],
+          defaultValue: 4
+        },
+        {
+          id: "ec_5",
+          type: "singleCards",
+          title: "Was würde dir am ehesten helfen, aus dem Schwebezustand rauszukommen?",
+          copy: "Nur der Haupthebel.",
+          section: "Angestellt & will wechseln",
+          options: [
+            { value: "klarheit_ueber_richtung", label: "Klarheit über Richtung & Optionen", emoji: "🧭" },
+            { value: "konkreter_plan", label: "Ein klarer nächster Plan", emoji: "🗺️" },
+            { value: "tool_struktur", label: "Ein Tool, das Gedanken und Schritte strukturiert", emoji: "💻" },
+            { value: "sparring", label: "Sparring / Gespräch mit jemandem, der mitdenkt", emoji: "🗣️" },
+            { value: "markt_einblick", label: "Besserer Markt- oder Realitätscheck", emoji: "📊" }
+          ]
+        },
+        {
+          id: "ec_6",
+          type: "scaleBars",
+          title: "Wo liegt bei dir am ehesten das Problem?",
+          copy: "Pro Bereich kurz einschätzen.",
+          section: "Angestellt & will wechseln",
+          bars: [
+            { key: "ec_6_problem_job", label: "Aktueller Job" },
+            { key: "ec_6_problem_klarheit", label: "Klarheit über den Wechsel" },
+            { key: "ec_6_problem_markt", label: "Orientierung im Markt" },
+            { key: "ec_6_problem_umsetzung", label: "Umsetzung / Aktivwerden" }
+          ]
+        },
+        {
+          id: "ec_7",
+          type: "singleGrid",
+          title: "Wie suchst oder prüfst du aktuell?",
+          copy: "Was trifft am ehesten?",
+          section: "Angestellt & will wechseln",
+          columns: 2,
+          options: [
+            { value: "gar_nicht", label: "Noch gar nicht wirklich" },
+            { value: "locker", label: "Locker / sporadisch" },
+            { value: "konkret", label: "Schon konkret" },
+            { value: "intern", label: "Eher intern / im Umfeld" }
+          ]
+        },
+        {
+          id: "ec_8",
+          type: "multiSelect",
+          title: "Was würde ein neues Setup für dich attraktiv machen?",
+          copy: "Top 2 auswählen.",
+          section: "Angestellt & will wechseln",
+          max: 2,
+          options: [
+            { value: "mehr_sinn", label: "Mehr Sinn / bessere Passung" },
+            { value: "mehr_verantwortung", label: "Mehr Verantwortung / Spielraum" },
+            { value: "mehr_lohn", label: "Besserer Lohn / bessere Bedingungen" },
+            { value: "bessere_kultur", label: "Bessere Kultur / Führung" },
+            { value: "mehr_struktur", label: "Mehr Struktur / weniger Chaos" },
+            { value: "bessere_entwicklung", label: "Klare Entwicklung" }
+          ]
+        },
+        {
+          id: "ec_9",
+          type: "singleCards",
+          title: "In welcher Form wäre Unterstützung für dich am ehesten interessant?",
+          copy: "Wenn es wirklich helfen würde.",
+          section: "Angestellt & will wechseln",
+          options: [
+            { value: "analyse", label: "Analyse / Klarheit", emoji: "🔍" },
+            { value: "strategie", label: "Strategie / Wechselpfad", emoji: "♟️" },
+            { value: "tool", label: "Digitales Tool / Strukturhilfe", emoji: "⚙️" },
+            { value: "beratung", label: "Sparring / Beratung", emoji: "🧠" },
+            { value: "nichts", label: "Eher keine Unterstützung", emoji: "👌" }
+          ]
+        },
+        {
+          id: "ec_10",
+          type: "singleGrid",
+          title: "Wie offen wärst du dafür, Zeit oder Geld in eine wirklich hilfreiche Lösung zu investieren?",
+          copy: "Nur als Signal, nicht als Kaufentscheid.",
+          section: "Angestellt & will wechseln",
+          columns: 2,
+          options: [
+            { value: "nur_zeit", label: "Zeit eher ja" },
+            { value: "zeit_und_geld", label: "Zeit und ggf. Geld" },
+            { value: "nur_wenn_sehr_klar", label: "Nur wenn sehr klarer Nutzen" },
+            { value: "eher_nicht", label: "Eher nicht" }
+          ]
+        }
+      ],
+
+      employed_self: [
+        {
+          id: "es_1",
+          type: "singleCards",
+          title: "Was zieht dich am stärksten in Richtung Selbständigkeit?",
+          copy: "Der grösste innere Treiber.",
+          section: "Angestellt & will selbständig werden",
+          options: [
+            { value: "freiheit", label: "Mehr Freiheit & Selbstbestimmung", emoji: "🕊️" },
+            { value: "eigenes_aufbauen", label: "Etwas Eigenes aufbauen", emoji: "🏗️" },
+            { value: "mehr_verdienen", label: "Mehr verdienen / mehr Hebel", emoji: "📈" },
+            { value: "besser_arbeiten", label: "Arbeit anders und besser gestalten", emoji: "🧠" },
+            { value: "raus_aus_system", label: "Raus aus dem aktuellen System", emoji: "🚪" }
+          ]
+        },
+        {
+          id: "es_2",
+          type: "singleGrid",
+          title: "Seit wann ist das Thema wirklich da?",
+          copy: "Nicht flüchtig gedacht, sondern real.",
+          section: "Angestellt & will selbständig werden",
+          columns: 2,
+          options: [
+            { value: "frisch", label: "Ganz frisch" },
+            { value: "einige_monate", label: "Einige Monate" },
+            { value: "ein_bis_drei_jahre", label: "1–3 Jahre" },
+            { value: "schon_sehr_lange", label: "Schon sehr lange" }
+          ]
+        },
+        {
+          id: "es_3",
+          type: "multiSelect",
+          title: "Was blockiert dich aktuell am stärksten?",
+          copy: "Top 2 auswählen.",
+          section: "Angestellt & will selbständig werden",
+          max: 2,
+          options: [
+            { value: "kein_plan", label: "Kein klarer Plan" },
+            { value: "geld_risiko", label: "Geld / Risiko" },
+            { value: "angst_zu_scheitern", label: "Angst zu scheitern" },
+            { value: "keine_zeit", label: "Zu wenig Zeit neben dem Job" },
+            { value: "idee_zu_unklar", label: "Idee noch zu unklar" },
+            { value: "keine_kunden_sichtbar", label: "Keine klaren Kunden / kein Marktgefühl" }
+          ]
+        },
+        {
+          id: "es_4",
+          type: "target",
+          title: "Wie sehr trifft das auf dich zu: 'Ich würde eher starten, wenn der Weg weniger diffus wäre'?",
+          copy: "Viele hängen weniger an der Motivation als an fehlender Klarheit.",
+          section: "Angestellt & will selbständig werden",
+          options: [
+            { value: "kaum", label: "Kaum", desc: "Der Weg ist mir schon klar." },
+            { value: "teils", label: "Teils", desc: "Teilweise klar, teilweise nicht." },
+            { value: "voll", label: "Trifft voll", desc: "Genau das ist das Problem." }
+          ]
+        },
+        {
+          id: "es_5",
+          type: "scale",
+          title: "Wie realistisch wäre ein erster Schritt innerhalb der nächsten 12 Monate?",
+          copy: "Nicht die komplette Gründung – nur ein echter erster Schritt.",
+          section: "Angestellt & will selbständig werden",
+          minLabel: "unrealistisch",
+          maxLabel: "realistisch",
+          labels: ["1", "2", "3", "4", "5"],
+          defaultValue: 3
+        },
+        {
+          id: "es_6",
+          type: "singleCards",
+          title: "Was würde dir am ehesten Sicherheit geben?",
+          copy: "Der eine Punkt, der am meisten helfen würde.",
+          section: "Angestellt & will selbständig werden",
+          options: [
+            { value: "klarer_fahrplan", label: "Ein klarer Fahrplan", emoji: "🗺️" },
+            { value: "erste_kunden", label: "Erste Kunden / Aufträge", emoji: "🤝" },
+            { value: "sparring", label: "Sparring mit jemandem, der das kennt", emoji: "🧠" },
+            { value: "einfaches_tool", label: "Ein einfaches Tool für Struktur und Überblick", emoji: "💻" },
+            { value: "zahlen_klarheit", label: "Mehr Klarheit über Zahlen und Risiko", emoji: "📊" }
+          ]
+        },
+        {
+          id: "es_7",
+          type: "scaleBars",
+          title: "Wo fehlt dir aktuell am meisten?",
+          copy: "Kurz pro Bereich einschätzen.",
+          section: "Angestellt & will selbständig werden",
+          bars: [
+            { key: "es_7_klarheit", label: "Klarheit" },
+            { key: "es_7_markt", label: "Marktgefühl" },
+            { key: "es_7_struktur", label: "Struktur" },
+            { key: "es_7_mut", label: "Mut / Sicherheit" }
+          ]
+        },
+        {
+          id: "es_8",
+          type: "singleGrid",
+          title: "Wie würdest du am ehesten starten wollen?",
+          copy: "Falls du startest – welche Form wirkt am plausibelsten?",
+          section: "Angestellt & will selbständig werden",
+          columns: 2,
+          options: [
+            { value: "nebenbei", label: "Nebenbei starten" },
+            { value: "sanfter_uebergang", label: "Übergang schrittweise" },
+            { value: "direkt", label: "Direkt / klarer Schnitt" },
+            { value: "ich_weiss_es_nicht", label: "Weiss ich noch nicht" }
+          ]
+        },
+        {
+          id: "es_9",
+          type: "multiSelect",
+          title: "Unter welchen Umständen würdest du eher wirklich starten?",
+          copy: "Top 2 auswählen.",
+          section: "Angestellt & will selbständig werden",
+          max: 2,
+          options: [
+            { value: "genug_polster", label: "Genug finanzielles Polster" },
+            { value: "klare_nachfrage", label: "Klare Nachfrage / erste Kunden" },
+            { value: "klarer_plan", label: "Ein sauberer Plan" },
+            { value: "guter_partner", label: "Partner / Netzwerk / Rückenwind" },
+            { value: "weniger_risiko", label: "Weniger gefühltes Risiko" },
+            { value: "tool_oder_system", label: "Ein gutes System / Tool für den Start" }
+          ]
+        },
+        {
+          id: "es_10",
+          type: "singleCards",
+          title: "Welche Art Unterstützung wäre für dich am relevantesten?",
+          copy: "Wenn sie konkret, einfach und realistisch wäre.",
+          section: "Angestellt & will selbständig werden",
+          options: [
+            { value: "analyse", label: "Analyse: Was passt überhaupt zu mir?", emoji: "🔍" },
+            { value: "strategie", label: "Strategie: Wie gehe ich es an?", emoji: "♟️" },
+            { value: "tool", label: "Tool: Struktur, Schritte, Überblick", emoji: "⚙️" },
+            { value: "beratung", label: "Beratung / Sparring", emoji: "🗣️" },
+            { value: "community", label: "Austausch mit ähnlichen Leuten", emoji: "🌐" }
+          ]
+        }
+      ],
+
+      self_employed: [
+        {
+          id: "se_1",
+          type: "singleCards",
+          title: "Wie läuft es aktuell – ganz ehrlich?",
+          copy: "Nicht für aussen. Für die Realität.",
+          section: "Selbständig",
+          options: [
+            { value: "laeuft_sehr_gut", label: "Läuft sehr gut", emoji: "🟢" },
+            { value: "laeuft_ok", label: "Läuft okay", emoji: "🟡" },
+            { value: "harzig", label: "Eher harzig", emoji: "🟠" },
+            { value: "ueberfordert", label: "Oft überfordert", emoji: "🔴" }
+          ]
+        },
+        {
+          id: "se_2",
+          type: "multiSelect",
+          title: "Wo verlierst du am meisten Zeit oder Nerven?",
+          copy: "Top 2 auswählen.",
+          section: "Selbständig",
+          max: 2,
+          options: [
+            { value: "kunden_finden", label: "Kunden finden / Aufträge sichern" },
+            { value: "offerten_preise", label: "Offerten / Preise / Kalkulation" },
+            { value: "admin", label: "Admin / Papierkram" },
+            { value: "planung", label: "Planung / Priorisierung / Überblick" },
+            { value: "tools_chaos", label: "Tool-Chaos / schlechte Systeme" },
+            { value: "zahlen_ueberblick", label: "Zahlen / Finanzen / Überblick" }
+          ]
+        },
+        {
+          id: "se_3",
+          type: "scale",
+          title: "Wie stark bremst dich operative Ineffizienz aktuell aus?",
+          copy: "Also Dinge, die Zeit fressen, aber keinen echten Hebel bringen.",
+          section: "Selbständig",
+          minLabel: "kaum",
+          maxLabel: "massiv",
+          labels: ["1", "2", "3", "4", "5"],
+          defaultValue: 4
+        },
+        {
+          id: "se_4",
+          type: "singleCards",
+          title: "Wie organisierst du deinen Alltag heute hauptsächlich?",
+          copy: "Was trifft am ehesten?",
+          section: "Selbständig",
+          options: [
+            { value: "im_kopf", label: "Vieles im Kopf", emoji: "🧠" },
+            { value: "zettel_notizen", label: "Notizen / Zettel / Chat-Verläufe", emoji: "📝" },
+            { value: "excel_sheets", label: "Excel / Google Sheets", emoji: "📄" },
+            { value: "mehrere_tools", label: "Mehrere Tools nebeneinander", emoji: "🧩" },
+            { value: "gutes_system", label: "Mit einem recht guten System", emoji: "⚙️" }
+          ]
+        },
+        {
+          id: "se_5",
+          type: "target",
+          title: "Wie sehr trifft das auf dich zu: 'Ich könnte deutlich effizienter sein, wenn alles einfacher und klarer zusammenlaufen würde'?",
+          copy: "Das ist oft weniger ein Kapazitäts- als ein Systemproblem.",
+          section: "Selbständig",
+          options: [
+            { value: "kaum", label: "Kaum", desc: "Mein Setup funktioniert schon ziemlich gut." },
+            { value: "teils", label: "Teils", desc: "Da geht noch etwas." },
+            { value: "voll", label: "Trifft voll", desc: "Genau da verliere ich viel." }
+          ]
+        },
+        {
+          id: "se_6",
+          type: "scaleBars",
+          title: "Wo steckt bei dir am meisten Verbesserungspotenzial?",
+          copy: "Kurz pro Bereich einschätzen.",
+          section: "Selbständig",
+          bars: [
+            { key: "se_6_analyse", label: "Analyse / Überblick" },
+            { key: "se_6_strategie", label: "Strategie / Richtung" },
+            { key: "se_6_effizienz", label: "Effizienz / Abläufe" },
+            { key: "se_6_tools", label: "Digitale Tools / Systeme" }
+          ]
+        },
+        {
+          id: "se_7",
+          type: "singleGrid",
+          title: "Was wäre für dich aktuell am wertvollsten?",
+          copy: "Nur der eine Hebel.",
+          section: "Selbständig",
+          columns: 2,
+          options: [
+            { value: "mehr_ueberblick", label: "Mehr Überblick" },
+            { value: "mehr_struktur", label: "Mehr Struktur" },
+            { value: "bessere_kundensteuerung", label: "Bessere Kunden-/Auftragssteuerung" },
+            { value: "weniger_admin", label: "Weniger Admin" }
+          ]
+        },
+        {
+          id: "se_8",
+          type: "singleCards",
+          title: "Welche Form würde dir am ehesten helfen?",
+          copy: "Wenn sie konkret und alltagstauglich wäre.",
+          section: "Selbständig",
+          options: [
+            { value: "tool", label: "Ein einfaches Tool", emoji: "💻" },
+            { value: "beratung", label: "Beratung / Analyse", emoji: "🔍" },
+            { value: "strategie_workshop", label: "Strategie / Klarheit", emoji: "♟️" },
+            { value: "system_vorlagen", label: "System / Vorlagen / Standardisierung", emoji: "📦" },
+            { value: "kombination", label: "Kombination aus mehreren Dingen", emoji: "🧩" }
+          ]
+        },
+        {
+          id: "se_9",
+          type: "multiSelect",
+          title: "Warum läuft es bei dir gut – oder warum gerade nicht?",
+          copy: "Top 2 auswählen.",
+          section: "Selbständig",
+          max: 2,
+          options: [
+            { value: "gute_nachfrage", label: "Gute Nachfrage / Markt" },
+            { value: "saubere_struktur", label: "Saubere Struktur / Prozesse" },
+            { value: "gute_tools", label: "Gute Tools / Systeme" },
+            { value: "persoenliche_disziplin", label: "Disziplin / Fokus" },
+            { value: "zu_viel_auf_einmal", label: "Zu viel gleichzeitig" },
+            { value: "kein_ueberblick", label: "Zu wenig Überblick / Steuerung" }
+          ]
+        },
+        {
+          id: "se_10",
+          type: "singleGrid",
+          title: "Wie offen wärst du für eine Lösung, die dir real Zeit, Klarheit oder Effizienz bringt?",
+          copy: "Nicht als Theorie – sondern als echtes Werkzeug oder Angebot.",
+          section: "Selbständig",
+          columns: 2,
+          options: [
+            { value: "sehr_offen", label: "Sehr offen" },
+            { value: "offen_wenn_einfach", label: "Offen, wenn einfach" },
+            { value: "offen_wenn_relevant", label: "Offen, wenn direkt relevant" },
+            { value: "eher_nicht", label: "Eher nicht" }
+          ]
+        }
+      ]
     };
 
     function startSurvey() {
-      showScreen("s1");
-      currentStep = 1;
+      showScreen("screen-question");
+      const branch = answers.gruppe || null;
+      state.questions = [...questionsCommon];
+      state.currentIndex = 0;
+      renderQuestion();
       updateProgress();
     }
 
+    function buildAllQuestionsForBranch(branch) {
+      return [...questionsCommon, ...branchQuestions[branch]];
+    }
+
     function showScreen(id) {
-      document.querySelectorAll(".screen").forEach(screen => screen.classList.remove("active"));
-      const el = document.getElementById(id);
-      if (el) el.classList.add("active");
+      document.querySelectorAll(".screen").forEach(el => el.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function updateProgress() {
-      const pct = Math.max(0, Math.min(100, Math.round((currentStep / totalSteps) * 100)));
+      const total = state.questions.length || 1;
+      const current = Math.max(0, state.currentIndex);
+      const pct = Math.round((current / total) * 100);
       document.getElementById("progressFill").style.width = pct + "%";
-      document.getElementById("progressCount").textContent = pct + "%";
+      document.getElementById("progressPill").textContent = pct + "%";
 
-      let label = "Bereit?";
-      const remaining = Math.max(totalSteps - currentStep, 0);
+      let label = "Los geht's";
+      const remaining = total - current;
 
-      if (currentStep === 0) {
-        label = "Bereit?";
-      } else if (remaining >= 4) {
-        label = "Du bist gut drin";
-      } else if (remaining >= 2) {
-        label = "Noch " + remaining + " Fragen";
-      } else if (remaining === 1) {
-        label = "Letzter Schritt";
-      } else {
-        label = "Geschafft";
-      }
+      if (current === 0) label = "Los geht's";
+      else if (remaining > 8) label = "Du bist drin";
+      else if (remaining > 4) label = "Läuft";
+      else if (remaining > 1) label = "Fast da";
+      else if (remaining === 1) label = "Letzter Schritt";
+      else label = "Geschafft";
 
       document.getElementById("progressLabel").textContent = label;
+      const q = state.questions[state.currentIndex];
+      document.getElementById("sectionPill").textContent = q ? q.section : "Analyse";
     }
 
-    function incrementStep() {
-      currentStep += 1;
+    function getCurrentQuestion() {
+      return state.questions[state.currentIndex];
+    }
+
+    function renderQuestion() {
+      const q = getCurrentQuestion();
+      if (!q) return;
+
+      document.getElementById("questionStep").textContent = `Frage ${state.currentIndex + 1} / ${state.questions.length}`;
+      document.getElementById("questionTitle").textContent = q.title;
+      document.getElementById("questionCopy").textContent = q.copy || "";
+      const micro = document.getElementById("microNote");
+      if (q.note) {
+        micro.textContent = `✨ ${q.note}`;
+        micro.classList.remove("hidden");
+      } else {
+        micro.classList.add("hidden");
+      }
+
+      document.getElementById("backBtn").classList.toggle("hidden", state.currentIndex === 0);
+      document.getElementById("continueBtn").classList.add("hidden");
+
+      state.pendingValue = null;
+      state.pendingValues = [];
+      state.targetValue = null;
+      state.scaleValue = q.defaultValue || 3;
+
+      const body = document.getElementById("questionBody");
+      body.innerHTML = "";
+
+      if (q.type === "singleCards" || q.type === "singleGrid") {
+        const wrap = document.createElement("div");
+        wrap.className = "choices " + ((q.type === "singleGrid" && q.columns === 2) ? "cards-2" : (q.type === "singleGrid" && q.columns === 3 ? "cards-3" : ""));
+
+        q.options.forEach(opt => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "choice" + (q.type === "singleCards" ? " mini-card" : "");
+          btn.innerHTML = `
+            <span class="choice-label">${opt.emoji ? `<span class="choice-emoji">${opt.emoji}</span>` : ""}${opt.label}</span>
+            ${opt.sub ? `<span class="choice-sub">${opt.sub}</span>` : ""}
+          `;
+          btn.onclick = () => {
+            wrap.querySelectorAll(".choice").forEach(x => x.classList.remove("selected"));
+            btn.classList.add("selected");
+            state.pendingValue = opt.value;
+            answers[q.id] = opt.value;
+            if (q.id === "gruppe") {
+              answers.branch = opt.value;
+            }
+            setTimeout(() => submitCurrentAnswer(), 200);
+          };
+          wrap.appendChild(btn);
+        });
+
+        body.appendChild(wrap);
+      }
+
+      if (q.type === "multiSelect") {
+        const helper = document.createElement("div");
+        helper.className = "helper";
+        helper.textContent = `Maximal ${q.max || 2} auswählen`;
+        body.appendChild(helper);
+
+        const wrap = document.createElement("div");
+        wrap.className = "choices";
+
+        q.options.forEach(opt => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "choice";
+          btn.innerHTML = `<span class="choice-label">${opt.label}</span>`;
+          btn.onclick = () => {
+            const selected = Array.from(wrap.querySelectorAll(".choice.selected"));
+            const already = btn.classList.contains("selected");
+
+            if (already) {
+              btn.classList.remove("selected");
+            } else {
+              if (selected.length >= (q.max || 2)) return;
+              btn.classList.add("selected");
+            }
+
+            state.pendingValues = Array.from(wrap.querySelectorAll(".choice.selected")).map(el => el.dataset.value);
+            answers[q.id] = state.pendingValues.join(", ");
+            document.getElementById("continueBtn").classList.remove("hidden");
+            document.getElementById("continueBtn").disabled = state.pendingValues.length === 0;
+          };
+          btn.dataset.value = opt.value;
+          wrap.appendChild(btn);
+        });
+
+        body.appendChild(wrap);
+
+        const continueBtn = document.getElementById("continueBtn");
+        continueBtn.classList.remove("hidden");
+        continueBtn.disabled = true;
+      }
+
+      if (q.type === "scale") {
+        const box = document.createElement("div");
+        box.className = "slider-box";
+
+        const labels = q.labels || ["1", "2", "3", "4", "5"];
+        const valueLabel = labels[(q.defaultValue || 3) - 1] || String(q.defaultValue || 3);
+
+        box.innerHTML = `
+          <div class="slider-head">
+            <div class="choice-label">Einordnen</div>
+            <div class="slider-value" id="scaleValuePill">${valueLabel}</div>
+          </div>
+          <div class="range-wrap">
+            <input type="range" id="scaleInput" min="1" max="${labels.length}" step="1" value="${q.defaultValue || 3}" />
+          </div>
+          <div class="scale-labels">
+            <span>${q.minLabel || "niedrig"}</span>
+            <span>${q.maxLabel || "hoch"}</span>
+          </div>
+        `;
+        body.appendChild(box);
+
+        const input = document.getElementById("scaleInput");
+        const pill = document.getElementById("scaleValuePill");
+        const update = () => {
+          const index = Number(input.value) - 1;
+          const label = labels[index] || input.value;
+          pill.textContent = label;
+          state.scaleValue = Number(input.value);
+          state.scaleLabel = label;
+          answers[q.id] = `${input.value}|${label}`;
+        };
+        input.addEventListener("input", update);
+        update();
+
+        const continueBtn = document.getElementById("continueBtn");
+        continueBtn.classList.remove("hidden");
+        continueBtn.disabled = false;
+      }
+
+      if (q.type === "target") {
+        const grid = document.createElement("div");
+        grid.className = "dart-grid";
+
+        const classes = ["low", "mid", "high"];
+        q.options.forEach((opt, idx) => {
+          const card = document.createElement("button");
+          card.type = "button";
+          card.className = `dart ${classes[idx] || "mid"}`;
+          card.innerHTML = `
+            <div class="dart-ring"><span></span></div>
+            <div class="choice-label">${opt.label}</div>
+            <div class="choice-sub" style="max-width:none;">${opt.desc || ""}</div>
+          `;
+          card.onclick = () => {
+            grid.querySelectorAll(".dart").forEach(d => d.classList.remove("selected"));
+            card.classList.add("selected");
+            state.targetValue = opt.value;
+            answers[q.id] = opt.value;
+            setTimeout(() => submitCurrentAnswer(), 180);
+          };
+          grid.appendChild(card);
+        });
+
+        body.appendChild(grid);
+      }
+
+      if (q.type === "scaleBars") {
+        const vis = document.createElement("div");
+        vis.className = "bar-vis";
+
+        q.bars.forEach((bar, idx) => {
+          const row = document.createElement("div");
+          row.className = "bar-row";
+          row.innerHTML = `
+            <div class="bar-row-top">
+              <span>${bar.label}</span>
+              <span id="${bar.key}_label">3</span>
+            </div>
+            <div class="mini-track"><div class="mini-fill" id="${bar.key}_fill"></div></div>
+            <div class="range-wrap" style="padding-top:14px;">
+              <input type="range" id="${bar.key}_input" min="1" max="5" step="1" value="3" />
+            </div>
+          `;
+          vis.appendChild(row);
+        });
+
+        body.appendChild(vis);
+
+        q.bars.forEach(bar => {
+          const input = document.getElementById(`${bar.key}_input`);
+          const label = document.getElementById(`${bar.key}_label`);
+          const fill = document.getElementById(`${bar.key}_fill`);
+
+          const update = () => {
+            const value = Number(input.value);
+            label.textContent = value;
+            fill.style.width = `${(value / 5) * 100}%`;
+            answers[bar.key] = String(value);
+          };
+
+          input.addEventListener("input", update);
+          update();
+        });
+
+        const continueBtn = document.getElementById("continueBtn");
+        continueBtn.classList.remove("hidden");
+        continueBtn.disabled = false;
+      }
+
       updateProgress();
     }
 
-    function goToBranchStart() {
-      if (branch === "a") showScreen("a4");
-      if (branch === "b") showScreen("b4");
-      if (branch === "c") showScreen("c4");
-      if (branch === "d") showScreen("d4");
-      incrementStep();
-    }
+    function submitCurrentAnswer() {
+      const q = getCurrentQuestion();
+      if (!q) return;
 
-    document.querySelectorAll('.options[data-type="single"] .option').forEach(option => {
-      option.addEventListener("click", function() {
-        const container = this.closest(".options");
-        const key = container.dataset.key;
-        const next = container.dataset.next;
-        const value = this.dataset.value;
-
-        if (this.dataset.branch) {
-          branch = this.dataset.branch;
-          totalSteps = totalStepsByBranch[branch];
-        }
-
-        container.querySelectorAll(".option").forEach(opt => opt.classList.remove("selected"));
-        this.classList.add("selected");
-
-        answers[key] = value;
-
-        setTimeout(() => {
-          if (next === "branch") {
-            goToBranchStart();
-          } else if (next === "contact") {
-            showScreen("contact");
-            incrementStep();
-          } else if (next) {
-            showScreen(next);
-            incrementStep();
-          }
-        }, 220);
-      });
-    });
-
-    document.querySelectorAll('.options[data-type="multi"] .option').forEach(option => {
-      option.addEventListener("click", function() {
-        const container = this.closest(".options");
-        const max = parseInt(container.dataset.max || "1", 10);
-        const selected = container.querySelectorAll(".option.selected");
-        const screen = this.closest(".screen");
-        const button = document.getElementById("btn-" + screen.id);
-
-        if (this.classList.contains("selected")) {
-          this.classList.remove("selected");
-        } else {
-          if (selected.length >= max) return;
-          this.classList.add("selected");
-        }
-
-        if (button) {
-          button.disabled = container.querySelectorAll(".option.selected").length === 0;
-        }
-      });
-    });
-
-    function submitMulti(screenId) {
-      const screen = document.getElementById(screenId);
-      const container = screen.querySelector(".options");
-      const key = container.dataset.key;
-      const next = container.dataset.next;
-      const selected = Array.from(container.querySelectorAll(".option.selected")).map(el => el.dataset.value);
-
-      answers[key] = selected.join(", ");
-
-      if (next === "contact") {
-        showScreen("contact");
-      } else {
-        showScreen(next);
+      if (q.id === "gruppe") {
+        state.branch = answers.gruppe;
       }
 
-      incrementStep();
+      if (state.currentIndex === 2 && answers.gruppe && state.questions.length === questionsCommon.length) {
+        state.questions = buildAllQuestionsForBranch(answers.gruppe);
+      }
+
+      state.history.push(state.currentIndex);
+
+      if (state.currentIndex >= state.questions.length - 1) {
+        buildResult();
+        showScreen("screen-result");
+        document.getElementById("progressFill").style.width = "100%";
+        document.getElementById("progressPill").textContent = "100%";
+        document.getElementById("progressLabel").textContent = "Analyse";
+        document.getElementById("sectionPill").textContent = "Zusammenfassung";
+        return;
+      }
+
+      state.currentIndex += 1;
+      renderQuestion();
     }
 
-    function showContactField() {
-      document.getElementById("contactWrap").style.display = "block";
-      document.getElementById("contact-yes").classList.add("selected");
+    function goBack() {
+      if (state.currentIndex <= 0) return;
+      state.currentIndex -= 1;
+      renderQuestion();
+    }
+
+    function scoreFromValue(v) {
+      if (!v) return 0;
+      const first = String(v).split("|")[0];
+      const n = Number(first);
+      return Number.isFinite(n) ? n : 0;
+    }
+
+    function average(values) {
+      const filtered = values.filter(v => Number.isFinite(v));
+      if (!filtered.length) return 0;
+      return filtered.reduce((a,b) => a + b, 0) / filtered.length;
+    }
+
+    function buildResult() {
+      const branch = answers.gruppe;
+      const branchLabel = branchLabels[branch] || "Ausgangslage";
+      const emoji = groupEmojis[branch] || "🧭";
+
+      document.getElementById("resultTag").textContent = `${emoji} ${branchLabel}`;
+      document.getElementById("shareText").textContent =
+        `Kurze, angenehm gemachte Umfrage darüber, wo in der Arbeitswelt wirklich Verbesserungspotenzial besteht – anonym und mit kurzer Analyse am Ende: ${window.location.href}`;
+
+      let title = "";
+      let copy = "";
+      let compare = "";
+      let what = "";
+      let potential = "";
+      let intent = "";
+      const pills = [];
+
+      if (branch === "employed_happy") {
+        const salaryWeight = scoreFromValue(answers.eh_4);
+        const target = answers.eh_5;
+        const improvement = answers.eh_7;
+        const selfCondition = answers.eh_10;
+
+        if (answers.eh_1 === "sicherheit" || target === "voll") {
+          title = "Stabilität mit klaren Grenzen";
+          copy = "Du wirkst nicht passiv zufrieden, sondern bewusst. Sicherheit, Rahmen und kalkulierbare Verantwortung scheinen bei dir zentrale Faktoren zu sein.";
+          compare = "Das deutet eher auf ein funktionierendes Setup mit punktuellem Optimierungspotenzial hin – nicht auf einen grundsätzlichen Fluchtimpuls.";
+        } else if (answers.eh_1 === "freiheit_verantwortung" || answers.eh_1 === "interessante_arbeit") {
+          title = "Zufrieden, weil Verantwortung und Inhalt stimmen";
+          copy = "Bei dir scheint Zufriedenheit weniger aus Bequemlichkeit zu kommen als aus Passung. Inhalt, Spielraum und Qualität der Arbeit sind wahrscheinlich wichtige Treiber.";
+          compare = "Das ist besonders spannend, weil genau hier oft sichtbar wird, warum gute Arbeitsrealität funktioniert.";
+        } else {
+          title = "Grundsätzlich zufrieden, aber nicht blind";
+          copy = "Du wirkst wie jemand, bei dem das Setup im Kern stimmt, der aber trotzdem klar merkt, wo Reibung oder unnötige Ineffizienz entsteht.";
+          compare = "Damit lieferst du eher Hinweise auf Verbesserung innerhalb funktionierender Systeme als auf radikale Veränderung.";
+        }
+
+        what = "Auffällig ist vor allem, was bereits trägt: passende Rahmenbedingungen, funktionierende Abläufe oder gutes Zusammenspiel von Verantwortung und Sicherheit.";
+        potential = "Verbesserungspotenzial liegt hier eher in Effizienz, Klarheit, besseren Tools oder weniger Reibung – nicht in kompletter Neuorientierung.";
+        intent = "Die interessante Frage ist hier nicht, wie man Unzufriedene rettet, sondern warum funktionierende Arbeitsrealität funktioniert – und was davon übertragbar ist.";
+
+        if (salaryWeight >= 4) pills.push("Lohn ist relevanter Faktor");
+        if (answers.eh_2 && answers.eh_2.includes("digitale_tools")) pills.push("Digitale Tools helfen spürbar");
+        if (improvement === "bessere_tools") pills.push("Tool-Potenzial sichtbar");
+        if (selfCondition === "klarer_sicherer_weg") pills.push("Selbständigkeit nur mit klarem Rahmen");
+        if (selfCondition === "eher_gar_nicht") pills.push("Kein echter Gründungsdrang");
+      }
+
+      if (branch === "employed_change") {
+        const urgency = scoreFromValue(answers.ec_4);
+        const support = answers.ec_5;
+        const form = answers.ec_9;
+
+        if (answers.ec_2 === "voll" || answers.ec_5 === "klarheit_ueber_richtung") {
+          title = "Nicht festgefahren – eher unscharf";
+          copy = "Bei dir wirkt weniger der Wille wie das Problem, sondern die fehlende Klarheit. Der Druck ist spürbar, aber die Richtung noch nicht sauber.";
+          compare = "Das spricht für Bedarf bei Analyse, Einordnung und einem klaren nächsten Schritt – bevor grösser gedacht wird.";
+        } else if (answers.ec_3 && answers.ec_3.includes("sicherheit")) {
+          title = "Veränderungswunsch mit Sicherheitsbremse";
+          copy = "Du wirkst nicht orientierungslos, sondern eher abwägend. Das aktuelle Setup hält dich nicht wegen Begeisterung, sondern wegen Stabilität.";
+          compare = "Hier liegt Relevanz oft dort, wo Risiko reduziert, Optionen sortiert und Entscheidungen greifbarer gemacht werden.";
+        } else {
+          title = "Bewegung wäre möglich – Struktur fehlt noch";
+          copy = "Es wirkt so, als wäre Veränderung grundsätzlich vorstellbar, aber noch nicht ausreichend in konkrete Schritte übersetzt.";
+          compare = "Das ist weniger ein Motivations- als ein Umsetzungs- und Strukturthema.";
+        }
+
+        what = "Die eigentliche Reibung scheint nicht nur im aktuellen Job zu liegen, sondern in der Phase zwischen Unzufriedenheit und klarer Bewegung.";
+        potential = "Potenzial liegt hier vor allem in Klarheit, strategischer Orientierung, strukturierten Entscheidungswegen und einfachen Hilfen zur Priorisierung.";
+        intent = "Spannend ist hier die Zone zwischen Frust und Entscheidung: Dort könnte ein starkes Analyse-, Strategie- oder Strukturangebot echten Nutzen schaffen.";
+
+        if (urgency >= 4) pills.push("Veränderung wirkt dringlich");
+        if (support === "tool_struktur") pills.push("Tool für Klarheit denkbar");
+        if (form === "beratung") pills.push("Beratung relevant");
+        if (form === "analyse") pills.push("Analyse relevant");
+        if (answers.ec_8 && answers.ec_8.includes("mehr_struktur")) pills.push("Struktur als Treiber");
+      }
+
+      if (branch === "employed_self") {
+        const realism = scoreFromValue(answers.es_5);
+        const target = answers.es_4;
+        const support = answers.es_10;
+
+        if (answers.es_3 && answers.es_3.includes("kein_plan")) {
+          title = "Zug da – aber der Weg ist zu diffus";
+          copy = "Du wirkst nicht unentschlossen in der Sache, sondern blockiert durch fehlende Struktur. Das Thema lebt, aber der nächste Schritt ist zu unklar.";
+          compare = "Das deutet eher auf Bedarf bei Strategie, Roadmap und Umsetzungslogik hin als auf reine Motivation.";
+        } else if (answers.es_3 && answers.es_3.includes("geld_risiko")) {
+          title = "Gründungswunsch mit Risikobremse";
+          copy = "Die Richtung scheint attraktiv, aber Risiko und finanzielle Unsicherheit stehen deutlich im Vordergrund.";
+          compare = "Relevant wären hier wahrscheinlich realistische Startmodelle, Zahlenklarheit und risikoärmere Übergänge.";
+        } else if (realism >= 4) {
+          title = "Relativ nah an echter Bewegung";
+          copy = "Bei dir wirkt das Thema nicht nur als Gedanke, sondern als Option mit Nähe zur Umsetzung.";
+          compare = "Damit wird interessant, welche Form von Struktur oder Unterstützung den Unterschied zwischen Nachdenken und Start machen würde.";
+        } else {
+          title = "Interesse ist da – Umsetzung noch nicht greifbar";
+          copy = "Der Reiz ist erkennbar, aber die Bedingungen für einen echten Start scheinen noch nicht stark genug zusammenzukommen.";
+          compare = "Das ist eine wichtige Zone, weil hier oft sichtbar wird, welche Trigger oder Sicherheiten wirklich zählen.";
+        }
+
+        what = "Hier geht es stark um Starthemmnisse: Klarheit, Risiko, Marktgefühl, Struktur und die Frage, unter welchen Umständen jemand wirklich in Bewegung kommt.";
+        potential = "Potenzial liegt in Einstiegslogik, schrittweisen Modellen, klaren Wegen, ersten Tests und einfachen Systemen statt in grossem Theorieaufbau.";
+        intent = "Interessant ist hier nicht nur, wer gründen will – sondern was den Unterschied macht zwischen dauerndem Gedankenspiel und tatsächlichem Start.";
+
+        if (target === "voll") pills.push("Klarer Weg fehlt");
+        if (support === "tool") pills.push("Tool als Gründungshebel");
+        if (support === "beratung") pills.push("Beratung / Sparring relevant");
+        if (answers.es_9 && answers.es_9.includes("klare_nachfrage")) pills.push("Nachfrage wäre zentraler Trigger");
+        if (answers.es_9 && answers.es_9.includes("genug_polster")) pills.push("Finanzielles Polster relevant");
+      }
+
+      if (branch === "self_employed") {
+        const ineff = scoreFromValue(answers.se_3);
+        const target = answers.se_5;
+        const help = answers.se_8;
+        const situation = answers.se_1;
+
+        if (situation === "laeuft_sehr_gut") {
+          title = "Funktionierend – mit übertragbaren Mustern";
+          copy = "Bei dir scheint weniger Überlebensmodus als Systemqualität im Vordergrund zu stehen. Das ist wertvoll, weil genau hier sichtbar wird, was im Alltag bereits funktioniert.";
+          compare = "Damit lieferst du weniger Schmerzsignal als Best-Practice-Signal – und genau das ist für spätere Lösungen extrem relevant.";
+        } else if (ineff >= 4 || target === "voll") {
+          title = "Nicht am Einsatz – eher am System";
+          copy = "Es wirkt so, als ob nicht der Wille fehlt, sondern Übersicht, Struktur oder ein einfacheres Zusammenspiel deiner Abläufe.";
+          compare = "Das deutet stark auf Bedarf bei Effizienz, Tooling, operativer Klarheit oder Prozessdesign hin.";
+        } else if (help === "beratung" || help === "strategie_workshop") {
+          title = "Operativ drin, strategisch mit Luft nach oben";
+          copy = "Der Alltag läuft offenbar, aber nicht alles ist sauber sortiert. Es könnte weniger um Chaos als um Richtung, Hebel und bessere Steuerung gehen.";
+          compare = "Hier liegt Potenzial eher bei Analyse und Strategie als nur bei einem weiteren Tool.";
+        } else {
+          title = "Spürbarer Hebel bei Vereinfachung";
+          copy = "Dein Bild deutet darauf hin, dass Alltag, Tools oder Entscheidungen vereinfacht und zusammengeführt werden könnten.";
+          compare = "Das ist oft genau der Punkt, an dem digitale Unterstützung oder gezielte Beratung praktisch relevant wird.";
+        }
+
+        what = "Hier wird besonders sichtbar, wo operative Ineffizienz, fehlender Überblick oder Tool-/Systemprobleme echte Wirkung auf Zeit, Energie und Steuerbarkeit haben.";
+        potential = "Potenzial liegt bei Analyse, Strategie, Effizienzsteigerung und digitalen Hilfen – aber nur dann, wenn sie einfach, konkret und alltagstauglich sind.";
+        intent = "Besonders spannend ist hier der Unterschied zwischen funktionierenden Setups und harzigen: Daraus lässt sich oft klar ableiten, wo echte Hebel liegen.";
+
+        if (situation === "laeuft_sehr_gut") pills.push("Best-Practice-Signal");
+        if (help === "tool") pills.push("Tool-Potenzial klar");
+        if (help === "beratung") pills.push("Beratungs-Potenzial klar");
+        if (answers.se_2 && answers.se_2.includes("planung")) pills.push("Planung ist Engpass");
+        if (answers.se_2 && answers.se_2.includes("tools_chaos")) pills.push("Tool-/Systemchaos sichtbar");
+      }
+
+      document.getElementById("resultTitle").textContent = title;
+      document.getElementById("resultCopy").textContent = copy;
+      document.getElementById("resultCompare").textContent = compare;
+      document.getElementById("analysisWhat").textContent = what;
+      document.getElementById("analysisPotential").textContent = potential;
+      document.getElementById("analysisIntent").textContent = intent;
+
+      const pillWrap = document.getElementById("summaryPills");
+      pillWrap.innerHTML = "";
+      const basePills = [
+        branchLabels[branch] || "Perspektive",
+        answers.bereich ? answers.bereich.replaceAll("_", " ") : null,
+        answers.alter ? answers.alter.replaceAll("_", "+") : null
+      ].filter(Boolean);
+
+      [...basePills, ...pills].slice(0, 7).forEach(text => {
+        const el = document.createElement("div");
+        el.className = "summary-pill";
+        el.textContent = text;
+        pillWrap.appendChild(el);
+      });
+    }
+
+    function openContact() {
+      document.getElementById("contactArea").classList.add("show");
       document.getElementById("contactInput").focus();
     }
 
-    function buildProfile() {
-      if (branch === "a") {
-        if (answers.frage5 && answers.frage5.includes("gar_nicht")) {
-          return {
-            tag: "Profil A",
-            title: "Eher klar verankert",
-            text: "Du wirkst nicht wie jemand, der einfach nur aus Unruhe etwas anderes will. Für dich zählen Stabilität, Klarheit und ein Setup, das verlässlich funktioniert.",
-            compare: "Im Vergleich zu anderen in dieser Gruppe wirkst du eher gefestigt als suchend.",
-            more: "Falls bei dir überhaupt Bedarf entsteht, dann eher dort, wo etwas einfacher, klarer oder stressfreier werden könnte – nicht aus Abenteuerlust."
-          };
-        }
-
-        return {
-          tag: "Profil A",
-          title: "Offen, aber nicht getrieben",
-          text: "Du wirkst nicht grundsätzlich abgeneigt, aber Veränderung ist für dich aktuell kein innerer Muss-Punkt. Eher etwas, das nur unter sehr guten Bedingungen interessant würde.",
-          compare: "Im Vergleich zu anderen Angestellten wirkst du eher vorsichtig-pragmatisch als wechselbereit.",
-          more: "Bedarf liegt bei dir eher in Orientierung und Klarheit – nicht in radikaler Veränderung."
-        };
-      }
-
-      if (branch === "b") {
-        if ((answers.frage5 || "").includes("keine_klarheit") || answers.frage6 === "klarheit") {
-          return {
-            tag: "Profil B",
-            title: "Im Umbruch, aber noch unscharf",
-            text: "Du spürst relativ klar, dass etwas nicht mehr passt, aber der nächste Schritt ist noch nicht greifbar. Das ist oft kein Motivationsproblem, sondern ein Klarheitsproblem.",
-            compare: "Im Vergleich zu anderen Wechselwilligen wirkst du eher suchend als blockiert.",
-            more: "Wenn hier Bedarf besteht, dann wahrscheinlich bei Einordnung, Struktur und der Frage: Was passt wirklich zu mir?"
-          };
-        }
-
-        if ((answers.frage5 || "").includes("sicherheit") || (answers.frage5 || "").includes("unsicherheit")) {
-          return {
-            tag: "Profil B",
-            title: "Gebremst durch Risiko und Unsicherheit",
-            text: "Der Wunsch nach Veränderung ist da, aber Sicherheit zieht stark mit. Das wirkt weniger wie fehlender Wille und mehr wie verständliche Vorsicht.",
-            compare: "Im Vergleich zu anderen in dieser Lage wirkst du nicht sprunghaft, sondern abwägend.",
-            more: "Ein echter Hebel könnte hier weniger Motivation sein – und mehr ein klarer, realistischer nächster Schritt."
-          };
-        }
-
-        return {
-          tag: "Profil B",
-          title: "Wechselbereit, aber noch im Schwebezustand",
-          text: "Du wirkst nicht festgefahren, aber auch noch nicht ganz in Bewegung. Genau in diesem Zwischenraum bleiben viele länger hängen, als ihnen lieb ist.",
-          compare: "Im Vergleich zu anderen Angestellten mit Wechselgedanken wirkst du näher an Bewegung als an Resignation.",
-          more: "Falls ich aus den Antworten etwas entwickle, wäre für Menschen wie dich wahrscheinlich Klarheit plus einfacher Umsetzungsrahmen zentral."
-        };
-      }
-
-      if (branch === "c") {
-        if (answers.frage5 === "nichts" || answers.frage5 === "recherchieren") {
-          return {
-            tag: "Profil C",
-            title: "Der Denker",
-            text: "Du trägst den Gedanken schon mit dir herum, aber der Schritt vom Nachdenken ins Tun bleibt schwierig. Das ist kein seltenes Muster.",
-            compare: "Im Vergleich zu anderen in deiner Situation wirkst du eher reflektiert als entschlossen.",
-            more: "Wenn hier Bedarf besteht, dann wahrscheinlich bei Struktur, ersten machbaren Schritten und weniger bei Motivation."
-          };
-        }
-
-        if ((answers.frage6 || "").includes("angst") || (answers.frage6 || "").includes("geld_risiko")) {
-          return {
-            tag: "Profil C",
-            title: "Gebremst durch Unsicherheit",
-            text: "Der Wunsch ist da, aber Unsicherheit zieht stark mit. Das wirkt weniger wie fehlender Wille und mehr wie fehlende Sicherheit in die nächsten Schritte.",
-            compare: "Im Vergleich zu anderen angehenden Selbständigen wirkst du eher blockiert als planlos.",
-            more: "Ein echter Hebel könnte hier weniger Inspiration sein – und mehr ein klarer, risikoärmer wirkender Weg."
-          };
-        }
-
-        return {
-          tag: "Profil C",
-          title: "Näher dran als viele andere",
-          text: "Du wirkst nicht nur interessiert, sondern schon relativ nah an echter Bewegung. Bei dir geht es eher um Umsetzung als um Grundsatzfragen.",
-          compare: "Im Vergleich zu vielen anderen in dieser Gruppe wirkst du konkreter und handlungsnäher.",
-          more: "Falls ich aus den Antworten etwas baue, wäre für Menschen wie dich wahrscheinlich Praxis, Struktur und ein klarer erster Schritt zentral."
-        };
-      }
-
-      if ((answers.frage6 || "").includes("alles_gleichzeitig") || answers.frage7 === "kopf" || answers.frage7 === "chaotisch") {
-        return {
-          tag: "Profil D",
-          title: "Der Kämpfer im Alltag",
-          text: "Du bist drin, aber vieles läuft offenbar parallel, ungeordnet oder mit viel mentaler Last. Das ist oft weniger ein Kompetenz- als ein Strukturproblem.",
-          compare: "Im Vergleich zu anderen Selbständigen wirkst du eher belastet durch Komplexität als durch fehlenden Einsatz.",
-          more: "Wenn hier Bedarf besteht, dann wahrscheinlich bei Überblick, Priorisierung und Entlastung im Alltag."
-        };
-      }
-
-      if (answers.frage5 === "laeuft_gut" || answers.frage5 === "okay_aber_luft_nach_oben") {
-        return {
-          tag: "Profil D",
-          title: "Der Optimierer",
-          text: "Es wirkt nicht nach Chaos, sondern eher nach dem Wunsch, Dinge sauberer, effizienter oder klarer zu machen.",
-          compare: "Im Vergleich zu anderen Selbständigen wirkst du stabiler und reflektierter als viele.",
-          more: "Für Menschen wie dich liegt Bedarf eher nicht im Überleben, sondern in Vereinfachung und besserem Überblick."
-        };
-      }
-
-      return {
-        tag: "Profil D",
-        title: "Unter Druck, aber dran",
-        text: "Es wirkt, als ob du vieles trägst und gleichzeitig funktionieren musst. Der Bedarf liegt hier wahrscheinlich nicht bei noch mehr Input, sondern bei Entlastung.",
-        compare: "Im Vergleich zu anderen in dieser Gruppe wirkt dein Alltag eher dicht und fordernd.",
-        more: "Wenn ich daraus etwas entwickle, wäre für diese Lage vor allem Einfachheit entscheidend."
-      };
-    }
-
-    function showResult() {
-      const result = buildProfile();
-      document.getElementById("resultTag").textContent = result.tag;
-      document.getElementById("resultTitle").textContent = result.title;
-      document.getElementById("resultText").textContent = result.text;
-      document.getElementById("resultCompare").textContent = result.compare;
-      document.getElementById("resultMore").textContent = result.more;
-    }
-
-   async function submitSurvey(kontakt) {
-  answers.kontakt = (kontakt || "").trim();
-  answers.timestamp_client = new Date().toISOString();
-  answers.branch = branch;
-
-  showResult();
-
-  const shareText = document.getElementById("shareText");
-  shareText.textContent =
-    "Hey, ich habe gerade eine ehrliche 3-Minuten-Umfrage zu Job, Wechselgedanken, Selbständigkeit und Beruf ausgefüllt: " +
-    window.location.href;
-
-  try {
-    console.log("Sende Daten:", answers);
-    console.log("URL:", GOOGLE_SCRIPT_URL);
-
-    const response = await fetch(GOOGLE_SCRIPT_URL, {
-      method: "POST",
-      body: JSON.stringify(answers)
-    });
-
-    const result = await response.json();
-    console.log("Server response:", result);
-
-    if (result.status !== "ok") {
-      console.warn("Apps Script error:", result.message);
-    }
-
-  } catch (error) {
-    console.error("Submit failed:", error);
-  }
-
-  showScreen("thankyou");
-  currentStep = totalSteps;
-  updateProgress();
-}
-
-    async function copyShare() {
-      const text = document.getElementById("shareText").textContent;
+    async function sendToBackend() {
       try {
-        await navigator.clipboard.writeText(text);
-        const status = document.getElementById("copyStatus");
-        status.style.display = "block";
-        setTimeout(() => {
-          status.style.display = "none";
-        }, 1800);
+        const payload = {
+          ...answers,
+          kontakt: answers.kontakt || "",
+          notiz: answers.notiz || "",
+          branch: answers.gruppe || ""
+        };
+
+        if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "https://script.google.com/macros/s/AKfycbxXt5TSWn8Il7PbG2opvhz8iHk1l1b0GUC6SklWby8Gv0JhAlceu97O0kI7pUH2PRcw/exec") {
+          const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify(payload)
+          });
+
+          const result = await response.json();
+          if (result.status !== "ok") {
+            console.warn("Apps Script error:", result.message);
+          }
+        }
+      } catch (error) {
+        console.warn("Submit failed:", error);
+      }
+    }
+
+    async function finishWithoutContact() {
+      answers.kontakt = "";
+      answers.notiz = "";
+      await sendToBackend();
+      showScreen("screen-thanks");
+    }
+
+    async function submitWithContact() {
+      answers.kontakt = document.getElementById("contactInput").value.trim();
+      answers.notiz = document.getElementById("notesInput").value.trim();
+      await sendToBackend();
+      showScreen("screen-thanks");
+    }
+
+    async function copyShareText() {
+      try {
+        await navigator.clipboard.writeText(document.getElementById("shareText").textContent);
       } catch (e) {
         console.warn("Copy failed", e);
       }
     }
+
+    function restartSurvey() {
+      Object.keys(answers).forEach(k => delete answers[k]);
+      answers.kontakt = "";
+      answers.notiz = "";
+      state.branch = null;
+      state.questions = [];
+      state.currentIndex = -1;
+      state.history = [];
+      document.getElementById("contactArea").classList.remove("show");
+      showScreen("screen-intro");
+      document.getElementById("progressFill").style.width = "0%";
+      document.getElementById("progressPill").textContent = "0%";
+      document.getElementById("progressLabel").textContent = "Bereit?";
+      document.getElementById("sectionPill").textContent = "Start";
+    }
   </script>
 </body>
 </html>
-```
-
