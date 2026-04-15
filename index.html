@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3 Minuten — Wie tickst du beruflich?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf8f5;
+  --card: #ffffff;
+  --text: #1a1a1a;
+  --dim: #6b6b6b;
+  --accent: #e85d26;
+  --accent-light: #fff0eb;
+  --accent-hover: #d14d1a;
+  --green: #1a9960;
+  --green-light: #e8f7f0;
+  --border: #e8e4df;
+  --shadow: 0 2px 16px rgba(0,0,0,0.06);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px 16px 80px;
+}
+
+.survey {
+  max-width: 560px;
+  width: 100%;
+  margin-top: 40px;
+}
+
+/* Progress */
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--border);
+  border-radius: 4px;
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 4px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Screen */
+.screen {
+  display: none;
+  animation: fadeUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.screen.active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Intro */
+.intro-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+.intro h1 {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.intro p {
+  font-size: 16px;
+  color: var(--dim);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+/* Question */
+.question-num {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.question-text {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 24px;
+}
+
+.question-hint {
+  font-size: 13px;
+  color: var(--dim);
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+/* Options */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.option:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.option:active {
+  transform: scale(0.98);
+}
+
+.option.selected {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  color: var(--accent-hover);
+  font-weight: 600;
+}
+
+.option.selected::after {
+  content: '✓';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: var(--accent);
+}
+
+/* Multi select */
+.multi-hint {
+  font-size: 12px;
+  color: var(--dim);
+  margin-bottom: 12px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 24px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+.btn-start {
+  font-size: 17px;
+  padding: 16px 36px;
+}
+
+/* Contact input */
+.contact-input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--card);
+  transition: border-color 0.2s;
+  margin-top: 12px;
+}
+
+.contact-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* Thank you */
+.thankyou {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.thankyou .emoji {
+  font-size: 56px;
+  margin-bottom: 20px;
+}
+
+.thankyou h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.thankyou p {
+  font-size: 15px;
+  color: var(--dim);
+  line-height: 1.7;
+}
+
+.share-box {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 24px;
+  text-align: left;
+}
+
+.share-box .share-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.share-text {
+  font-size: 13px;
+  color: var(--dim);
+  line-height: 1.6;
+  background: var(--bg);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.btn-copy {
+  background: var(--text);
+  font-size: 13px;
+  padding: 10px 20px;
+  margin-top: 8px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .intro h1 { font-size: 26px; }
+  .question-text { font-size: 19px; }
+  .survey { margin-top: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="survey">
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress" style="width: 0%"></div>
+  </div>
+
+  <!-- ============ INTRO ============ -->
+  <div class="screen active" id="intro">
+    <div class="intro">
+      <span class="intro-badge">⏱ Max. 3 Minuten</span>
+      <h1>Wie tickst du beruflich?</h1>
+      <p>Ich arbeite gerade an einem Projekt rund um Berufseinstieg und Selbständigkeit im Handwerk und Gewerbe. Dafür brauche ich echte Meinungen von echten Leuten.<br><br>Komplett anonym. Wenn du es weiterleiten magst — umso besser. Merci!</p>
+      <button class="btn btn-start" onclick="startSurvey()">Los geht's →</button>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 1: Filter ============ -->
+  <div class="screen" id="s1">
+    <div class="question-num">Frage 1 von ~6</div>
+    <div class="question-text">Hand aufs Herz — wo stehst du gerade?</div>
+    <div class="options" data-key="gruppe" data-type="single" data-next="s2">
+      <div class="option" data-value="angestellt_happy" data-branch="a">Angestellt, passt für mich</div>
+      <div class="option" data-value="angestellt_traum" data-branch="b">Angestellt, aber der Traum von «meinem eigenen Ding» lässt mich nicht los</div>
+      <div class="option" data-value="selbstaendig" data-branch="c">Selbständig — mit allen Höhen und Tiefen</div>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 2: Bereich ============ -->
+  <div class="screen" id="s2">
+    <div class="question-num">Frage 2</div>
+    <div class="question-text">Was machst du beruflich?</div>
+    <div class="options" data-key="bereich" data-type="single" data-next="s3">
+      <div class="option" data-value="bau_handwerk">Bau / Handwerk</div>
+      <div class="option" data-value="gewerbe_produktion">Gewerbe / Produktion</div>
+      <div class="option" data-value="dienstleistung">Dienstleistung</div>
+      <div class="option" data-value="kreativ_design">Kreativ / Design</div>
+      <div class="option" data-value="anderes">Was ganz anderes</div>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 3: Alter ============ -->
+  <div class="screen" id="s3">
+    <div class="question-num">Frage 3</div>
+    <div class="question-text">Wie alt bist du?</div>
+    <div class="options" data-key="alter" data-type="single" data-next="branch">
+      <div class="option" data-value="18-25">18–25</div>
+      <div class="option" data-value="26-35">26–35</div>
+      <div class="option" data-value="36-45">36–45</div>
+      <div class="option" data-value="46+">46+</div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- GRUPPE A: Angestellt & happy -->
+  <!-- ============================================ -->
+  <div class="screen" id="a4">
+    <div class="question-num">Frage 4 von 5</div>
+    <div class="question-text">Selbständigkeit — was löst das Wort bei dir aus?</div>
+    <div class="options" data-key="frage4" data-type="single" data-next="a5">
+      <div class="option" data-value="stress_risiko">Stress und Risiko, nein danke</div>
+      <div class="option" data-value="spannend_nicht_fuer_mich">Spannend, aber nichts für mich</div>
+      <div class="option" data-value="vielleicht_irgendwann">Vielleicht irgendwann mal</div>
+      <div class="option" data-value="reizt_bleib_safe">Reizt mich, aber ich bleib lieber safe</div>
+    </div>
+  </div>
+
+  <div class="screen" id="a5">
+    <div class="question-num">Frage 5 von 5</div>
+    <div class="question-text">Was müsste passieren, damit du es trotzdem wagst?</div>
+    <div class="multi-hint">Wähle bis zu 2</div>
+    <div class="options" data-key="frage5" data-type="multi" data-max="2" data-next="contact">
+      <div class="option" data-value="bombensichere_idee">Eine bombensichere Geschäftsidee</div>
+      <div class="option" data-value="genug_geld">Genug Geld auf der Seite</div>
+      <div class="option" data-value="jemand_zeigt">Jemand der mir zeigt wie es geht</div>
+      <div class="option" data-value="will_nicht">Gar nichts, ich will einfach nicht</div>
+      <div class="option" data-value="kuendigung">Kündigung — dann hätte ich keine Wahl</div>
+    </div>
+    <button class="btn" id="btn-a5" onclick="submitMulti('a5')" disabled>Weiter →</button>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- GRUPPE B: Will selbständig werden -->
+  <!-- ============================================ -->
+  <div class="screen" id="b4">
+    <div class="question-num">Frage 4 von 7</div>
+    <div class="question-text">Wie lange geistert die Idee schon in deinem Kopf rum?</div>
+    <div class="options" data-key="frage4" data-type="single" data-next="b5">
+      <div class="option" data-value="ganz_frisch">Ganz frisch, seit ein paar Wochen</div>
+      <div class="option" data-value="paar_monate">Ein paar Monate, wird langsam konkreter</div>
+      <div class="option" data-value="1_3_jahre">1–3 Jahre, ich drehe mich im Kreis</div>
+      <div class="option" data-value="schon_ewig">Schon ewig, ich komme einfach nicht ins Tun</div>
+    </div>
+  </div>
+
+  <div class="screen" id="b5">
+    <div class="question-num">Frage 5 von 7</div>
+    <div class="question-text">Was bremst dich aus?</div>
+    <div class="multi-hint">Wähle bis zu 2</div>
+    <div class="options" data-key="frage5" data-type="multi" data-max="2" data-next="b6">
+      <div class="option" data-value="weiss_nicht_wo">Ich weiss nicht wo anfangen</div>
+      <div class="option" data-value="geld_unsicher">Das Geld fehlt oder ist zu unsicher</div>
+      <div class="option" data-value="kein_plan">Ich hab keinen klaren Plan</div>
+      <div class="option" data-value="angst_nase">Die Angst auf die Nase zu fallen</div>
+      <div class="option" data-value="umfeld_dagegen">Mein Umfeld findet es keine gute Idee</div>
+      <div class="option" data-value="keine_zeit">Keine Zeit neben dem Job</div>
+    </div>
+    <button class="btn" id="btn-b5" onclick="submitMulti('b5')" disabled>Weiter →</button>
+  </div>
+
+  <div class="screen" id="b6">
+    <div class="question-num">Frage 6 von 7</div>
+    <div class="question-text">Was würde den Unterschied machen?</div>
+    <div class="multi-hint">Wähle bis zu 2</div>
+    <div class="options" data-key="frage6" data-type="multi" data-max="2" data-next="b7">
+      <div class="option" data-value="fahrplan">Ein klarer Fahrplan, Schritt für Schritt</div>
+      <div class="option" data-value="begleitung">Jemand der schon dort war und mich begleitet</div>
+      <div class="option" data-value="tool">Ein einfaches Tool das mich organisiert</div>
+      <div class="option" data-value="austausch">Austausch mit Leuten die das Gleiche durchmachen</div>
+      <div class="option" data-value="zahlen_hilfe">Hilfe bei Zahlen, Kalkulation, Finanzen</div>
+    </div>
+    <button class="btn" id="btn-b6" onclick="submitMulti('b6')" disabled>Weiter →</button>
+  </div>
+
+  <div class="screen" id="b7">
+    <div class="question-num">Frage 7 von 7</div>
+    <div class="question-text">Wenn es das gäbe — wärst du bereit dafür zu investieren?</div>
+    <div class="options" data-key="frage7" data-type="single" data-next="contact">
+      <div class="option" data-value="nein_gratis">Nein, muss gratis sein</div>
+      <div class="option" data-value="bis_50">Bis CHF 50/Monat</div>
+      <div class="option" data-value="bis_100">Bis CHF 100/Monat</div>
+      <div class="option" data-value="mehr">Mehr, wenn es mich wirklich weiterbringt</div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- GRUPPE C: Selbständig -->
+  <!-- ============================================ -->
+  <div class="screen" id="c4">
+    <div class="question-num">Frage 4 von 9</div>
+    <div class="question-text">Seit wann machst du dein Ding?</div>
+    <div class="options" data-key="frage4" data-type="single" data-next="c5">
+      <div class="option" data-value="unter_1_jahr">Unter 1 Jahr — noch ganz frisch</div>
+      <div class="option" data-value="1_3_jahre">1–3 Jahre — läuft so langsam</div>
+      <div class="option" data-value="3_plus">3+ Jahre — ich kenne das Spiel</div>
+    </div>
+  </div>
+
+  <div class="screen" id="c5">
+    <div class="question-num">Frage 5 von 9</div>
+    <div class="question-text">Ehrliche Bestandesaufnahme — wie läufts?</div>
+    <div class="options" data-key="frage5" data-type="single" data-next="c6">
+      <div class="option" data-value="richtig_gut">Richtig gut, ich kann nicht klagen</div>
+      <div class="option" data-value="okay_mehr_drin">Okay, aber da wäre mehr drin</div>
+      <div class="option" data-value="harzig">Harzig, ich beisse mich durch</div>
+      <div class="option" data-value="ueberlege_aufhoeren">Ich überlege ehrlich gesagt aufzuhören</div>
+    </div>
+  </div>
+
+  <div class="screen" id="c6">
+    <div class="question-num">Frage 6 von 9</div>
+    <div class="question-text">Was nervt dich am meisten?</div>
+    <div class="multi-hint">Wähle bis zu 3</div>
+    <div class="options" data-key="frage6" data-type="multi" data-max="3" data-next="c7">
+      <div class="option" data-value="kunden_finden">Neue Kunden finden</div>
+      <div class="option" data-value="preise_offerten">Preise setzen und Offerten schreiben</div>
+      <div class="option" data-value="admin_papierkram">Admin und Papierkram</div>
+      <div class="option" data-value="nie_genug_zeit">Nie genug Zeit für alles</div>
+      <div class="option" data-value="social_media">Social Media und Sichtbarkeit</div>
+      <div class="option" data-value="kein_ueberblick">Keinen Überblick über meine Zahlen</div>
+      <div class="option" data-value="keine_strategie">Keine klare Strategie</div>
+      <div class="option" data-value="work_life">Arbeit und Privatleben trennen</div>
+    </div>
+    <button class="btn" id="btn-c6" onclick="submitMulti('c6')" disabled>Weiter →</button>
+  </div>
+
+  <div class="screen" id="c7">
+    <div class="question-num">Frage 7 von 9</div>
+    <div class="question-text">Wie organisierst du deinen Laden?</div>
+    <div class="options" data-key="frage7" data-type="single" data-next="c8">
+      <div class="option" data-value="im_kopf">Alles im Kopf — bis jetzt gings</div>
+      <div class="option" data-value="notizbuch">Notizbuch oder Zettelwirtschaft</div>
+      <div class="option" data-value="excel">Excel oder Google Sheets</div>
+      <div class="option" data-value="tool">Ein richtiges Tool</div>
+      <div class="option" data-value="naja">Organisieren? Naja...</div>
+    </div>
+  </div>
+
+  <div class="screen" id="c8">
+    <div class="question-num">Frage 8 von 9</div>
+    <div class="question-text">Stell dir vor: Ein Tool das dir morgens sagt wen du anrufen sollst, wie deine Zahlen stehen und was diese Woche dran ist. Einfach, lokal, kein Cloud-Quatsch.</div>
+    <div class="options" data-key="frage8" data-type="single" data-next="c9">
+      <div class="option" data-value="ja_sofort">Ja, das will ich sofort</div>
+      <div class="option" data-value="klingt_gut">Klingt gut, muss aber einfach sein</div>
+      <div class="option" data-value="vielleicht">Vielleicht, müsste ich sehen</div>
+      <div class="option" data-value="nein">Nein, brauche ich nicht</div>
+    </div>
+  </div>
+
+  <div class="screen" id="c9">
+    <div class="question-num">Frage 9 von 9</div>
+    <div class="question-text">Was wäre dir das wert?</div>
+    <div class="options" data-key="frage9" data-type="single" data-next="contact">
+      <div class="option" data-value="gratis">Nichts, muss gratis sein</div>
+      <div class="option" data-value="bis_30">Bis CHF 30/Monat</div>
+      <div class="option" data-value="bis_50">Bis CHF 50/Monat</div>
+      <div class="option" data-value="bis_100">Bis CHF 100/Monat</div>
+      <div class="option" data-value="mehr">Mehr, wenn es wirklich funktioniert</div>
+    </div>
+  </div>
+
+  <!-- ============ CONTACT (optional) ============ -->
+  <div class="screen" id="contact">
+    <div class="question-text">Fast geschafft!</div>
+    <p style="color:var(--dim);font-size:15px;line-height:1.7;margin-bottom:24px;">Ich arbeite an etwas für Leute die beruflich mehr wollen. Wenn dich das interessiert, lass mir eine Nummer oder dein Insta da — kein Spam, versprochen.</p>
+    <div class="options" data-key="kontakt_wahl" data-type="single">
+      <div class="option" data-value="nein" onclick="submitSurvey('')">Nein danke, fertig</div>
+      <div class="option" data-value="ja" id="opt-contact" onclick="showContactField()">Ja gerne</div>
+    </div>
+    <div id="contact-field" style="display:none;margin-top:16px;">
+      <input type="text" class="contact-input" id="contact-input" placeholder="Telefon, Insta oder beides...">
+      <button class="btn" onclick="submitSurvey(document.getElementById('contact-input').value)">Abschicken →</button>
+    </div>
+  </div>
+
+  <!-- ============ THANK YOU ============ -->
+  <div class="screen" id="thankyou">
+    <div class="thankyou">
+      <div class="emoji">🤙</div>
+      <h2>Merci vielmal!</h2>
+      <p>Du hilfst mir damit echt weiter. Wenn du jemanden kennst den das auch interessiert — leite es gerne weiter.</p>
+      <div class="share-box">
+        <div class="share-title">📋 Zum Kopieren und Weiterleiten:</div>
+        <div class="share-text" id="share-text">Hey, ein Kollege von mir macht ein Projekt zum Thema Selbständigkeit und braucht kurz deine Meinung. 3 Minuten, anonym: </div>
+        <button class="btn btn-copy" onclick="copyShare()">Text kopieren 📋</button>
+        <span id="copied" style="display:none;margin-left:12px;font-size:13px;color:var(--green);">✓ Kopiert!</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================
+// KONFIGURATION
+// ============================================
+// WICHTIG: Ersetze diese URL mit deiner Google Apps Script Web-App URL
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzjslk_XEWnylaKoWtzALDBpLdH25_e83f5t7SBYsvz5MOFetuJvR_6-dMmM3ONJTyp/exec';
+
+// ============================================
+// STATE
+// ============================================
+let answers = {};
+let branch = ''; // a, b, c
+let totalScreens = 5; // wird dynamisch angepasst
+
+// Screen counts per branch
+const branchScreens = { a: 5, b: 7, c: 9 };
+
+// ============================================
+// FUNCTIONS
+// ============================================
+
+function startSurvey() {
+  document.getElementById('intro').classList.remove('active');
+  document.getElementById('s1').classList.add('active');
+  updateProgress(1);
+}
+
+function updateProgress(current) {
+  const pct = Math.round((current / totalScreens) * 100);
+  document.getElementById('progress').style.width = pct + '%';
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Single select
+document.querySelectorAll('.options[data-type="single"] .option').forEach(opt => {
+  opt.addEventListener('click', function() {
+    const container = this.closest('.options');
+    const key = container.dataset.key;
+    const nextScreen = container.dataset.next;
+    const value = this.dataset.value;
+    
+    // Store branch if this is the group filter
+    if (this.dataset.branch) {
+      branch = this.dataset.branch;
+      totalScreens = branchScreens[branch];
+    }
+    
+    // Visual feedback
+    container.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    this.classList.add('selected');
+    
+    // Store answer
+    answers[key] = value;
+    
+    // Navigate after short delay
+    setTimeout(() => {
+      if (nextScreen === 'branch') {
+        // Route to group-specific screen
+        showScreen(branch + '4');
+        updateProgress(4);
+      } else if (nextScreen === 'contact') {
+        showScreen('contact');
+        updateProgress(totalScreens);
+      } else if (nextScreen) {
+        showScreen(nextScreen);
+        // Calculate progress
+        const num = parseInt(nextScreen.replace(/\D/g, '')) || 3;
+        updateProgress(num);
+      }
+    }, 300);
+  });
+});
+
+// Multi select
+document.querySelectorAll('.options[data-type="multi"] .option').forEach(opt => {
+  opt.addEventListener('click', function() {
+    const container = this.closest('.options');
+    const max = parseInt(container.dataset.max);
+    const selected = container.querySelectorAll('.option.selected');
+    const screenId = this.closest('.screen').id;
+    const btn = document.getElementById('btn-' + screenId);
+    
+    if (this.classList.contains('selected')) {
+      this.classList.remove('selected');
+    } else {
+      if (selected.length >= max) return;
+      this.classList.add('selected');
+    }
+    
+    // Enable/disable button
+    const currentSelected = container.querySelectorAll('.option.selected');
+    if (btn) btn.disabled = currentSelected.length === 0;
+  });
+});
+
+function submitMulti(screenId) {
+  const screen = document.getElementById(screenId);
+  const container = screen.querySelector('.options');
+  const key = container.dataset.key;
+  const nextScreen = container.dataset.next;
+  const selected = container.querySelectorAll('.option.selected');
+  
+  answers[key] = Array.from(selected).map(o => o.dataset.value).join(', ');
+  
+  if (nextScreen === 'contact') {
+    showScreen('contact');
+    updateProgress(totalScreens);
+  } else {
+    showScreen(nextScreen);
+    const num = parseInt(nextScreen.replace(/\D/g, '')) || 5;
+    updateProgress(num);
+  }
+}
+
+function showContactField() {
+  document.getElementById('contact-field').style.display = 'block';
+  document.getElementById('opt-contact').classList.add('selected');
+  document.getElementById('contact-input').focus();
+}
+
+function submitSurvey(kontakt) {
+  answers.kontakt = kontakt;
+  
+  // Update share text with current URL
+  const shareText = document.getElementById('share-text');
+  shareText.textContent = 'Hey, ein Kollege von mir macht ein Projekt zum Thema Selbständigkeit und braucht kurz deine Meinung. 3 Minuten, anonym: ' + window.location.href;
+  
+  // Send to Google Sheets
+  if (GOOGLE_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbzjslk_XEWnylaKoWtzALDBpLdH25_e83f5t7SBYsvz5MOFetuJvR_6-dMmM3ONJTyp/exec') {
+    fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(answers)
+    }).catch(err => console.log('Submit error:', err));
+  }
+  
+  showScreen('thankyou');
+  document.getElementById('progress').style.width = '100%';
+}
+
+function copyShare() {
+  const text = document.getElementById('share-text').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copied').style.display = 'inline';
+    setTimeout(() => {
+      document.getElementById('copied').style.display = 'none';
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>
