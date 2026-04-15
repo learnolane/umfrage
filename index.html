@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -976,40 +975,42 @@
       document.getElementById("resultMore").textContent = result.more;
     }
 
-    async function submitSurvey(kontakt) {
-      answers.kontakt = (kontakt || "").trim();
-      answers.timestamp_client = new Date().toISOString();
-      answers.branch = branch;
+   async function submitSurvey(kontakt) {
+  answers.kontakt = (kontakt || "").trim();
+  answers.timestamp_client = new Date().toISOString();
+  answers.branch = branch;
 
-      showResult();
+  showResult();
 
-      const shareText = document.getElementById("shareText");
-      shareText.textContent =
-        "Hey, ich habe gerade eine ehrliche 3-Minuten-Umfrage zu Job, Wechselgedanken, Selbständigkeit und beruflichem Alltag ausgefüllt. Ist angenehm gemacht und am Ende bekommt man eine kurze Einordnung: " +
-        window.location.href;
+  const shareText = document.getElementById("shareText");
+  shareText.textContent =
+    "Hey, ich habe gerade eine ehrliche 3-Minuten-Umfrage zu Job, Wechselgedanken, Selbständigkeit und Beruf ausgefüllt: " +
+    window.location.href;
 
-      if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "https://script.google.com/macros/s/AKfycbxXt5TSWn8Il7PbG2opvhz8iHk1l1b0GUC6SklWby8Gv0JhAlceu97O0kI7pUH2PRcw/exec") {
-        try {
-          const response = await fetch(GOOGLE_SCRIPT_URL, {
-            method: "POST",
-            body: JSON.stringify(answers)
-          });
+  try {
+    console.log("Sende Daten:", answers);
+    console.log("URL:", GOOGLE_SCRIPT_URL);
 
-          const result = await response.json();
-          console.log("Server response:", result);
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify(answers)
+    });
 
-          if (result.status !== "ok") {
-            console.warn("Apps Script error:", result.message);
-          }
-        } catch (error) {
-          console.warn("Submit failed:", error);
-        }
-      }
+    const result = await response.json();
+    console.log("Server response:", result);
 
-      showScreen("thankyou");
-      currentStep = totalSteps;
-      updateProgress();
+    if (result.status !== "ok") {
+      console.warn("Apps Script error:", result.message);
     }
+
+  } catch (error) {
+    console.error("Submit failed:", error);
+  }
+
+  showScreen("thankyou");
+  currentStep = totalSteps;
+  updateProgress();
+}
 
     async function copyShare() {
       const text = document.getElementById("shareText").textContent;
