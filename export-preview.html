@@ -28,7 +28,7 @@
     const SUBTLE    = '#9e9088';
     const LINE_SOFT = '#e6dbcf';
 
-    const X = 180; // left margin
+    const X = 360; // left margin – safe zone against WhatsApp left crop
 
     // Background
     ctx.fillStyle = BG;
@@ -47,7 +47,7 @@
     // Divider
     ctx.fillStyle = LINE_SOFT;
     ctx.beginPath();
-    ctx.roundRect(X, 218, W - X * 2, 2, 1);
+    ctx.roundRect(X, 218, 480, 2, 1);
     ctx.fill();
 
     // Questions – visual focus, equal weight
