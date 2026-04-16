@@ -2,9 +2,24 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
- <link rel="icon" type="image/png" href="./favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Arbeitsrealität – Kurz-Analyse</title>
+
+  <title>Arbeitsrealität – Kurz-Check</title>
+  <meta name="description" content="Kurze Umfrage zur Arbeitsrealität – was funktioniert gut, wo gibt es Reibung und wo besteht echtes Verbesserungspotenzial.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+
+  <!-- Open Graph (WhatsApp / Social Preview) -->
+  <!-- TODO: replace placeholder URLs with your absolute domain -->
+  <meta property="og:title" content="Arbeitsrealität – Kurz-Check">
+  <meta property="og:description" content="Kurze, angenehm gemachte Umfrage: Was läuft gut, wo gibt es Reibung – inkl. kurzer Einordnung am Ende.">
+  <meta property="og:image" content="https://learnolane.github.io/umfrage/preview.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://learnolane.github.io/umfrage">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +38,7 @@
       --accent-soft: #f4e6dc;
       --green: #2f7c59;
       --green-soft: #e7f3ec;
-      --shadow: 0 14px 34px rgba(51, 34, 19, 0.08);
+      --shadow: 0 8px 24px rgba(51, 34, 19, 0.06);
       --danger-soft: #f7e8e4;
       --gold-soft: #f7f0df;
       --radius-xl: 26px;
@@ -213,6 +228,19 @@
       margin-bottom: 16px;
     }
 
+    .hero-list {
+      margin: 0 0 16px;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .hero-list li::before {
+      content: "– ";
+    }
+
     .hero-focus {
       display: grid;
       gap: 10px;
@@ -398,14 +426,14 @@
     }
 
     .slider-value {
-      min-width: 58px;
+      min-width: 68px;
       text-align: center;
       border-radius: 999px;
       background: var(--accent-soft);
       color: var(--accent);
       font-weight: 800;
-      padding: 8px 10px;
-      font-size: 14px;
+      padding: 10px 14px;
+      font-size: 17px;
     }
 
     .range-wrap {
@@ -417,7 +445,7 @@
       appearance: none;
       height: 8px;
       border-radius: 999px;
-      background: linear-gradient(90deg, #e8d4c7 0%, #f0dfd3 100%);
+      background: #eaded1;
       outline: none;
     }
 
@@ -611,7 +639,7 @@
 
     .result-wrap {
       display: grid;
-      gap: 16px;
+      gap: 20px;
     }
 
     .result-hero {
@@ -649,7 +677,7 @@
 
     .analysis-grid {
       display: grid;
-      gap: 12px;
+      gap: 16px;
     }
 
     .analysis-box {
@@ -679,6 +707,46 @@
       font-size: 13px;
       font-weight: 700;
       color: #5f564d;
+    }
+
+    .result-chart {
+      margin-top: 14px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .result-chart-row {
+      display: grid;
+      grid-template-columns: 110px 1fr 32px;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .result-chart-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .result-chart-track {
+      height: 8px;
+      background: #e8e0d6;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .result-chart-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #d49569, var(--accent));
+      transition: width 400ms cubic-bezier(.2,.8,.2,1);
+    }
+
+    .result-chart-value {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
     }
 
     .cta-panel {
@@ -829,35 +897,29 @@
 
     <section class="screen active" id="screen-intro">
       <div class="card">
-        <div class="hero-badge">⏱ 3–5 Minuten · anonym · klickbar</div>
-        <h1 class="hero-title">Wo hakt es in der Arbeitswelt wirklich?</h1>
-        <p class="hero-copy">
-          Fokus dieser Umfrage: herausfinden, wo im Arbeitsalltag, bei Wechselgedanken,
-          beim Schritt in die Selbständigkeit und im selbständigen Arbeiten echtes Verbesserungspotenzial liegt.
-        </p>
-        <p class="hero-copy">
-          Nicht Theorie. Nicht Blabla. Sondern Muster rund um Analyse, Strategie, Effizienz,
-          digitale Tools und die Frage, warum manche starten – und andere nicht.
-        </p>
+        <h1 class="hero-title">Wie läuft Arbeit heute wirklich?</h1>
+        <p class="hero-copy">3–5 Minuten. Anonym. Mit kurzer Einordnung am Ende.</p>
+        <p class="hero-copy">Ich schaue mir an:</p>
+        <ul class="hero-list">
+          <li>was gut funktioniert</li>
+          <li>wo Reibung entsteht</li>
+          <li>wo bessere Lösungen sinnvoll wären</li>
+        </ul>
+        <p class="hero-copy">im Arbeitsalltag, beim Wechsel oder auf dem Weg in die Selbständigkeit</p>
 
         <div class="hero-focus">
           <div class="focus-row">
             <div class="focus-icon">🔍</div>
-            <div>Wo entstehen Reibung, Chaos, Unsicherheit oder Leerlauf?</div>
+            <div>Was läuft gut?</div>
           </div>
           <div class="focus-row">
             <div class="focus-icon">⚙️</div>
-            <div>Wo würden Struktur, Beratung oder ein einfaches Tool wirklich etwas verbessern?</div>
-          </div>
-          <div class="focus-row">
-            <div class="focus-icon">📈</div>
-            <div>Was funktioniert bereits gut – und warum?</div>
+            <div>Wo würde etwas helfen?</div>
           </div>
         </div>
 
         <div class="start-actions">
           <button class="btn btn-primary" onclick="startSurvey()">Starten →</button>
-          <div class="small-fine">Am Ende bekommst du eine kurze Einordnung und kannst, wenn du willst, vernetzt bleiben oder Inputs geben.</div>
         </div>
       </div>
     </section>
@@ -886,14 +948,14 @@
           <div class="result-hero">
             <div class="result-tag" id="resultTag">Kurz-Analyse</div>
             <h2 class="result-title" id="resultTitle">Dein Bild</h2>
-            <div class="result-copy" id="resultCopy"></div>
-            <div class="result-compare" id="resultCompare"></div>
+            <div class="result-copy">Basierend auf deinen Antworten ergibt sich folgendes Bild:</div>
           </div>
 
           <div class="analysis-grid">
             <div class="analysis-box">
               <h3>Was auffällt</h3>
               <div id="analysisWhat"></div>
+              <div id="resultChart" class="result-chart"></div>
               <div class="summary-pills" id="summaryPills"></div>
             </div>
 
@@ -902,28 +964,18 @@
               <div id="analysisPotential"></div>
             </div>
 
-            <div class="analysis-box">
-              <h3>Intention</h3>
-              <div class="result-intent" id="analysisIntent"></div>
-            </div>
           </div>
 
           <div class="cta-panel">
-            <h3 class="cta-title">Wenn du mehr sehen oder Input geben willst</h3>
-            <div class="cta-copy">
-              Ich sammle hier keine Ideenlisten, sondern Muster. Wenn dich interessiert,
-              was daraus entsteht, oder du einen Gedanken dazu dalassen willst, kannst du das hier tun.
-            </div>
+            <h3 class="cta-title">Wenn du dranbleiben willst oder einen Gedanken hast:</h3>
 
             <div class="contact-options">
               <button class="choice" onclick="finishWithoutContact()">
-                <span class="choice-label">👍 Fertig für mich</span>
-                <span class="choice-sub">Analyse gesehen, alles gut.</span>
+                <span class="choice-label">👍 Passt für mich</span>
               </button>
 
               <button class="choice" onclick="openContact()">
-                <span class="choice-label">🤝 Ich will vernetzt bleiben / Input geben</span>
-                <span class="choice-sub">Optional Kontakt oder kurze Notiz dalassen.</span>
+                <span class="choice-label">🤝 Dranbleiben / Input geben</span>
               </button>
             </div>
 
@@ -934,6 +986,17 @@
                 <button class="btn btn-dark" onclick="submitWithContact()">Absenden →</button>
               </div>
               <div class="contact-tip">Ganz optional. Keine langen Erklärungen nötig.</div>
+            </div>
+
+            <div class="share-box" id="feedbackBox">
+              <h4>Wie war die Umfrage?</h4>
+              <div class="btn-row">
+                <button type="button" class="btn btn-secondary" id="feedbackUpBtn" onclick="setSurveyFeedback('up')">👍 Hat gepasst</button>
+                <button type="button" class="btn btn-secondary" id="feedbackDownBtn" onclick="setSurveyFeedback('down')">👎 Eher nicht</button>
+              </div>
+              <div class="contact-area" id="feedbackTextArea">
+                <textarea class="textarea" id="feedbackInput" placeholder="Optional: Was war gut, unklar oder hätte besser sein können?"></textarea>
+              </div>
             </div>
 
             <div class="share-box">
@@ -952,76 +1015,89 @@
 
     <section class="screen" id="screen-thanks">
       <div class="card">
-        <div class="hero-badge">✅ Erfasst</div>
         <h2 class="hero-title" style="font-size:30px;">Merci.</h2>
-        <p class="hero-copy">
-          Deine Antworten sind gespeichert.
-        </p>
+        <p class="hero-copy">Deine Antworten sind gespeichert.</p>
         <div class="btn-row">
           <button class="btn btn-primary" onclick="restartSurvey()">Neue Runde starten</button>
+        </div>
+
+        <p class="hero-copy" style="margin-top:8px;">
+          Wenn du magst: sende die Umfrage noch an 2 Menschen weiter, bei denen die Perspektive spannend wäre.
+        </p>
+
+        <div class="share-box" style="margin-top:18px;">
+          <h4>Weiterleiten</h4>
+          <div class="share-text" id="finalShareText">
+            Kurze Umfrage zur Arbeitsrealität: Was läuft gut, wo gibt es Reibung – mit kurzer Einordnung am Ende:
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-secondary" onclick="copyFinalShareText()">Link kopieren</button>
+          </div>
         </div>
       </div>
     </section>
   </div>
 
   <script>
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxXt5TSWn8Il7PbG2opvhz8iHk1l1b0GUC6SklWby8Gv0JhAlceu97O0kI7pUH2PRcw/exec";
+    const GOOGLE_SCRIPT_URL = "";
 
     function getSubmissionId() {
-  let id = sessionStorage.getItem("submission_id");
-  if (!id) {
-    id = "sub_" + Date.now() + "_" + Math.random().toString(36).slice(2, 10);
-    sessionStorage.setItem("submission_id", id);
-  }
-  return id;
-}
-
-function getInterestLevelFromAnswers() {
-  const possibleScaleKeys = ["eh_4", "ec_4", "es_5", "se_3"];
-  for (const key of possibleScaleKeys) {
-    if (answers[key]) {
-      const first = String(answers[key]).split("|")[0];
-      const n = Number(first);
-      if (Number.isFinite(n)) {
-        return Math.max(0, Math.min(10, n * 2));
+      let id = sessionStorage.getItem("submission_id");
+      if (!id) {
+        id = "sub_" + Date.now() + "_" + Math.random().toString(36).slice(2, 10);
+        sessionStorage.setItem("submission_id", id);
       }
+      return id;
     }
-  }
-  return 0;
-}
 
-function extractEmail(value) {
-  const text = String(value || "").trim();
-  if (!text) return "";
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text) ? text : "";
-}
+    function getInterestLevelFromAnswers() {
+      const possibleScaleKeys = ["eh_4", "ec_4", "es_5", "se_3"];
+      for (const key of possibleScaleKeys) {
+        if (answers[key]) {
+          const first = String(answers[key]).split("|")[0];
+          const n = Number(first);
+          if (Number.isFinite(n)) {
+            return Math.max(0, Math.min(10, n * 2));
+          }
+        }
+      }
+      return 0;
+    }
 
-function getEntryPoint() {
-  const branchMap = {
-    employed_happy: "angestellt_zufrieden",
-    employed_change: "wechselwunsch",
-    employed_self: "selbststaendig_interesse",
-    self_employed: "selbststaendig"
-  };
-  return branchMap[answers.gruppe] || "unbekannt";
-}
+    function extractEmail(value) {
+      const text = String(value || "").trim();
+      if (!text) return "";
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text) ? text : "";
+    }
 
-  function detectContactChannel(value) {
-  const text = String(value || "").trim().toLowerCase();
-  if (!text) return "";
+    function getEntryPoint() {
+      const branchMap = {
+        employed_happy: "angestellt_zufrieden",
+        employed_change: "wechselwunsch",
+        employed_self: "selbststaendig_interesse",
+        self_employed: "selbststaendig"
+      };
+      return branchMap[answers.gruppe] || "unbekannt";
+    }
 
-  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) return "email";
-  if (text.includes("instagram") || text.includes("insta") || text.startsWith("@")) return "instagram";
- if (text.includes("whatsapp") || text.includes("wa") || text.includes("wa.me"))
-  if (text.includes("telegram")) return "telegram";
-  if (/^\+?[0-9\s/()-]{6,}$/.test(text)) return "phone";
+    function detectContactChannel(value) {
+      const text = String(value || "").trim().toLowerCase();
+      if (!text) return "";
 
-  return "other";
-}
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) return "email";
+      if (text.includes("instagram") || text.includes("insta") || text.startsWith("@")) return "instagram";
+      if (text.includes("whatsapp") || text.includes("wa") || text.includes("wa.me")) return "whatsapp";
+      if (text.includes("telegram")) return "telegram";
+      if (/^\+?[0-9\s/()-]{6,}$/.test(text)) return "phone";
+
+      return "other";
+    }
     
     const answers = {
       kontakt: "",
-      notiz: ""
+      notiz: "",
+      feedback_rating: "",
+      feedback_text: ""
     };
 
     const state = {
@@ -1115,18 +1191,17 @@ function getEntryPoint() {
         },
         {
           id: "eh_2",
-          type: "multiSelect",
+          type: "singleGrid",
           title: "Was nutzt du in deinem Alltag gerne?",
-          copy: "Top 2 auswählen. Mich interessiert, was wirklich hilft.",
+          copy: "Mich interessiert, was wirklich hilft.",
           section: "Angestellt & zufrieden",
-          max: 2,
           options: [
             { value: "klare_prozesse", label: "Klare Prozesse" },
-            { value: "gute_fuehrung", label: "Gute Führung / klare Entscheidungen" },
-            { value: "digitale_tools", label: "Digitale Tools / Software" },
-            { value: "gute_planung", label: "Saubere Planung / Übersicht" },
+            { value: "gute_fuehrung", label: "Klare Führung" },
+            { value: "digitale_tools", label: "Digitale Tools" },
+            { value: "gute_planung", label: "Saubere Planung" },
             { value: "selbststaendigkeit_im_job", label: "Eigenverantwortung im Alltag" },
-            { value: "stabiler_rahmen", label: "Stabiler Rahmen ohne dauerndes Chaos" }
+            { value: "stabiler_rahmen", label: "Stabiler Rahmen" }
           ]
         },
         {
@@ -1168,18 +1243,17 @@ function getEntryPoint() {
         },
         {
           id: "eh_6",
-          type: "multiSelect",
+          type: "singleGrid",
           title: "Was nervt dich trotz Zufriedenheit trotzdem immer wieder?",
-          copy: "Top 2 auswählen.",
+          copy: "Den grössten Punkt nennen.",
           section: "Angestellt & zufrieden",
-          max: 2,
           options: [
-            { value: "zu_viele_meetings", label: "Zu viele Meetings / Abstimmungen" },
+            { value: "zu_viele_meetings", label: "Zu viele Meetings" },
             { value: "langsame_entscheidungen", label: "Langsame Entscheidungen" },
-            { value: "unnoetige_admin", label: "Unnötige Admin / Bürokratie" },
-            { value: "ineffiziente_tools", label: "Schlechte oder ineffiziente Tools" },
-            { value: "politische_spiele", label: "Interne Spielchen / Politik" },
-            { value: "zu_wenig_entwicklung", label: "Zu wenig Entwicklung / Bewegung" }
+            { value: "unnoetige_admin", label: "Unnötige Bürokratie" },
+            { value: "ineffiziente_tools", label: "Ineffiziente Tools" },
+            { value: "politische_spiele", label: "Interne Spielchen" },
+            { value: "zu_wenig_entwicklung", label: "Zu wenig Entwicklung" }
           ]
         },
         {
@@ -1189,8 +1263,8 @@ function getEntryPoint() {
           copy: "Nicht Traumwelt. Nur realistisch gedacht.",
           section: "Angestellt & zufrieden",
           options: [
-            { value: "mehr_ueberblick", label: "Mehr Überblick & Klarheit", emoji: "🧭" },
-            { value: "weniger_reibung", label: "Weniger Reibung & Leerlauf", emoji: "⚙️" },
+            { value: "mehr_ueberblick", label: "Mehr Überblick", emoji: "🧭" },
+            { value: "weniger_reibung", label: "Weniger Reibung", emoji: "⚙️" },
             { value: "bessere_tools", label: "Bessere digitale Tools", emoji: "💻" },
             { value: "bessere_priorisierung", label: "Bessere Priorisierung / Fokus", emoji: "🎯" },
             { value: "gar_nicht_viel", label: "Gar nicht so viel – es läuft schon gut", emoji: "👌" }
@@ -1268,18 +1342,17 @@ function getEntryPoint() {
         },
         {
           id: "ec_3",
-          type: "multiSelect",
+          type: "singleGrid",
           title: "Was hält dich aktuell am stärksten fest?",
-          copy: "Top 2 auswählen.",
+          copy: "Den grössten Punkt nennen.",
           section: "Angestellt & will wechseln",
-          max: 2,
           options: [
-            { value: "sicherheit", label: "Sicherheit / Einkommen" },
+            { value: "sicherheit", label: "Sicherheit" },
             { value: "keine_klarheit", label: "Zu wenig Klarheit über den nächsten Schritt" },
-            { value: "zu_wenig_energie", label: "Zu wenig Energie / Fokus" },
-            { value: "fehlender_marktblick", label: "Ich weiss nicht, was wirklich passt" },
-            { value: "bequemlichkeit", label: "Gewohnheit / Trägheit" },
-            { value: "keine_zeit", label: "Zu wenig Zeit neben dem Alltag" }
+            { value: "zu_wenig_energie", label: "Zu wenig Energie" },
+            { value: "fehlender_marktblick", label: "Ich weiss nicht, was passt" },
+            { value: "bequemlichkeit", label: "Gewohnheit" },
+            { value: "keine_zeit", label: "Zu wenig Zeit" }
           ]
         },
         {
@@ -1296,15 +1369,15 @@ function getEntryPoint() {
         {
           id: "ec_5",
           type: "singleCards",
-          title: "Was würde dir am ehesten helfen, aus dem Schwebezustand rauszukommen?",
+          title: "Was würde dir jetzt am meisten helfen?",
           copy: "Nur der Haupthebel.",
           section: "Angestellt & will wechseln",
           options: [
-            { value: "klarheit_ueber_richtung", label: "Klarheit über Richtung & Optionen", emoji: "🧭" },
-            { value: "konkreter_plan", label: "Ein klarer nächster Plan", emoji: "🗺️" },
-            { value: "tool_struktur", label: "Ein Tool, das Gedanken und Schritte strukturiert", emoji: "💻" },
-            { value: "sparring", label: "Sparring / Gespräch mit jemandem, der mitdenkt", emoji: "🗣️" },
-            { value: "markt_einblick", label: "Besserer Markt- oder Realitätscheck", emoji: "📊" }
+            { value: "klarheit_ueber_richtung", label: "Klarheit über die Richtung", emoji: "🧭" },
+            { value: "konkreter_plan", label: "Ein klarer Plan", emoji: "🗺️" },
+            { value: "tool_struktur", label: "Ein strukturierendes Tool", emoji: "💻" },
+            { value: "sparring", label: "Sparring / Austausch", emoji: "🗣️" },
+            { value: "markt_einblick", label: "Mehr Marktverständnis", emoji: "📊" }
           ]
         },
         {
@@ -1336,17 +1409,16 @@ function getEntryPoint() {
         },
         {
           id: "ec_8",
-          type: "multiSelect",
+          type: "singleGrid",
           title: "Was würde ein neues Setup für dich attraktiv machen?",
-          copy: "Top 2 auswählen.",
+          copy: "Den wichtigsten Punkt nennen.",
           section: "Angestellt & will wechseln",
-          max: 2,
           options: [
-            { value: "mehr_sinn", label: "Mehr Sinn / bessere Passung" },
-            { value: "mehr_verantwortung", label: "Mehr Verantwortung / Spielraum" },
-            { value: "mehr_lohn", label: "Besserer Lohn / bessere Bedingungen" },
-            { value: "bessere_kultur", label: "Bessere Kultur / Führung" },
-            { value: "mehr_struktur", label: "Mehr Struktur / weniger Chaos" },
+            { value: "mehr_sinn", label: "Mehr Sinn" },
+            { value: "mehr_verantwortung", label: "Mehr Verantwortung" },
+            { value: "mehr_lohn", label: "Besserer Lohn" },
+            { value: "bessere_kultur", label: "Bessere Kultur" },
+            { value: "mehr_struktur", label: "Mehr Struktur" },
             { value: "bessere_entwicklung", label: "Klare Entwicklung" }
           ]
         },
@@ -1411,18 +1483,17 @@ function getEntryPoint() {
         },
         {
           id: "es_3",
-          type: "multiSelect",
+          type: "singleGrid",
           title: "Was blockiert dich aktuell am stärksten?",
-          copy: "Top 2 auswählen.",
+          copy: "Den grössten Punkt nennen.",
           section: "Angestellt & will selbständig werden",
-          max: 2,
           options: [
             { value: "kein_plan", label: "Kein klarer Plan" },
             { value: "geld_risiko", label: "Geld / Risiko" },
             { value: "angst_zu_scheitern", label: "Angst zu scheitern" },
-            { value: "keine_zeit", label: "Zu wenig Zeit neben dem Job" },
+            { value: "keine_zeit", label: "Zu wenig Zeit" },
             { value: "idee_zu_unklar", label: "Idee noch zu unklar" },
-            { value: "keine_kunden_sichtbar", label: "Keine klaren Kunden / kein Marktgefühl" }
+            { value: "keine_kunden_sichtbar", label: "Kein Marktgefühl" }
           ]
         },
         {
@@ -1491,18 +1562,17 @@ function getEntryPoint() {
         },
         {
           id: "es_9",
-          type: "multiSelect",
+          type: "singleGrid",
           title: "Unter welchen Umständen würdest du eher wirklich starten?",
-          copy: "Top 2 auswählen.",
+          copy: "Den wichtigsten Punkt nennen.",
           section: "Angestellt & will selbständig werden",
-          max: 2,
           options: [
             { value: "genug_polster", label: "Genug finanzielles Polster" },
-            { value: "klare_nachfrage", label: "Klare Nachfrage / erste Kunden" },
-            { value: "klarer_plan", label: "Ein sauberer Plan" },
-            { value: "guter_partner", label: "Partner / Netzwerk / Rückenwind" },
-            { value: "weniger_risiko", label: "Weniger gefühltes Risiko" },
-            { value: "tool_oder_system", label: "Ein gutes System / Tool für den Start" }
+            { value: "klare_nachfrage", label: "Klare Nachfrage" },
+            { value: "klarer_plan", label: "Ein klarer Plan" },
+            { value: "guter_partner", label: "Netzwerk" },
+            { value: "weniger_risiko", label: "Weniger Risiko" },
+            { value: "tool_oder_system", label: "Ein gutes System" }
           ]
         },
         {
@@ -1537,18 +1607,17 @@ function getEntryPoint() {
         },
         {
           id: "se_2",
-          type: "multiSelect",
+          type: "singleGrid",
           title: "Wo verlierst du am meisten Zeit oder Nerven?",
-          copy: "Top 2 auswählen.",
+          copy: "Den grössten Punkt nennen.",
           section: "Selbständig",
-          max: 2,
           options: [
-            { value: "kunden_finden", label: "Kunden finden / Aufträge sichern" },
-            { value: "offerten_preise", label: "Offerten / Preise / Kalkulation" },
+            { value: "kunden_finden", label: "Kunden finden" },
+            { value: "offerten_preise", label: "Offerten / Kalkulation" },
             { value: "admin", label: "Admin / Papierkram" },
-            { value: "planung", label: "Planung / Priorisierung / Überblick" },
-            { value: "tools_chaos", label: "Tool-Chaos / schlechte Systeme" },
-            { value: "zahlen_ueberblick", label: "Zahlen / Finanzen / Überblick" }
+            { value: "planung", label: "Planung" },
+            { value: "tools_chaos", label: "Tool-Chaos" },
+            { value: "zahlen_ueberblick", label: "Zahlen / Finanzen" }
           ]
         },
         {
@@ -1631,18 +1700,17 @@ function getEntryPoint() {
         },
         {
           id: "se_9",
-          type: "multiSelect",
+          type: "singleGrid",
           title: "Warum läuft es bei dir gut – oder warum gerade nicht?",
-          copy: "Top 2 auswählen.",
+          copy: "Den Hauptgrund nennen.",
           section: "Selbständig",
-          max: 2,
           options: [
-            { value: "gute_nachfrage", label: "Gute Nachfrage / Markt" },
-            { value: "saubere_struktur", label: "Saubere Struktur / Prozesse" },
-            { value: "gute_tools", label: "Gute Tools / Systeme" },
-            { value: "persoenliche_disziplin", label: "Disziplin / Fokus" },
+            { value: "gute_nachfrage", label: "Gute Nachfrage" },
+            { value: "saubere_struktur", label: "Saubere Struktur" },
+            { value: "gute_tools", label: "Gute Tools" },
+            { value: "persoenliche_disziplin", label: "Disziplin" },
             { value: "zu_viel_auf_einmal", label: "Zu viel gleichzeitig" },
-            { value: "kein_ueberblick", label: "Zu wenig Überblick / Steuerung" }
+            { value: "kein_ueberblick", label: "Zu wenig Überblick" }
           ]
         },
         {
@@ -1833,6 +1901,8 @@ function getEntryPoint() {
           state.scaleValue = Number(input.value);
           state.scaleLabel = label;
           answers[q.id] = `${input.value}|${label}`;
+          const pct = ((Number(input.value) - 1) / (labels.length - 1)) * 100;
+          input.style.background = `linear-gradient(90deg, var(--accent) 0%, var(--accent) ${pct}%, #eaded1 ${pct}%, #eaded1 100%)`;
         };
         input.addEventListener("input", update);
         update();
@@ -1969,14 +2039,11 @@ function getEntryPoint() {
 
       document.getElementById("resultTag").textContent = `${emoji} ${branchLabel}`;
       document.getElementById("shareText").textContent =
-        `Kurze, angenehm gemachte Umfrage darüber, wo in der Arbeitswelt wirklich Verbesserungspotenzial besteht – anonym und mit kurzer Analyse am Ende: ${window.location.href}`;
+        `Kurze Umfrage (3–5 Min):\n\nWas läuft bei dir gut – und wo würde etwas helfen?\n\nAm Ende gibt's eine kurze Einordnung.\n\n${window.location.href}`;
 
       let title = "";
-      let copy = "";
-      let compare = "";
       let what = "";
       let potential = "";
-      let intent = "";
       const pills = [];
 
       if (branch === "employed_happy") {
@@ -1987,21 +2054,14 @@ function getEntryPoint() {
 
         if (answers.eh_1 === "sicherheit" || target === "voll") {
           title = "Stabilität mit klaren Grenzen";
-          copy = "Du wirkst nicht passiv zufrieden, sondern bewusst. Sicherheit, Rahmen und kalkulierbare Verantwortung scheinen bei dir zentrale Faktoren zu sein.";
-          compare = "Das deutet eher auf ein funktionierendes Setup mit punktuellem Optimierungspotenzial hin – nicht auf einen grundsätzlichen Fluchtimpuls.";
         } else if (answers.eh_1 === "freiheit_verantwortung" || answers.eh_1 === "interessante_arbeit") {
-          title = "Zufrieden, weil Verantwortung und Inhalt stimmen";
-          copy = "Bei dir scheint Zufriedenheit weniger aus Bequemlichkeit zu kommen als aus Passung. Inhalt, Spielraum und Qualität der Arbeit sind wahrscheinlich wichtige Treiber.";
-          compare = "Das ist besonders spannend, weil genau hier oft sichtbar wird, warum gute Arbeitsrealität funktioniert.";
+          title = "Zufrieden, weil Inhalt und Verantwortung stimmen";
         } else {
-          title = "Grundsätzlich zufrieden, aber nicht blind";
-          copy = "Du wirkst wie jemand, bei dem das Setup im Kern stimmt, der aber trotzdem klar merkt, wo Reibung oder unnötige Ineffizienz entsteht.";
-          compare = "Damit lieferst du eher Hinweise auf Verbesserung innerhalb funktionierender Systeme als auf radikale Veränderung.";
+          title = "Setup stimmt – mit sichtbaren Reibungspunkten";
         }
 
-        what = "Auffällig ist vor allem, was bereits trägt: passende Rahmenbedingungen, funktionierende Abläufe oder gutes Zusammenspiel von Verantwortung und Sicherheit.";
-        potential = "Verbesserungspotenzial liegt hier eher in Effizienz, Klarheit, besseren Tools oder weniger Reibung – nicht in kompletter Neuorientierung.";
-        intent = "Die interessante Frage ist hier nicht, wie man Unzufriedene rettet, sondern warum funktionierende Arbeitsrealität funktioniert – und was davon übertragbar ist.";
+        what = "Dein Setup wirkt insgesamt stimmig. Was trägt: passende Rahmenbedingungen, funktionierende Abläufe, stimmiges Zusammenspiel von Verantwortung und Sicherheit.";
+        potential = "Der grösste Hebel liegt wahrscheinlich bei Effizienz, Klarheit oder besseren Tools – nicht bei grundsätzlicher Veränderung.";
 
         if (salaryWeight >= 4) pills.push("Lohn ist relevanter Faktor");
         if (answers.eh_2 && answers.eh_2.includes("digitale_tools")) pills.push("Digitale Tools helfen spürbar");
@@ -2017,21 +2077,14 @@ function getEntryPoint() {
 
         if (answers.ec_2 === "voll" || answers.ec_5 === "klarheit_ueber_richtung") {
           title = "Nicht festgefahren – eher unscharf";
-          copy = "Bei dir wirkt weniger der Wille wie das Problem, sondern die fehlende Klarheit. Der Druck ist spürbar, aber die Richtung noch nicht sauber.";
-          compare = "Das spricht für Bedarf bei Analyse, Einordnung und einem klaren nächsten Schritt – bevor grösser gedacht wird.";
         } else if (answers.ec_3 && answers.ec_3.includes("sicherheit")) {
           title = "Veränderungswunsch mit Sicherheitsbremse";
-          copy = "Du wirkst nicht orientierungslos, sondern eher abwägend. Das aktuelle Setup hält dich nicht wegen Begeisterung, sondern wegen Stabilität.";
-          compare = "Hier liegt Relevanz oft dort, wo Risiko reduziert, Optionen sortiert und Entscheidungen greifbarer gemacht werden.";
         } else {
           title = "Bewegung wäre möglich – Struktur fehlt noch";
-          copy = "Es wirkt so, als wäre Veränderung grundsätzlich vorstellbar, aber noch nicht ausreichend in konkrete Schritte übersetzt.";
-          compare = "Das ist weniger ein Motivations- als ein Umsetzungs- und Strukturthema.";
         }
 
-        what = "Die eigentliche Reibung scheint nicht nur im aktuellen Job zu liegen, sondern in der Phase zwischen Unzufriedenheit und klarer Bewegung.";
-        potential = "Potenzial liegt hier vor allem in Klarheit, strategischer Orientierung, strukturierten Entscheidungswegen und einfachen Hilfen zur Priorisierung.";
-        intent = "Spannend ist hier die Zone zwischen Frust und Entscheidung: Dort könnte ein starkes Analyse-, Strategie- oder Strukturangebot echten Nutzen schaffen.";
+        what = "Du wirkst nicht orientierungslos, sondern in einer Phase, in der Klarheit und Struktur fehlen. Die Reibung liegt oft zwischen Unzufriedenheit und klarer Bewegung.";
+        potential = "Der grösste Hebel liegt wahrscheinlich bei klarer Richtung, konkreten nächsten Schritten und einem einfachen System.";
 
         if (urgency >= 4) pills.push("Veränderung wirkt dringlich");
         if (support === "tool_struktur") pills.push("Tool für Klarheit denkbar");
@@ -2047,25 +2100,16 @@ function getEntryPoint() {
 
         if (answers.es_3 && answers.es_3.includes("kein_plan")) {
           title = "Zug da – aber der Weg ist zu diffus";
-          copy = "Du wirkst nicht unentschlossen in der Sache, sondern blockiert durch fehlende Struktur. Das Thema lebt, aber der nächste Schritt ist zu unklar.";
-          compare = "Das deutet eher auf Bedarf bei Strategie, Roadmap und Umsetzungslogik hin als auf reine Motivation.";
         } else if (answers.es_3 && answers.es_3.includes("geld_risiko")) {
           title = "Gründungswunsch mit Risikobremse";
-          copy = "Die Richtung scheint attraktiv, aber Risiko und finanzielle Unsicherheit stehen deutlich im Vordergrund.";
-          compare = "Relevant wären hier wahrscheinlich realistische Startmodelle, Zahlenklarheit und risikoärmere Übergänge.";
         } else if (realism >= 4) {
-          title = "Relativ nah an echter Bewegung";
-          copy = "Bei dir wirkt das Thema nicht nur als Gedanke, sondern als Option mit Nähe zur Umsetzung.";
-          compare = "Damit wird interessant, welche Form von Struktur oder Unterstützung den Unterschied zwischen Nachdenken und Start machen würde.";
+          title = "Nah an echter Bewegung";
         } else {
-          title = "Interesse ist da – Umsetzung noch nicht greifbar";
-          copy = "Der Reiz ist erkennbar, aber die Bedingungen für einen echten Start scheinen noch nicht stark genug zusammenzukommen.";
-          compare = "Das ist eine wichtige Zone, weil hier oft sichtbar wird, welche Trigger oder Sicherheiten wirklich zählen.";
+          title = "Interesse da – Umsetzung noch nicht greifbar";
         }
 
-        what = "Hier geht es stark um Starthemmnisse: Klarheit, Risiko, Marktgefühl, Struktur und die Frage, unter welchen Umständen jemand wirklich in Bewegung kommt.";
-        potential = "Potenzial liegt in Einstiegslogik, schrittweisen Modellen, klaren Wegen, ersten Tests und einfachen Systemen statt in grossem Theorieaufbau.";
-        intent = "Interessant ist hier nicht nur, wer gründen will – sondern was den Unterschied macht zwischen dauerndem Gedankenspiel und tatsächlichem Start.";
+        what = "Dein Setup wirkt insgesamt wie jemand, der den Wunsch hat, aber den Weg noch nicht klar sieht. Klarheit, Struktur und ein erster konkreter Schritt fehlen.";
+        potential = "Der grösste Hebel liegt wahrscheinlich bei Einstiegsstruktur, Marktgefühl und einem realistischen ersten Schritt.";
 
         if (target === "voll") pills.push("Klarer Weg fehlt");
         if (support === "tool") pills.push("Tool als Gründungshebel");
@@ -2082,25 +2126,16 @@ function getEntryPoint() {
 
         if (situation === "laeuft_sehr_gut") {
           title = "Funktionierend – mit übertragbaren Mustern";
-          copy = "Bei dir scheint weniger Überlebensmodus als Systemqualität im Vordergrund zu stehen. Das ist wertvoll, weil genau hier sichtbar wird, was im Alltag bereits funktioniert.";
-          compare = "Damit lieferst du weniger Schmerzsignal als Best-Practice-Signal – und genau das ist für spätere Lösungen extrem relevant.";
         } else if (ineff >= 4 || target === "voll") {
           title = "Nicht am Einsatz – eher am System";
-          copy = "Es wirkt so, als ob nicht der Wille fehlt, sondern Übersicht, Struktur oder ein einfacheres Zusammenspiel deiner Abläufe.";
-          compare = "Das deutet stark auf Bedarf bei Effizienz, Tooling, operativer Klarheit oder Prozessdesign hin.";
         } else if (help === "beratung" || help === "strategie_workshop") {
-          title = "Operativ drin, strategisch mit Luft nach oben";
-          copy = "Der Alltag läuft offenbar, aber nicht alles ist sauber sortiert. Es könnte weniger um Chaos als um Richtung, Hebel und bessere Steuerung gehen.";
-          compare = "Hier liegt Potenzial eher bei Analyse und Strategie als nur bei einem weiteren Tool.";
+          title = "Operativ drin, strategisch mit Luft";
         } else {
-          title = "Spürbarer Hebel bei Vereinfachung";
-          copy = "Dein Bild deutet darauf hin, dass Alltag, Tools oder Entscheidungen vereinfacht und zusammengeführt werden könnten.";
-          compare = "Das ist oft genau der Punkt, an dem digitale Unterstützung oder gezielte Beratung praktisch relevant wird.";
+          title = "Klarer Hebel bei Vereinfachung";
         }
 
-        what = "Hier wird besonders sichtbar, wo operative Ineffizienz, fehlender Überblick oder Tool-/Systemprobleme echte Wirkung auf Zeit, Energie und Steuerbarkeit haben.";
-        potential = "Potenzial liegt bei Analyse, Strategie, Effizienzsteigerung und digitalen Hilfen – aber nur dann, wenn sie einfach, konkret und alltagstauglich sind.";
-        intent = "Besonders spannend ist hier der Unterschied zwischen funktionierenden Setups und harzigen: Daraus lässt sich oft klar ableiten, wo echte Hebel liegen.";
+        what = "Dein Setup zeigt, wo fehlende Struktur, operative Ineffizienz oder unklare Abläufe Zeit und Energie kosten – und was bereits gut läuft.";
+        potential = "Der grösste Hebel liegt wahrscheinlich bei Effizienz, Überblick und einfacheren Abläufen im Alltag.";
 
         if (situation === "laeuft_sehr_gut") pills.push("Best-Practice-Signal");
         if (help === "tool") pills.push("Tool-Potenzial klar");
@@ -2110,11 +2145,52 @@ function getEntryPoint() {
       }
 
       document.getElementById("resultTitle").textContent = title;
-      document.getElementById("resultCopy").textContent = copy;
-      document.getElementById("resultCompare").textContent = compare;
       document.getElementById("analysisWhat").textContent = what;
       document.getElementById("analysisPotential").textContent = potential;
-      document.getElementById("analysisIntent").textContent = intent;
+
+      // Mini bar chart from scaleBars data
+      const chartContainer = document.getElementById("resultChart");
+      chartContainer.innerHTML = "";
+      const chartData = [];
+      if (branch === "employed_happy") {
+        chartData.push(
+          { label: "Strategie", value: Number(answers.eh_8_strategie) || 3 },
+          { label: "Kommunikation", value: Number(answers.eh_8_kommunikation) || 3 },
+          { label: "Tools", value: Number(answers.eh_8_tools) || 3 },
+          { label: "Abläufe", value: Number(answers.eh_8_ablauf) || 3 }
+        );
+      } else if (branch === "employed_change") {
+        chartData.push(
+          { label: "Aktueller Job", value: Number(answers.ec_6_problem_job) || 3 },
+          { label: "Klarheit", value: Number(answers.ec_6_problem_klarheit) || 3 },
+          { label: "Markt", value: Number(answers.ec_6_problem_markt) || 3 },
+          { label: "Umsetzung", value: Number(answers.ec_6_problem_umsetzung) || 3 }
+        );
+      } else if (branch === "employed_self") {
+        chartData.push(
+          { label: "Klarheit", value: Number(answers.es_7_klarheit) || 3 },
+          { label: "Marktgefühl", value: Number(answers.es_7_markt) || 3 },
+          { label: "Struktur", value: Number(answers.es_7_struktur) || 3 },
+          { label: "Mut / Sicherheit", value: Number(answers.es_7_mut) || 3 }
+        );
+      } else if (branch === "self_employed") {
+        chartData.push(
+          { label: "Analyse", value: Number(answers.se_6_analyse) || 3 },
+          { label: "Strategie", value: Number(answers.se_6_strategie) || 3 },
+          { label: "Effizienz", value: Number(answers.se_6_effizienz) || 3 },
+          { label: "Tools", value: Number(answers.se_6_tools) || 3 }
+        );
+      }
+      chartData.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "result-chart-row";
+        row.innerHTML = `
+          <div class="result-chart-label">${item.label}</div>
+          <div class="result-chart-track"><div class="result-chart-fill" style="width:${(item.value / 5) * 100}%"></div></div>
+          <div class="result-chart-value">${item.value}/5</div>
+        `;
+        chartContainer.appendChild(row);
+      });
 
       const pillWrap = document.getElementById("summaryPills");
       pillWrap.innerHTML = "";
@@ -2124,7 +2200,7 @@ function getEntryPoint() {
         answers.alter ? answers.alter.replaceAll("_", "+") : null
       ].filter(Boolean);
 
-      [...basePills, ...pills].slice(0, 7).forEach(text => {
+      [...basePills, ...pills].slice(0, 4).forEach(text => {
         const el = document.createElement("div");
         el.className = "summary-pill";
         el.textContent = text;
@@ -2138,65 +2214,106 @@ function getEntryPoint() {
     }
 
     async function sendToBackend() {
-  try {
-    const contactValue = answers.kontakt || "";
-    const noteValue = answers.notiz || "";
+      try {
+        const contactValue = answers.kontakt || "";
+        const noteValue = answers.notiz || "";
 
-    const rawAnswers = {
-      ...answers,
-      branch_label: branchLabels[answers.gruppe] || "",
-      submitted_from: window.location.href
-    };
+        const rawAnswers = {
+          ...answers,
+          branch_label: branchLabels[answers.gruppe] || "",
+          submitted_from: window.location.href
+        };
 
-    const payload = {
-  submission_id: getSubmissionId(),
-  user_type: answers.gruppe || "",
-  entry_point: getEntryPoint(),
-  pain_points: JSON.stringify(rawAnswers),
-  motivation: noteValue || "",
-  interest_level: getInterestLevelFromAnswers(),
-  contact_opt_in: contactValue ? "yes" : "no",
-  contact_channel: detectContactChannel(contactValue),
-  contact_value: contactValue,
-  contact_email: extractEmail(contactValue),
-  honeypot: ""
-};
+        const payload = {
+          submission_id: getSubmissionId(),
+          user_type: answers.gruppe || "",
+          entry_point: getEntryPoint(),
+          pain_points: JSON.stringify(rawAnswers),
+          motivation: noteValue || "",
+          interest_level: getInterestLevelFromAnswers(),
+          contact_opt_in: contactValue ? "yes" : "no",
+          contact_channel: detectContactChannel(contactValue),
+          contact_value: contactValue,
+          contact_email: extractEmail(contactValue),
+          honeypot: "",
+          feedback_rating: answers.feedback_rating || "",
+          feedback_text: answers.feedback_text || ""
+        };
 
-    if (!GOOGLE_SCRIPT_URL) {
-      console.warn("No Google Script URL configured.");
-      return;
+        if (!GOOGLE_SCRIPT_URL) {
+          console.warn("No Google Script URL configured.");
+          return;
+        }
+
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+        try {
+          const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify(payload),
+            signal: controller.signal
+          });
+          const result = await response.json();
+          if (result.status !== "ok") {
+            console.warn("Apps Script error:", result.message);
+          }
+        } finally {
+          clearTimeout(timeoutId);
+        }
+      } catch (error) {
+        console.warn("Submit failed:", error);
+      }
     }
-
-    const response = await fetch(GOOGLE_SCRIPT_URL, {
-  method: "POST",
-  body: JSON.stringify(payload)
-});
-    
-    const result = await response.json();
-
-    if (result.status !== "ok") {
-      console.warn("Apps Script error:", result.message);
-    }
-  } catch (error) {
-    console.warn("Submit failed:", error);
-  }
-}
 
     function finishWithoutContact() {
-  answers.kontakt = "";
-  answers.notiz = "";
+      answers.kontakt = "";
+      answers.notiz = "";
+      answers.feedback_text = (document.getElementById("feedbackInput") || {}).value || "";
 
-  showScreen("screen-thanks");
-  sendToBackend();
-}
+      showScreen("screen-thanks");
+      updateFinalShareText();
+      sendToBackend();
+    }
 
-function submitWithContact() {
-  answers.kontakt = document.getElementById("contactInput").value.trim();
-  answers.notiz = document.getElementById("notesInput").value.trim();
+    function submitWithContact() {
+      answers.kontakt = document.getElementById("contactInput").value.trim();
+      answers.notiz = document.getElementById("notesInput").value.trim();
+      answers.feedback_text = (document.getElementById("feedbackInput") || {}).value || "";
 
-  showScreen("screen-thanks");
-  sendToBackend();
-}
+      showScreen("screen-thanks");
+      updateFinalShareText();
+      sendToBackend();
+    }
+
+    function setSurveyFeedback(value) {
+      answers.feedback_rating = value;
+      document.getElementById("feedbackUpBtn").classList.toggle("selected", value === "up");
+      document.getElementById("feedbackDownBtn").classList.toggle("selected", value === "down");
+      if (value === "down") {
+        document.getElementById("feedbackTextArea").classList.add("show");
+      } else {
+        document.getElementById("feedbackTextArea").classList.remove("show");
+      }
+    }
+
+    function updateFinalShareText() {
+      const el = document.getElementById("finalShareText");
+      if (!el) return;
+      el.textContent =
+        "Kurze Umfrage zur Arbeitsrealität: Was läuft gut, wo gibt es Reibung – mit kurzer Einordnung am Ende: " +
+        window.location.href;
+    }
+
+    async function copyFinalShareText() {
+      try {
+        await navigator.clipboard.writeText(
+          document.getElementById("finalShareText").textContent
+        );
+      } catch (e) {
+        console.warn("Copy failed", e);
+      }
+    }
 
     async function copyShareText() {
       try {
@@ -2210,6 +2327,8 @@ function submitWithContact() {
       Object.keys(answers).forEach(k => delete answers[k]);
       answers.kontakt = "";
       answers.notiz = "";
+      answers.feedback_rating = "";
+      answers.feedback_text = "";
       state.branch = null;
       state.questions = [];
       state.currentIndex = -1;

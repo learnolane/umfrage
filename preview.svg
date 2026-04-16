@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#f7f1e8"/>
+  <!-- Top accent strip -->
+  <rect width="1200" height="5" fill="#bf6a3c"/>
+  <!-- Left accent bar -->
+  <rect x="88" y="160" width="4" height="310" rx="2" fill="#bf6a3c" opacity="0.3"/>
+
+  <!-- Title -->
+  <text x="120" y="272"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="80"
+    font-weight="700"
+    letter-spacing="-2"
+    fill="#231f1a">Arbeitsrealität</text>
+
+  <!-- Accent divider -->
+  <rect x="120" y="302" width="72" height="4" rx="2" fill="#bf6a3c"/>
+
+  <!-- Questions -->
+  <text x="120" y="370"
+    font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif"
+    font-size="34"
+    font-weight="500"
+    fill="#6d6258">Was läuft gut?</text>
+
+  <text x="120" y="420"
+    font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif"
+    font-size="34"
+    font-weight="500"
+    fill="#6d6258">Wo würde etwas helfen?</text>
+
+  <!-- Footer -->
+  <text x="120" y="510"
+    font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif"
+    font-size="24"
+    fill="#9e9088"
+    letter-spacing="0.5">3–5 Minuten · anonym · mit kurzer Einordnung</text>
+</svg>

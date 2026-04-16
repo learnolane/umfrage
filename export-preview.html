@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Preview exportieren</title>
+  <style>
+    body { margin: 0; background: #333; display: flex; flex-direction: column; align-items: center; padding: 24px; gap: 16px; font-family: sans-serif; }
+    canvas { display: block; max-width: 100%; border: 1px solid #555; }
+    button { padding: 12px 24px; background: #bf6a3c; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; }
+    p { color: #ccc; font-size: 13px; margin: 0; }
+  </style>
+</head>
+<body>
+  <p>Vorschaubild 1200 × 630 px – als preview.png speichern und im Projektordner ablegen.</p>
+  <canvas id="c" width="1200" height="630"></canvas>
+  <button onclick="download()">preview.png herunterladen</button>
+  <p>Anschliessend in index.html die DEINE-DOMAIN Platzhalter durch die echte Domain ersetzen.</p>
+
+  <script>
+    const c = document.getElementById('c');
+    const ctx = c.getContext('2d');
+
+    const W = 1200, H = 630;
+    const BG        = '#f7f1e8';
+    const ACCENT    = '#bf6a3c';
+    const TEXT      = '#231f1a';
+    const MUTED     = '#6d6258';
+    const SUBTLE    = '#9e9088';
+    const LINE_SOFT = '#e6dbcf';
+
+    // Background
+    ctx.fillStyle = BG;
+    ctx.fillRect(0, 0, W, H);
+
+    // Top accent strip
+    ctx.fillStyle = ACCENT;
+    ctx.fillRect(0, 0, W, 5);
+
+    // Left vertical accent bar
+    ctx.fillStyle = LINE_SOFT;
+    ctx.beginPath();
+    ctx.roundRect(88, 140, 4, 320, 2);
+    ctx.fill();
+
+    // Title
+    ctx.fillStyle = TEXT;
+    ctx.font = '700 76px Georgia, serif';
+    ctx.letterSpacing = '-1px';
+    ctx.fillText('Arbeitsrealität', 120, 218);
+
+    // Accent divider
+    ctx.fillStyle = ACCENT;
+    ctx.beginPath();
+    ctx.roundRect(120, 244, 64, 4, 2);
+    ctx.fill();
+
+    // Hook line
+    ctx.fillStyle = '#5f564d';
+    ctx.font = '400 33px -apple-system, "Helvetica Neue", Arial, sans-serif';
+    ctx.letterSpacing = '0px';
+    ctx.fillText('Wie sieht dein Arbeitsalltag aktuell aus?', 120, 302);
+
+    // Questions
+    ctx.fillStyle = TEXT;
+    ctx.font = '600 34px -apple-system, "Helvetica Neue", Arial, sans-serif';
+    ctx.fillText('Was läuft gut?', 120, 400);
+    ctx.fillStyle = MUTED;
+    ctx.font = '400 34px -apple-system, "Helvetica Neue", Arial, sans-serif';
+    ctx.fillText('Wo verlierst du Zeit oder Nerven?', 120, 455);
+
+    // Footer
+    ctx.fillStyle = SUBTLE;
+    ctx.font = '400 23px -apple-system, "Helvetica Neue", Arial, sans-serif';
+    ctx.fillText('3–5 Minuten · anonym', 120, 545);
+
+    function download() {
+      const a = document.createElement('a');
+      a.download = 'preview.png';
+      a.href = c.toDataURL('image/png');
+      a.click();
+    }
+  </script>
+</body>
+</html>
