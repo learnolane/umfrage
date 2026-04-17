@@ -1030,7 +1030,7 @@
                 <button type="button" class="btn btn-secondary" id="feedbackDownBtn" onclick="setSurveyFeedback('down')">👎 Eher nicht</button>
               </div>
               <div class="contact-area" id="feedbackTextArea">
-                <textarea class="textarea" id="feedbackInput" placeholder="Optional: Was war gut, unklar oder hätte besser sein können?"></textarea>
+                <textarea class="textarea" id="feedback-text" placeholder="Optional: Was war gut, unklar oder hätte besser sein können?"></textarea>
               </div>
             </div>
 
@@ -2189,30 +2189,54 @@
       try {
         const contactValue = answers.kontakt || "";
         const noteValue = answers.notiz || "";
+        const feedbackText = document.getElementById("feedback-text")?.value?.trim() || "";
 
-        const rawAnswers = {
-          ...answers,
-          branch_label: branchLabels[answers.gruppe] || "",
-          submitted_from: window.location.href
-        };
+        // Scale values are stored as "value|label" – parse to integer
+        function scaleInt(key) {
+          return parseInt(answers[key]) || 0;
+        }
 
         const now = new Date().toISOString();
         const payload = {
           submission_id: getSubmissionId(),
           created_at: now,
           updated_at: now,
+
           user_type: answers.gruppe || "",
           entry_point: getEntryPoint(),
-          pain_points: JSON.stringify(rawAnswers),
-          motivation: noteValue || "",
+          motivation: noteValue,
           interest_level: getInterestLevelFromAnswers(),
+          honeypot: "",
+
+          // Pain point flags (reserved for future use)
+          pain_points_time_pressure: answers.time_pressure ? 1 : 0,
+          pain_points_tool_confusion: answers.tool_confusion ? 1 : 0,
+          pain_points_knowledge_gap: answers.knowledge_gap ? 1 : 0,
+
+          // Analysis fields – use first available value across all branches
+          segment: answers.gruppe || "",
+          pressure_level: scaleInt("ec_4") || scaleInt("se_3") || scaleInt("es_5") || scaleInt("eh_4"),
+          change_intent: answers.ec_2 || "",
+          clarity_level: answers.ec_6_problem_klarheit || answers.es_4 || answers.se_5 || "",
+          risk_sensitivity: answers.ec_3 || answers.es_3 || "",
+          solution_preference: answers.ec_5 || answers.es_6 || answers.se_8 || answers.eh_7 || "",
+          tool_openness: answers.eh_9 || answers.ec_10 || answers.se_10 || "",
+          support_readiness: answers.ec_10 || answers.se_10 || "",
+          primary_blocker: answers.ec_3 || answers.es_3 || answers.se_2 || "",
+          primary_desire: answers.eh_1 || answers.ec_8 || answers.es_1 || answers.se_7 || "",
+          operational_friction: answers.se_3 || answers.se_5 || answers.ec_6_problem_job || "",
+          self_employment_readiness: answers.es_5 || answers.se_1 || "",
+          best_practice_signal: answers.eh_2 || answers.se_9 || "",
+
+          // Feedback
+          feedback_rating: answers.feedback_rating || "",
+          feedback_text: feedbackText,
+
+          // Contact
           contact_opt_in: contactValue ? "yes" : "no",
           contact_channel: detectContactChannel(contactValue),
           contact_value: contactValue,
-          contact_email: extractEmail(contactValue),
-          honeypot: "",
-          feedback_rating: answers.feedback_rating || "",
-          feedback_text: answers.feedback_text || ""
+          contact_email: extractEmail(contactValue)
         };
 
         if (!GOOGLE_SCRIPT_URL) {
@@ -2244,7 +2268,7 @@
     function finishWithoutContact() {
       answers.kontakt = "";
       answers.notiz = "";
-      answers.feedback_text = (document.getElementById("feedbackInput") || {}).value || "";
+      answers.feedback_rating = answers.feedback_rating || "";
 
       showScreen("screen-thanks");
       updateFinalShareText();
@@ -2254,7 +2278,7 @@
     function submitWithContact() {
       answers.kontakt = document.getElementById("contactInput").value.trim();
       answers.notiz = document.getElementById("notesInput").value.trim();
-      answers.feedback_text = (document.getElementById("feedbackInput") || {}).value || "";
+      answers.feedback_rating = answers.feedback_rating || "";
 
       showScreen("screen-thanks");
       updateFinalShareText();
