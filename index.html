@@ -474,10 +474,19 @@
       display: flex;
       justify-content: space-between;
       gap: 10px;
-      margin-top: 12px;
+      margin-top: 8px;
       color: var(--muted);
       font-size: 12px;
       font-weight: 700;
+    }
+
+    .scale-ticks {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 2px 0;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
     }
 
     .dart-grid {
@@ -514,8 +523,6 @@
       display: grid;
       place-items: center;
       position: relative;
-      background: #fff;
-      border: 1px solid var(--border);
     }
 
     .dart-ring::before,
@@ -523,29 +530,50 @@
       content: "";
       position: absolute;
       border-radius: 50%;
-      border: 2px solid currentColor;
-      opacity: .25;
     }
 
     .dart-ring::before {
-      inset: 9px;
+      inset: 16px;
     }
 
     .dart-ring::after {
-      inset: 21px;
+      inset: 30px;
     }
 
     .dart-ring span {
-      width: 18px;
-      height: 18px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
-      background: currentColor;
       display: inline-block;
+      position: relative;
+      z-index: 1;
     }
 
+    /* Kaum – äusserer Ring betont, Mitte leer */
     .dart.low { color: #9a8f84; }
+    .dart.low .dart-ring { background: rgba(154,143,132,.28); border: 2px solid rgba(154,143,132,.45); }
+    .dart.low .dart-ring::before { background: #fffcf7; }
+    .dart.low .dart-ring::after  { background: #fffcf7; }
+    .dart.low .dart-ring span    { background: #fffcf7; }
+
+    /* Teils – mittlerer Ring betont */
     .dart.mid { color: #c98a4b; }
+    .dart.mid .dart-ring { background: rgba(201,138,75,.15); border: 2px solid rgba(201,138,75,.4); }
+    .dart.mid .dart-ring::before { background: rgba(201,138,75,.5); }
+    .dart.mid .dart-ring::after  { background: #fffcf7; }
+    .dart.mid .dart-ring span    { background: #fffcf7; }
+
+    /* Trifft voll – Bullseye komplett ausgefüllt */
     .dart.high { color: #b24d2c; }
+    .dart.high .dart-ring { background: rgba(178,77,44,.12); border: 2px solid rgba(178,77,44,.4); }
+    .dart.high .dart-ring::before { background: rgba(178,77,44,.45); }
+    .dart.high .dart-ring::after  { background: rgba(178,77,44,.75); }
+    .dart.high .dart-ring span    { background: #b24d2c; }
+
+    .dart.selected .dart-ring {
+      border-color: var(--accent);
+      box-shadow: 0 4px 14px rgba(191,106,60,.22);
+    }
 
     .bar-vis {
       margin-top: 18px;
@@ -690,6 +718,22 @@
     .analysis-box h3 {
       font-size: 18px;
       margin-bottom: 8px;
+    }
+
+    .analysis-bars {
+      display: grid;
+      gap: 12px;
+    }
+
+    .result-insight {
+      background: #fcf7f0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--text);
+      font-weight: 500;
     }
 
     .summary-pills {
@@ -909,12 +953,16 @@
 
         <div class="hero-focus">
           <div class="focus-row">
+            <div class="focus-icon">🧭</div>
+            <div>Wie sieht dein Arbeitsalltag aktuell aus?</div>
+          </div>
+          <div class="focus-row">
             <div class="focus-icon">🔍</div>
             <div>Was läuft gut?</div>
           </div>
           <div class="focus-row">
             <div class="focus-icon">⚙️</div>
-            <div>Wo würde etwas helfen?</div>
+            <div>Wo verlierst du Zeit oder Nerven?</div>
           </div>
         </div>
 
@@ -947,35 +995,22 @@
         <div class="result-wrap">
           <div class="result-hero">
             <div class="result-tag" id="resultTag">Kurz-Analyse</div>
-            <h2 class="result-title" id="resultTitle">Dein Bild</h2>
-            <div class="result-copy">Basierend auf deinen Antworten ergibt sich folgendes Bild:</div>
+            <h2 class="result-title">Dein aktuelles Bild</h2>
           </div>
 
-          <div class="analysis-grid">
-            <div class="analysis-box">
-              <h3>Was auffällt</h3>
-              <div id="analysisWhat"></div>
-              <div id="resultChart" class="result-chart"></div>
-              <div class="summary-pills" id="summaryPills"></div>
-            </div>
+          <div class="analysis-bars" id="analysisBars"></div>
 
-            <div class="analysis-box">
-              <h3>Wo Potenzial liegt</h3>
-              <div id="analysisPotential"></div>
-            </div>
-
-          </div>
+          <div class="result-insight" id="resultInsight"></div>
 
           <div class="cta-panel">
-            <h3 class="cta-title">Wenn du dranbleiben willst oder einen Gedanken hast:</h3>
+            <h3 class="cta-title">Wenn du das verändern willst: Lass uns kurz sprechen</h3>
 
             <div class="contact-options">
-              <button class="choice" onclick="finishWithoutContact()">
-                <span class="choice-label">👍 Passt für mich</span>
-              </button>
-
               <button class="choice" onclick="openContact()">
-                <span class="choice-label">🤝 Dranbleiben / Input geben</span>
+                <span class="choice-label">🤝 Ja, gerne kurz sprechen</span>
+              </button>
+              <button class="choice" onclick="finishWithoutContact()">
+                <span class="choice-label">👍 Danke, passt so</span>
               </button>
             </div>
 
@@ -1000,14 +1035,12 @@
             </div>
 
             <div class="share-box">
-              <h4>Zum Weiterleiten</h4>
-              <div class="share-text" id="shareText">Kurze, angenehm gemachte Umfrage darüber, wo in der Arbeitswelt wirklich Verbesserungspotenzial besteht – anonym und mit kurzer Analyse am Ende:</div>
+              <h4>Weiterleiten</h4>
+              <div class="share-text" id="shareText">Kurze Umfrage zur Arbeitsrealität – anonym und mit kurzer Einordnung am Ende:</div>
               <div class="btn-row">
                 <button class="btn btn-secondary" onclick="copyShareText()">Text kopieren</button>
               </div>
             </div>
-
-            <div class="small-fine">Keine Versprechen. Nur Analyse, Richtung und die Frage, wo echte Relevanz besteht.</div>
           </div>
         </div>
       </div>
@@ -1015,18 +1048,14 @@
 
     <section class="screen" id="screen-thanks">
       <div class="card">
-        <h2 class="hero-title" style="font-size:30px;">Merci.</h2>
-        <p class="hero-copy">Deine Antworten sind gespeichert.</p>
+        <h2 class="hero-title" style="font-size:30px;">Danke für deinen Einblick.</h2>
+        <p class="hero-copy">Wenn du magst, melde dich.</p>
         <div class="btn-row">
           <button class="btn btn-primary" onclick="restartSurvey()">Neue Runde starten</button>
         </div>
 
-        <p class="hero-copy" style="margin-top:8px;">
-          Wenn du magst: sende die Umfrage noch an 2 Menschen weiter, bei denen die Perspektive spannend wäre.
-        </p>
-
         <div class="share-box" style="margin-top:18px;">
-          <h4>Weiterleiten</h4>
+          <h4>Oder schick das 2 Personen, die ähnlich ticken</h4>
           <div class="share-text" id="finalShareText">
             Kurze Umfrage zur Arbeitsrealität: Was läuft gut, wo gibt es Reibung – mit kurzer Einordnung am Ende:
           </div>
@@ -1039,7 +1068,7 @@
   </div>
 
   <script>
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxXt5TSWn8Il7PbG2opvhz8iHk1l1b0GUC6SklWby8Gv0JhAlceu97O0kI7pUH2PRcw/exec";
+    const GOOGLE_SCRIPT_URL = "";
 
     function getSubmissionId() {
       let id = sessionStorage.getItem("submission_id");
@@ -1114,7 +1143,7 @@
 
     const branchLabels = {
       employed_happy: "Angestellt & zufrieden",
-      employed_change: "Angestellt & will wechseln",
+      employed_change: "Ich möchte mich beruflich verändern",
       employed_self: "Angestellt & will selbständig werden",
       self_employed: "Selbständig"
     };
@@ -1136,7 +1165,7 @@
         section: "Start",
         options: [
           { value: "employed_happy", label: "Angestellt & zufrieden", sub: "Es passt grundsätzlich.", emoji: "🙂" },
-          { value: "employed_change", label: "Angestellt & will wechseln", sub: "Es passt nicht mehr richtig.", emoji: "🔄" },
+          { value: "employed_change", label: "Ich möchte mich beruflich verändern", sub: "Es passt nicht mehr richtig.", emoji: "🔄" },
           { value: "employed_self", label: "Angestellt & will selbständig werden", sub: "Das eigene Ding zieht.", emoji: "🚀" },
           { value: "self_employed", label: "Selbständig", sub: "Ich arbeite auf eigene Rechnung.", emoji: "🛠️" }
         ]
@@ -1153,6 +1182,8 @@
           { value: "gewerbe_produktion", label: "Gewerbe / Produktion", emoji: "🏭" },
           { value: "dienstleistung", label: "Dienstleistung", emoji: "🧑‍💼" },
           { value: "kreativ", label: "Kreativ / Design", emoji: "🎨" },
+          { value: "sozial_gesundheit_pflege", label: "Sozial / Gesundheit / Pflege", emoji: "🏥" },
+          { value: "bildung_coaching", label: "Bildung / Coaching", emoji: "📚" },
           { value: "andere", label: "Etwas anderes", emoji: "🧩" }
         ]
       },
@@ -1168,7 +1199,8 @@
           { value: "18_25", label: "18–25" },
           { value: "26_35", label: "26–35" },
           { value: "36_45", label: "36–45" },
-          { value: "46_plus", label: "46+" }
+          { value: "46_55", label: "46–55" },
+          { value: "56_65", label: "56–65" }
         ]
       }
     ];
@@ -1224,8 +1256,8 @@
           title: "Wie stark trägt guter Lohn zu deiner Zufriedenheit bei?",
           copy: "Nicht absolut – nur im Verhältnis zu den anderen Faktoren.",
           section: "Angestellt & zufrieden",
-          minLabel: "kaum",
-          maxLabel: "sehr stark",
+          minLabel: "trifft gar nicht zu",
+          maxLabel: "trifft voll zu",
           labels: ["1", "2", "3", "4", "5"],
           defaultValue: 4
         },
@@ -1319,7 +1351,7 @@
           type: "singleCards",
           title: "Was passt aktuell am wenigsten?",
           copy: "Nicht alles. Der grösste Punkt.",
-          section: "Angestellt & will wechseln",
+          section: "Berufliche Veränderung",
           options: [
             { value: "job_inhalt", label: "Die Arbeit selbst", emoji: "🧱" },
             { value: "team_kultur", label: "Team / Führung / Kultur", emoji: "🫥" },
@@ -1333,7 +1365,7 @@
           type: "target",
           title: "Wie stark trifft das auf dich zu: 'Ich weiss, dass etwas nicht passt – aber noch nicht sauber, wohin'?",
           copy: "Das ist oft der eigentliche Engpass.",
-          section: "Angestellt & will wechseln",
+          section: "Berufliche Veränderung",
           options: [
             { value: "kaum", label: "Kaum", desc: "Ich weiss schon recht genau, wohin." },
             { value: "teils", label: "Teils", desc: "Es ist halb klar, halb offen." },
@@ -1345,7 +1377,7 @@
           type: "singleGrid",
           title: "Was hält dich aktuell am stärksten fest?",
           copy: "Den grössten Punkt nennen.",
-          section: "Angestellt & will wechseln",
+          section: "Berufliche Veränderung",
           options: [
             { value: "sicherheit", label: "Sicherheit" },
             { value: "keine_klarheit", label: "Zu wenig Klarheit über den nächsten Schritt" },
@@ -1360,9 +1392,9 @@
           type: "scale",
           title: "Wie dringend willst du innerhalb der nächsten 12 Monate etwas verändern?",
           copy: "Nicht für immer – nur aktuell.",
-          section: "Angestellt & will wechseln",
-          minLabel: "nicht dringend",
-          maxLabel: "sehr dringend",
+          section: "Berufliche Veränderung",
+          minLabel: "trifft gar nicht zu",
+          maxLabel: "trifft voll zu",
           labels: ["1", "2", "3", "4", "5"],
           defaultValue: 4
         },
@@ -1371,12 +1403,12 @@
           type: "singleCards",
           title: "Was würde dir jetzt am meisten helfen?",
           copy: "Nur der Haupthebel.",
-          section: "Angestellt & will wechseln",
+          section: "Berufliche Veränderung",
           options: [
             { value: "klarheit_ueber_richtung", label: "Klarheit über die Richtung", emoji: "🧭" },
             { value: "konkreter_plan", label: "Ein klarer Plan", emoji: "🗺️" },
             { value: "tool_struktur", label: "Ein strukturierendes Tool", emoji: "💻" },
-            { value: "sparring", label: "Sparring / Austausch", emoji: "🗣️" },
+            { value: "sparring", label: "Austausch mit jemandem", emoji: "🗣️" },
             { value: "markt_einblick", label: "Mehr Marktverständnis", emoji: "📊" }
           ]
         },
@@ -1385,10 +1417,10 @@
           type: "scaleBars",
           title: "Wo liegt bei dir am ehesten das Problem?",
           copy: "Pro Bereich kurz einschätzen.",
-          section: "Angestellt & will wechseln",
+          section: "Berufliche Veränderung",
           bars: [
             { key: "ec_6_problem_job", label: "Aktueller Job" },
-            { key: "ec_6_problem_klarheit", label: "Klarheit über den Wechsel" },
+            { key: "ec_6_problem_klarheit", label: "Klarheit über den Jobwechsel" },
             { key: "ec_6_problem_markt", label: "Orientierung im Markt" },
             { key: "ec_6_problem_umsetzung", label: "Umsetzung / Aktivwerden" }
           ]
@@ -1398,7 +1430,7 @@
           type: "singleGrid",
           title: "Wie suchst oder prüfst du aktuell?",
           copy: "Was trifft am ehesten?",
-          section: "Angestellt & will wechseln",
+          section: "Berufliche Veränderung",
           columns: 2,
           options: [
             { value: "gar_nicht", label: "Noch gar nicht wirklich" },
@@ -1412,7 +1444,7 @@
           type: "singleGrid",
           title: "Was würde ein neues Setup für dich attraktiv machen?",
           copy: "Den wichtigsten Punkt nennen.",
-          section: "Angestellt & will wechseln",
+          section: "Berufliche Veränderung",
           options: [
             { value: "mehr_sinn", label: "Mehr Sinn" },
             { value: "mehr_verantwortung", label: "Mehr Verantwortung" },
@@ -1427,12 +1459,12 @@
           type: "singleCards",
           title: "In welcher Form wäre Unterstützung für dich am ehesten interessant?",
           copy: "Wenn es wirklich helfen würde.",
-          section: "Angestellt & will wechseln",
+          section: "Berufliche Veränderung",
           options: [
             { value: "analyse", label: "Analyse / Klarheit", emoji: "🔍" },
-            { value: "strategie", label: "Strategie / Wechselpfad", emoji: "♟️" },
+            { value: "strategie", label: "Strategie / Jobwechselpfad", emoji: "♟️" },
             { value: "tool", label: "Digitales Tool / Strukturhilfe", emoji: "⚙️" },
-            { value: "beratung", label: "Sparring / Beratung", emoji: "🧠" },
+            { value: "beratung", label: "Austausch / Beratung", emoji: "🧠" },
             { value: "nichts", label: "Eher keine Unterstützung", emoji: "👌" }
           ]
         },
@@ -1441,7 +1473,7 @@
           type: "singleGrid",
           title: "Wie offen wärst du dafür, Zeit oder Geld in eine wirklich hilfreiche Lösung zu investieren?",
           copy: "Nur als Signal, nicht als Kaufentscheid.",
-          section: "Angestellt & will wechseln",
+          section: "Berufliche Veränderung",
           columns: 2,
           options: [
             { value: "nur_zeit", label: "Zeit eher ja" },
@@ -1514,8 +1546,8 @@
           title: "Wie realistisch wäre ein erster Schritt innerhalb der nächsten 12 Monate?",
           copy: "Nicht die komplette Gründung – nur ein echter erster Schritt.",
           section: "Angestellt & will selbständig werden",
-          minLabel: "unrealistisch",
-          maxLabel: "realistisch",
+          minLabel: "trifft gar nicht zu",
+          maxLabel: "trifft voll zu",
           labels: ["1", "2", "3", "4", "5"],
           defaultValue: 3
         },
@@ -1528,7 +1560,7 @@
           options: [
             { value: "klarer_fahrplan", label: "Ein klarer Fahrplan", emoji: "🗺️" },
             { value: "erste_kunden", label: "Erste Kunden / Aufträge", emoji: "🤝" },
-            { value: "sparring", label: "Sparring mit jemandem, der das kennt", emoji: "🧠" },
+            { value: "sparring", label: "Austausch mit jemandem, der das kennt", emoji: "🧠" },
             { value: "einfaches_tool", label: "Ein einfaches Tool für Struktur und Überblick", emoji: "💻" },
             { value: "zahlen_klarheit", label: "Mehr Klarheit über Zahlen und Risiko", emoji: "📊" }
           ]
@@ -1585,7 +1617,7 @@
             { value: "analyse", label: "Analyse: Was passt überhaupt zu mir?", emoji: "🔍" },
             { value: "strategie", label: "Strategie: Wie gehe ich es an?", emoji: "♟️" },
             { value: "tool", label: "Tool: Struktur, Schritte, Überblick", emoji: "⚙️" },
-            { value: "beratung", label: "Beratung / Sparring", emoji: "🗣️" },
+            { value: "beratung", label: "Beratung / Austausch", emoji: "🗣️" },
             { value: "community", label: "Austausch mit ähnlichen Leuten", emoji: "🌐" }
           ]
         }
@@ -1626,8 +1658,8 @@
           title: "Wie stark bremst dich operative Ineffizienz aktuell aus?",
           copy: "Also Dinge, die Zeit fressen, aber keinen echten Hebel bringen.",
           section: "Selbständig",
-          minLabel: "kaum",
-          maxLabel: "massiv",
+          minLabel: "trifft gar nicht zu",
+          maxLabel: "trifft voll zu",
           labels: ["1", "2", "3", "4", "5"],
           defaultValue: 4
         },
@@ -1885,6 +1917,9 @@
           <div class="range-wrap">
             <input type="range" id="scaleInput" min="1" max="${labels.length}" step="1" value="${q.defaultValue || 3}" />
           </div>
+          <div class="scale-ticks">
+            ${labels.map((l, i) => `<span>${i + 1}</span>`).join("")}
+          </div>
           <div class="scale-labels">
             <span>${q.minLabel || "niedrig"}</span>
             <span>${q.maxLabel || "hoch"}</span>
@@ -2039,173 +2074,110 @@
 
       document.getElementById("resultTag").textContent = `${emoji} ${branchLabel}`;
       document.getElementById("shareText").textContent =
-        `Kurze Umfrage (3–5 Min):\n\nWas läuft bei dir gut – und wo würde etwas helfen?\n\nAm Ende gibt's eine kurze Einordnung.\n\n${window.location.href}`;
+        `Kurze Umfrage zur Arbeitsrealität – anonym und mit kurzer Einordnung am Ende:\n\n${window.location.href}`;
 
-      let title = "";
-      let what = "";
-      let potential = "";
-      const pills = [];
+      // Compute 3 dimension scores (0–100)
+      let friction = 50;
+      let clarity = 50;
+      let changeWish = 50;
 
       if (branch === "employed_happy") {
-        const salaryWeight = scoreFromValue(answers.eh_4);
-        const target = answers.eh_5;
-        const improvement = answers.eh_7;
-        const selfCondition = answers.eh_10;
-
-        if (answers.eh_1 === "sicherheit" || target === "voll") {
-          title = "Stabilität mit klaren Grenzen";
-        } else if (answers.eh_1 === "freiheit_verantwortung" || answers.eh_1 === "interessante_arbeit") {
-          title = "Zufrieden, weil Inhalt und Verantwortung stimmen";
-        } else {
-          title = "Setup stimmt – mit sichtbaren Reibungspunkten";
-        }
-
-        what = "Dein Setup wirkt insgesamt stimmig. Was trägt: passende Rahmenbedingungen, funktionierende Abläufe, stimmiges Zusammenspiel von Verantwortung und Sicherheit.";
-        potential = "Der grösste Hebel liegt wahrscheinlich bei Effizienz, Klarheit oder besseren Tools – nicht bei grundsätzlicher Veränderung.";
-
-        if (salaryWeight >= 4) pills.push("Lohn ist relevanter Faktor");
-        if (answers.eh_2 && answers.eh_2.includes("digitale_tools")) pills.push("Digitale Tools helfen spürbar");
-        if (improvement === "bessere_tools") pills.push("Tool-Potenzial sichtbar");
-        if (selfCondition === "klarer_sicherer_weg") pills.push("Selbständigkeit nur mit klarem Rahmen");
-        if (selfCondition === "eher_gar_nicht") pills.push("Kein echter Gründungsdrang");
+        const bars = [
+          Number(answers.eh_8_strategie) || 3,
+          Number(answers.eh_8_kommunikation) || 3,
+          Number(answers.eh_8_tools) || 3,
+          Number(answers.eh_8_ablauf) || 3
+        ];
+        friction = Math.round(average(bars) * 20);
+        clarity = answers.eh_7 === "gar_nicht_viel" ? 85 : (answers.eh_5 === "voll" ? 55 : 70);
+        changeWish = answers.eh_10 === "eher_gar_nicht" ? 10 : answers.eh_10 === "sehr_starke_idee" ? 40 : 20;
       }
 
       if (branch === "employed_change") {
         const urgency = scoreFromValue(answers.ec_4);
-        const support = answers.ec_5;
-        const form = answers.ec_9;
-
-        if (answers.ec_2 === "voll" || answers.ec_5 === "klarheit_ueber_richtung") {
-          title = "Nicht festgefahren – eher unscharf";
-        } else if (answers.ec_3 && answers.ec_3.includes("sicherheit")) {
-          title = "Veränderungswunsch mit Sicherheitsbremse";
-        } else {
-          title = "Bewegung wäre möglich – Struktur fehlt noch";
-        }
-
-        what = "Du wirkst nicht orientierungslos, sondern in einer Phase, in der Klarheit und Struktur fehlen. Die Reibung liegt oft zwischen Unzufriedenheit und klarer Bewegung.";
-        potential = "Der grösste Hebel liegt wahrscheinlich bei klarer Richtung, konkreten nächsten Schritten und einem einfachen System.";
-
-        if (urgency >= 4) pills.push("Veränderung wirkt dringlich");
-        if (support === "tool_struktur") pills.push("Tool für Klarheit denkbar");
-        if (form === "beratung") pills.push("Beratung relevant");
-        if (form === "analyse") pills.push("Analyse relevant");
-        if (answers.ec_8 && answers.ec_8.includes("mehr_struktur")) pills.push("Struktur als Treiber");
+        friction = urgency > 0 ? Math.round(urgency * 20) : 60;
+        clarity = answers.ec_2 === "voll" ? 20 : answers.ec_2 === "teils" ? 50 : 75;
+        changeWish = urgency > 0 ? Math.round(urgency * 20) : 65;
       }
 
       if (branch === "employed_self") {
+        const bars = [
+          Number(answers.es_7_klarheit) || 3,
+          Number(answers.es_7_markt) || 3,
+          Number(answers.es_7_struktur) || 3,
+          Number(answers.es_7_mut) || 3
+        ];
+        friction = Math.round(average(bars) * 20);
+        clarity = answers.es_4 === "voll" ? 20 : answers.es_4 === "teils" ? 50 : 75;
         const realism = scoreFromValue(answers.es_5);
-        const target = answers.es_4;
-        const support = answers.es_10;
-
-        if (answers.es_3 && answers.es_3.includes("kein_plan")) {
-          title = "Zug da – aber der Weg ist zu diffus";
-        } else if (answers.es_3 && answers.es_3.includes("geld_risiko")) {
-          title = "Gründungswunsch mit Risikobremse";
-        } else if (realism >= 4) {
-          title = "Nah an echter Bewegung";
-        } else {
-          title = "Interesse da – Umsetzung noch nicht greifbar";
-        }
-
-        what = "Dein Setup wirkt insgesamt wie jemand, der den Wunsch hat, aber den Weg noch nicht klar sieht. Klarheit, Struktur und ein erster konkreter Schritt fehlen.";
-        potential = "Der grösste Hebel liegt wahrscheinlich bei Einstiegsstruktur, Marktgefühl und einem realistischen ersten Schritt.";
-
-        if (target === "voll") pills.push("Klarer Weg fehlt");
-        if (support === "tool") pills.push("Tool als Gründungshebel");
-        if (support === "beratung") pills.push("Beratung / Sparring relevant");
-        if (answers.es_9 && answers.es_9.includes("klare_nachfrage")) pills.push("Nachfrage wäre zentraler Trigger");
-        if (answers.es_9 && answers.es_9.includes("genug_polster")) pills.push("Finanzielles Polster relevant");
+        changeWish = realism > 0 ? Math.round(realism * 20) : 55;
       }
 
       if (branch === "self_employed") {
         const ineff = scoreFromValue(answers.se_3);
-        const target = answers.se_5;
-        const help = answers.se_8;
-        const situation = answers.se_1;
-
-        if (situation === "laeuft_sehr_gut") {
-          title = "Funktionierend – mit übertragbaren Mustern";
-        } else if (ineff >= 4 || target === "voll") {
-          title = "Nicht am Einsatz – eher am System";
-        } else if (help === "beratung" || help === "strategie_workshop") {
-          title = "Operativ drin, strategisch mit Luft";
-        } else {
-          title = "Klarer Hebel bei Vereinfachung";
-        }
-
-        what = "Dein Setup zeigt, wo fehlende Struktur, operative Ineffizienz oder unklare Abläufe Zeit und Energie kosten – und was bereits gut läuft.";
-        potential = "Der grösste Hebel liegt wahrscheinlich bei Effizienz, Überblick und einfacheren Abläufen im Alltag.";
-
-        if (situation === "laeuft_sehr_gut") pills.push("Best-Practice-Signal");
-        if (help === "tool") pills.push("Tool-Potenzial klar");
-        if (help === "beratung") pills.push("Beratungs-Potenzial klar");
-        if (answers.se_2 && answers.se_2.includes("planung")) pills.push("Planung ist Engpass");
-        if (answers.se_2 && answers.se_2.includes("tools_chaos")) pills.push("Tool-/Systemchaos sichtbar");
+        friction = ineff > 0 ? Math.round(ineff * 20) : 55;
+        clarity = answers.se_5 === "voll" ? 25 : answers.se_5 === "teils" ? 55 : 80;
+        changeWish = ineff > 0 ? Math.round(ineff * 20) : 50;
       }
 
-      document.getElementById("resultTitle").textContent = title;
-      document.getElementById("analysisWhat").textContent = what;
-      document.getElementById("analysisPotential").textContent = potential;
+      friction = Math.max(0, Math.min(100, friction));
+      clarity = Math.max(0, Math.min(100, clarity));
+      changeWish = Math.max(0, Math.min(100, changeWish));
 
-      // Mini bar chart from scaleBars data
-      const chartContainer = document.getElementById("resultChart");
-      chartContainer.innerHTML = "";
-      const chartData = [];
-      if (branch === "employed_happy") {
-        chartData.push(
-          { label: "Strategie", value: Number(answers.eh_8_strategie) || 3 },
-          { label: "Kommunikation", value: Number(answers.eh_8_kommunikation) || 3 },
-          { label: "Tools", value: Number(answers.eh_8_tools) || 3 },
-          { label: "Abläufe", value: Number(answers.eh_8_ablauf) || 3 }
-        );
-      } else if (branch === "employed_change") {
-        chartData.push(
-          { label: "Aktueller Job", value: Number(answers.ec_6_problem_job) || 3 },
-          { label: "Klarheit", value: Number(answers.ec_6_problem_klarheit) || 3 },
-          { label: "Markt", value: Number(answers.ec_6_problem_markt) || 3 },
-          { label: "Umsetzung", value: Number(answers.ec_6_problem_umsetzung) || 3 }
-        );
-      } else if (branch === "employed_self") {
-        chartData.push(
-          { label: "Klarheit", value: Number(answers.es_7_klarheit) || 3 },
-          { label: "Marktgefühl", value: Number(answers.es_7_markt) || 3 },
-          { label: "Struktur", value: Number(answers.es_7_struktur) || 3 },
-          { label: "Mut / Sicherheit", value: Number(answers.es_7_mut) || 3 }
-        );
-      } else if (branch === "self_employed") {
-        chartData.push(
-          { label: "Analyse", value: Number(answers.se_6_analyse) || 3 },
-          { label: "Strategie", value: Number(answers.se_6_strategie) || 3 },
-          { label: "Effizienz", value: Number(answers.se_6_effizienz) || 3 },
-          { label: "Tools", value: Number(answers.se_6_tools) || 3 }
-        );
+      function levelLabel(v) {
+        return v >= 67 ? "hoch" : v >= 34 ? "mittel" : "niedrig";
       }
-      chartData.forEach(item => {
+
+      const barsContainer = document.getElementById("analysisBars");
+      barsContainer.innerHTML = "";
+      [
+        { label: "Druck / Reibung", value: friction },
+        { label: "Klarheit", value: clarity },
+        { label: "Veränderungswunsch", value: changeWish }
+      ].forEach(item => {
         const row = document.createElement("div");
-        row.className = "result-chart-row";
+        row.className = "bar-row";
         row.innerHTML = `
-          <div class="result-chart-label">${item.label}</div>
-          <div class="result-chart-track"><div class="result-chart-fill" style="width:${(item.value / 5) * 100}%"></div></div>
-          <div class="result-chart-value">${item.value}/5</div>
+          <div class="bar-row-top">
+            <span>${item.label}</span>
+            <span>${levelLabel(item.value)}</span>
+          </div>
+          <div class="mini-track"><div class="mini-fill" style="width:${item.value}%"></div></div>
         `;
-        chartContainer.appendChild(row);
+        barsContainer.appendChild(row);
       });
 
-      const pillWrap = document.getElementById("summaryPills");
-      pillWrap.innerHTML = "";
-      const basePills = [
-        branchLabels[branch] || "Perspektive",
-        answers.bereich ? answers.bereich.replaceAll("_", " ") : null,
-        answers.alter ? answers.alter.replaceAll("_", "+") : null
-      ].filter(Boolean);
+      // 1-sentence insight
+      let insight = "";
+      if (branch === "employed_happy") {
+        insight = "Dein Setup passt – der grösste Hebel liegt bei Effizienz und Klarheit, nicht bei grundlegender Veränderung.";
+      } else if (branch === "employed_change") {
+        if (answers.ec_2 === "voll") {
+          insight = "Du hast aktuell wenig Klarheit, aber einen klaren Wunsch nach Veränderung.";
+        } else if (scoreFromValue(answers.ec_4) >= 4) {
+          insight = "Der Druck ist da – was fehlt ist ein konkreter nächster Schritt.";
+        } else {
+          insight = "Der Wunsch ist da. Klarheit über die Richtung wäre dein grösster Hebel.";
+        }
+      } else if (branch === "employed_self") {
+        if (answers.es_4 === "voll") {
+          insight = "Der Wunsch ist da, aber der Weg ist noch zu diffus – Klarheit wäre dein grösster Hebel.";
+        } else if (scoreFromValue(answers.es_5) >= 4) {
+          insight = "Du bist näher an einem ersten Schritt, als es sich vielleicht anfühlt.";
+        } else {
+          insight = "Konkrete Struktur und ein erster machbarer Schritt würden viel verändern.";
+        }
+      } else if (branch === "self_employed") {
+        if (scoreFromValue(answers.se_3) >= 4) {
+          insight = "Operative Reibung kostet dich aktuell Zeit und Energie – das ist ein System-, kein Kapazitätsproblem.";
+        } else if (answers.se_5 === "voll") {
+          insight = "Du siehst das Verbesserungspotenzial klar – der nächste Schritt ist, es anzugehen.";
+        } else {
+          insight = "Dein Setup hat Stärken – mit gezielter Anpassung wäre noch mehr drin.";
+        }
+      }
 
-      [...basePills, ...pills].slice(0, 4).forEach(text => {
-        const el = document.createElement("div");
-        el.className = "summary-pill";
-        el.textContent = text;
-        pillWrap.appendChild(el);
-      });
+      document.getElementById("resultInsight").textContent = insight;
     }
 
     function openContact() {
@@ -2224,8 +2196,11 @@
           submitted_from: window.location.href
         };
 
+        const now = new Date().toISOString();
         const payload = {
           submission_id: getSubmissionId(),
+          created_at: now,
+          updated_at: now,
           user_type: answers.gruppe || "",
           entry_point: getEntryPoint(),
           pain_points: JSON.stringify(rawAnswers),
