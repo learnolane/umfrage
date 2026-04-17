@@ -2320,10 +2320,12 @@
 
     function submitFeedbackOnly(btn) {
       sendToBackend();
-      document.getElementById("feedbackTextArea").classList.remove("show");
-      document.getElementById("feedbackInput").value = "";
       btn.textContent = "Gesendet ✓";
       btn.disabled = true;
+      setTimeout(() => {
+        showScreen("screen-thanks");
+        updateFinalShareText();
+      }, 600);
     }
 
     function updateFinalShareText() {
