@@ -1030,7 +1030,10 @@
                 <button type="button" class="btn btn-secondary" id="feedbackDownBtn" onclick="setSurveyFeedback('down')">👎 Eher nicht</button>
               </div>
               <div class="contact-area" id="feedbackTextArea">
-                <textarea class="textarea" id="feedback-text" placeholder="Optional: Was war gut, unklar oder hätte besser sein können?"></textarea>
+                <textarea class="textarea" id="feedbackInput" placeholder="Optional: Was war gut, unklar oder hätte besser sein können?"></textarea>
+                <div class="btn-row">
+                  <button class="btn btn-dark" onclick="submitFeedbackOnly(this)">Feedback senden →</button>
+                </div>
               </div>
             </div>
 
@@ -2189,7 +2192,7 @@
       try {
         const contactValue = answers.kontakt || "";
         const noteValue = answers.notiz || "";
-        const feedbackText = document.getElementById("feedback-text")?.value?.trim() || "";
+        const feedbackText = document.getElementById("feedbackInput")?.value?.trim() || "";
 
         // Scale values are stored as "value|label" – parse to integer
         function scaleInt(key) {
@@ -2204,14 +2207,13 @@
 
           user_type: answers.gruppe || "",
           entry_point: getEntryPoint(),
-          motivation: noteValue,
+          contact_note: noteValue,
           interest_level: getInterestLevelFromAnswers(),
           honeypot: "",
 
-          // Pain point flags (reserved for future use)
-          pain_points_time_pressure: answers.time_pressure ? 1 : 0,
-          pain_points_tool_confusion: answers.tool_confusion ? 1 : 0,
-          pain_points_knowledge_gap: answers.knowledge_gap ? 1 : 0,
+          // Demographics (alle Branches)
+          bereich: answers.bereich || "",
+          alter: answers.alter || "",
 
           // Analysis fields – use first available value across all branches
           segment: answers.gruppe || "",
@@ -2227,6 +2229,26 @@
           operational_friction: answers.se_3 || answers.se_5 || answers.ec_6_problem_job || "",
           self_employment_readiness: answers.es_5 || answers.se_1 || "",
           best_practice_signal: answers.eh_2 || answers.se_9 || "",
+
+          // Rohantworten employed_happy
+          eh_attraction: answers.eh_1 || "",
+          eh_annoyance: answers.eh_6 || "",
+          eh_self_condition: answers.eh_10 || "",
+
+          // Rohantworten employed_change
+          ec_main_issue: answers.ec_1 || "",
+          ec_search_mode: answers.ec_7 || "",
+          ec_support_form: answers.ec_9 || "",
+
+          // Rohantworten employed_self
+          es_main_driver: answers.es_1 || "",
+          es_since_when: answers.es_2 || "",
+          es_start_method: answers.es_8 || "",
+
+          // Rohantworten self_employed
+          se_status: answers.se_1 || "",
+          se_organization: answers.se_4 || "",
+          se_main_need: answers.se_7 || "",
 
           // Feedback
           feedback_rating: answers.feedback_rating || "",
@@ -2294,6 +2316,14 @@
       } else {
         document.getElementById("feedbackTextArea").classList.remove("show");
       }
+    }
+
+    function submitFeedbackOnly(btn) {
+      sendToBackend();
+      document.getElementById("feedbackTextArea").classList.remove("show");
+      document.getElementById("feedbackInput").value = "";
+      btn.textContent = "Gesendet ✓";
+      btn.disabled = true;
     }
 
     function updateFinalShareText() {
