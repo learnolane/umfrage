@@ -2182,6 +2182,8 @@
       sendToBackend();
       btn.textContent = "Gesendet ✓";
       btn.disabled = true;
+      document.getElementById("feedbackTextArea").classList.remove("show");
+      document.getElementById("feedbackBox").style.opacity = "0.5";
     }
 
     async function sendToBackend() {
