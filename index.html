@@ -1003,24 +1003,12 @@
           <div class="result-insight" id="resultInsight"></div>
 
           <div class="cta-panel">
-            <h3 class="cta-title">Wenn du das verändern willst: Lass uns kurz sprechen</h3>
 
-            <div class="contact-options">
-              <button class="choice" onclick="openContact()">
-                <span class="choice-label">🤝 Ja, gerne kurz sprechen</span>
-              </button>
-              <button class="choice" onclick="finishWithoutContact()">
-                <span class="choice-label">👍 Danke, passt so</span>
-              </button>
-            </div>
-
-            <div class="contact-area" id="contactArea">
+            <div class="share-box">
+              <h4>Kontakt – wenn du möchtest</h4>
               <input class="input" id="contactInput" type="text" placeholder="Mail, WhatsApp, Insta oder was für dich passt" />
-              <textarea class="textarea" id="notesInput" placeholder="Optional: Noch ein Gedanke, Wunsch oder Hinweis?"></textarea>
-              <div class="btn-row">
-                <button class="btn btn-dark" onclick="submitWithContact()">Absenden →</button>
-              </div>
-              <div class="contact-tip">Ganz optional. Keine langen Erklärungen nötig.</div>
+              <textarea class="textarea" id="notesInput" placeholder="Optional: Noch ein Gedanke, Wunsch oder Hinweis?" style="margin-top:10px;"></textarea>
+              <div class="contact-tip" style="margin-top:6px;">Ganz optional. Keine langen Erklärungen nötig.</div>
             </div>
 
             <div class="share-box" id="feedbackBox">
@@ -1030,10 +1018,7 @@
                 <button type="button" class="btn btn-secondary" id="feedbackDownBtn" onclick="setSurveyFeedback('down')">👎 Eher nicht</button>
               </div>
               <div class="contact-area" id="feedbackTextArea">
-                <textarea class="textarea" id="feedbackInput" placeholder="Optional: Was war gut, unklar oder hätte besser sein können?"></textarea>
-                <div class="btn-row">
-                  <button class="btn btn-dark" onclick="submitFeedbackOnly(this)">Feedback senden →</button>
-                </div>
+                <textarea class="textarea" id="feedbackInput" placeholder="Optional: Was war unklar oder hätte besser sein können?"></textarea>
               </div>
             </div>
 
@@ -1044,6 +1029,11 @@
                 <button class="btn btn-secondary" onclick="copyShareText()">Text kopieren</button>
               </div>
             </div>
+
+            <div class="btn-row" style="margin-top:8px;">
+              <button class="btn btn-primary" id="finishBtn" onclick="finishSurvey()" disabled>Abschliessen →</button>
+            </div>
+
           </div>
         </div>
       </div>
@@ -2183,9 +2173,12 @@
       document.getElementById("resultInsight").textContent = insight;
     }
 
-    function openContact() {
-      document.getElementById("contactArea").classList.add("show");
-      document.getElementById("contactInput").focus();
+    function finishSurvey() {
+      answers.kontakt = document.getElementById("contactInput").value.trim();
+      answers.notiz = document.getElementById("notesInput").value.trim();
+      showScreen("screen-thanks");
+      updateFinalShareText();
+      sendToBackend();
     }
 
     async function sendToBackend() {
@@ -2287,25 +2280,6 @@
       }
     }
 
-    function finishWithoutContact() {
-      answers.kontakt = "";
-      answers.notiz = "";
-      answers.feedback_rating = answers.feedback_rating || "";
-
-      showScreen("screen-thanks");
-      updateFinalShareText();
-      sendToBackend();
-    }
-
-    function submitWithContact() {
-      answers.kontakt = document.getElementById("contactInput").value.trim();
-      answers.notiz = document.getElementById("notesInput").value.trim();
-      answers.feedback_rating = answers.feedback_rating || "";
-
-      showScreen("screen-thanks");
-      updateFinalShareText();
-      sendToBackend();
-    }
 
     function setSurveyFeedback(value) {
       answers.feedback_rating = value;
@@ -2316,17 +2290,9 @@
       } else {
         document.getElementById("feedbackTextArea").classList.remove("show");
       }
+      document.getElementById("finishBtn").disabled = false;
     }
 
-    function submitFeedbackOnly(btn) {
-      sendToBackend();
-      btn.textContent = "Gesendet ✓";
-      btn.disabled = true;
-      setTimeout(() => {
-        showScreen("screen-thanks");
-        updateFinalShareText();
-      }, 600);
-    }
 
     function updateFinalShareText() {
       const el = document.getElementById("finalShareText");
@@ -2365,7 +2331,13 @@
       state.currentIndex = -1;
       state.history = [];
       sessionStorage.removeItem("submission_id");
-      document.getElementById("contactArea").classList.remove("show");
+      document.getElementById("contactInput").value = "";
+      document.getElementById("notesInput").value = "";
+      document.getElementById("feedbackUpBtn").classList.remove("selected");
+      document.getElementById("feedbackDownBtn").classList.remove("selected");
+      document.getElementById("feedbackTextArea").classList.remove("show");
+      document.getElementById("feedbackInput").value = "";
+      document.getElementById("finishBtn").disabled = true;
       showScreen("screen-intro");
       document.getElementById("progressFill").style.width = "0%";
       document.getElementById("progressPill").textContent = "0%";
