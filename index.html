@@ -1027,8 +1027,8 @@
         <div class="share-box" id="feedbackBox">
           <h4>Wie war die Umfrage?</h4>
           <div class="btn-row">
-            <button type="button" class="btn btn-secondary" id="feedbackUpBtn" onclick="setSurveyFeedback('up')">👍 Hat gepasst</button>
-            <button type="button" class="btn btn-secondary" id="feedbackDownBtn" onclick="setSurveyFeedback('down')">👎 Eher nicht</button>
+            <button type="button" class="btn btn-secondary" id="feedbackUpBtn" onclick="setSurveyFeedback('up')" style="flex:1">👍 Hat gepasst</button>
+            <button type="button" class="btn btn-secondary" id="feedbackDownBtn" onclick="setSurveyFeedback('down')" style="flex:1">👎 Eher nicht</button>
           </div>
           <div class="contact-area" id="feedbackTextArea">
             <textarea class="textarea" id="feedbackInput" placeholder="Optional: Was war unklar oder hätte besser sein können?"></textarea>
@@ -2184,6 +2184,8 @@
       btn.disabled = true;
       document.getElementById("feedbackTextArea").classList.remove("show");
       document.getElementById("feedbackBox").style.opacity = "0.5";
+      document.getElementById("contactInput").disabled = true;
+      document.getElementById("notesInput").disabled = true;
     }
 
     async function sendToBackend() {
@@ -2336,7 +2338,9 @@
       state.history = [];
       sessionStorage.removeItem("submission_id");
       document.getElementById("contactInput").value = "";
+      document.getElementById("contactInput").disabled = false;
       document.getElementById("notesInput").value = "";
+      document.getElementById("notesInput").disabled = false;
       document.getElementById("feedbackUpBtn").classList.remove("selected");
       document.getElementById("feedbackDownBtn").classList.remove("selected");
       document.getElementById("feedbackTextArea").classList.remove("show");
