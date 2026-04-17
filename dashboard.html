@@ -136,15 +136,124 @@
       flex-shrink: 0;
     }
 
-    /* Feedback */
-    .feedback-item {
-      background: var(--bg);
-      border-radius: 10px;
-      padding: 12px 14px;
+    /* Feedback cards */
+    .feedback-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+
+    .feedback-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
+    .feedback-rating {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .feedback-type {
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--accent-light);
+      border-radius: 6px;
+      padding: 2px 8px;
+    }
+
+    .feedback-date {
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    .feedback-text {
       font-size: 13px;
       color: var(--text);
-      margin-bottom: 8px;
       line-height: 1.5;
+    }
+
+    .feedback-only-rating {
+      font-size: 13px;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* Contact cards */
+    .contact-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+
+    .contact-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .contact-type {
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--accent-light);
+      border-radius: 6px;
+      padding: 2px 8px;
+    }
+
+    .contact-date {
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    .contact-channel-badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-light);
+      border-radius: 6px;
+      padding: 3px 10px;
+    }
+
+    .contact-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      word-break: break-all;
+    }
+
+    .contact-email-row {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      word-break: break-all;
+    }
+
+    .contact-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .contact-tag {
+      font-size: 11px;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2px 10px;
     }
 
     .empty-hint {
@@ -192,7 +301,7 @@
     <h1>Arbeitsrealität</h1>
     <div class="subtitle" id="lastUpdated"></div>
 
-    <!-- KPIs -->
+    <!-- ── SECTION 1: INSIGHTS ── -->
     <div class="section-title">Überblick</div>
     <div class="kpi-grid">
       <div class="kpi-card">
@@ -216,39 +325,38 @@
       </div>
     </div>
 
-    <!-- By user type -->
     <div class="section-title">Antworten nach Typ</div>
     <div class="chart-card">
       <div id="chartUserType"></div>
     </div>
 
-    <!-- Pressure by type -->
     <div class="section-title">Ø Druck pro Typ</div>
     <div class="chart-card">
       <div id="chartPressure"></div>
     </div>
 
-    <!-- Solution preference -->
     <div class="section-title">Nachfrage nach Lösungstyp</div>
     <div class="chart-card">
       <div id="chartSolution"></div>
     </div>
 
-    <!-- Top blocker -->
     <div class="section-title">Top Blocker</div>
     <div class="chart-card">
       <div id="chartBlocker"></div>
     </div>
 
-    <!-- Top desire -->
     <div class="section-title">Top Wünsche</div>
     <div class="chart-card">
       <div id="chartDesire"></div>
     </div>
 
-    <!-- Feedback texts -->
-    <div class="section-title">Letztes Feedback</div>
+    <!-- ── SECTION 2: RÜCKMELDUNGEN ── -->
+    <div class="section-title">Rückmeldungen</div>
     <div id="feedbackList"></div>
+
+    <!-- ── SECTION 3: KONTAKTAUFNAHMEN ── -->
+    <div class="section-title">Kontaktaufnahmen</div>
+    <div id="contactList"></div>
 
     <button class="refresh-btn" onclick="loadData()">Aktualisieren</button>
   </div>
@@ -263,8 +371,20 @@
       self_employed:   "Selbständig"
     };
 
+    const CHANNEL_LABELS = {
+      whatsapp: "WhatsApp",
+      telegram: "Telegram",
+      instagram: "Instagram",
+      linkedin: "LinkedIn",
+      email: "E-Mail"
+    };
+
     function label(key) {
       return TYPE_LABELS[key] || key.replace(/_/g, ' ');
+    }
+
+    function channelLabel(key) {
+      return CHANNEL_LABELS[key] || key;
     }
 
     function avg(obj) {
@@ -327,6 +447,81 @@
       });
     }
 
+    function renderFeedback(entries) {
+      const container = document.getElementById("feedbackList");
+      container.innerHTML = "";
+
+      if (!entries || !entries.length) {
+        container.innerHTML = '<div class="empty-hint">Noch keine Rückmeldungen vorhanden</div>';
+        return;
+      }
+
+      entries.forEach(item => {
+        const ratingEmoji = item.feedback_rating === 'up' ? '👍' : item.feedback_rating === 'down' ? '👎' : '';
+        const typeText = TYPE_LABELS[item.user_type] || item.user_type || '';
+        const dateText = item.created_at ? item.created_at.split(' ')[0] : '';
+
+        const card = document.createElement("div");
+        card.className = "feedback-card";
+        card.innerHTML = `
+          <div class="feedback-meta">
+            ${ratingEmoji ? `<span class="feedback-rating">${ratingEmoji}</span>` : ''}
+            ${typeText ? `<span class="feedback-type">${typeText}</span>` : ''}
+            ${dateText ? `<span class="feedback-date">${dateText}</span>` : ''}
+          </div>
+          ${item.feedback_text
+            ? `<div class="feedback-text">${escHtml(item.feedback_text)}</div>`
+            : `<div class="feedback-only-rating">Nur Bewertung abgegeben</div>`
+          }
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderContacts(entries) {
+      const container = document.getElementById("contactList");
+      container.innerHTML = "";
+
+      if (!entries || !entries.length) {
+        container.innerHTML = '<div class="empty-hint">Noch keine Kontaktaufnahmen vorhanden</div>';
+        return;
+      }
+
+      entries.forEach(item => {
+        const typeText = TYPE_LABELS[item.user_type] || item.user_type || '';
+        const dateText = item.created_at ? item.created_at.split(' ')[0] : '';
+        const ch = channelLabel(item.contact_channel);
+
+        const tags = [
+          item.primary_blocker ? `Blocker: ${item.primary_blocker.replace(/_/g,' ')}` : null,
+          item.solution_preference ? `Lösung: ${item.solution_preference.replace(/_/g,' ')}` : null,
+          item.primary_desire ? `Wunsch: ${item.primary_desire.replace(/_/g,' ')}` : null
+        ].filter(Boolean);
+
+        const card = document.createElement("div");
+        card.className = "contact-card";
+        card.innerHTML = `
+          <div class="contact-header">
+            ${typeText ? `<span class="contact-type">${typeText}</span>` : ''}
+            ${item.contact_channel ? `<span class="contact-channel-badge">${ch}</span>` : ''}
+            ${dateText ? `<span class="contact-date">${dateText}</span>` : ''}
+          </div>
+          ${item.contact_value ? `<div class="contact-value">${escHtml(item.contact_value)}</div>` : ''}
+          ${item.contact_email ? `<div class="contact-email-row">✉ ${escHtml(item.contact_email)}</div>` : ''}
+          ${tags.length ? `<div class="contact-tags">${tags.map(t => `<span class="contact-tag">${escHtml(t)}</span>`).join('')}</div>` : ''}
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
     async function loadData() {
       document.getElementById("loadingState").textContent = "Daten werden geladen…";
       document.getElementById("loadingState").style.display = "block";
@@ -345,8 +540,8 @@
         const avgF = avg(d.avg_operational_friction);
         document.getElementById("kpiFriction").textContent = avgF !== null ? avgF : "–";
 
-        const up = d.feedback_rating_counts.up || 0;
-        const down = d.feedback_rating_counts.down || 0;
+        const up = (d.feedback_rating_counts && d.feedback_rating_counts.up) || 0;
+        const down = (d.feedback_rating_counts && d.feedback_rating_counts.down) || 0;
         const total = up + down;
         if (total > 0) {
           document.getElementById("kpiFeedback").textContent = Math.round((up / total) * 100) + "%";
@@ -356,25 +551,15 @@
         }
 
         // Charts
-        renderBars("chartUserType", d.by_user_type);
-        renderAvgBars("chartPressure", d.avg_pressure_level, 5);
-        renderBars("chartSolution", d.solution_preference_counts);
-        renderBars("chartBlocker", d.primary_blocker_counts, null, 5);
-        renderBars("chartDesire", d.primary_desire_counts, null, 5);
+        renderBars("chartUserType", d.by_user_type || {});
+        renderAvgBars("chartPressure", d.avg_pressure_level || {}, 5);
+        renderBars("chartSolution", d.solution_preference_counts || {});
+        renderBars("chartBlocker", d.primary_blocker_counts || {}, null, 5);
+        renderBars("chartDesire", d.primary_desire_counts || {}, null, 5);
 
-        // Feedback texts
-        const feedbackList = document.getElementById("feedbackList");
-        feedbackList.innerHTML = "";
-        if (d.latest_feedback && d.latest_feedback.length) {
-          d.latest_feedback.forEach(text => {
-            const div = document.createElement("div");
-            div.className = "feedback-item";
-            div.textContent = text;
-            feedbackList.appendChild(div);
-          });
-        } else {
-          feedbackList.innerHTML = '<div class="empty-hint">Noch kein Text-Feedback vorhanden</div>';
-        }
+        // Feedback + Contacts
+        renderFeedback(d.latest_feedback || []);
+        renderContacts(d.contact_requests || []);
 
         // Timestamp
         document.getElementById("lastUpdated").textContent =
