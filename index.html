@@ -2062,7 +2062,8 @@
       const emoji = groupEmojis[branch] || "🧭";
 
       document.getElementById("resultTag").textContent = `${emoji} ${branchLabel}`;
-      document.getElementById("shareText").textContent =
+      const shareTextEl = document.getElementById("shareText");
+      if (shareTextEl) shareTextEl.textContent =
         `Kurze Umfrage zur Arbeitsrealität – anonym und mit kurzer Einordnung am Ende:\n\n${window.location.href}`;
 
       // Compute 3 dimension scores (0–100)
