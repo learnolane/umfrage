@@ -1004,34 +1004,8 @@
 
           <div class="cta-panel">
 
-            <div class="share-box">
-              <h4>Kontakt – wenn du möchtest</h4>
-              <input class="input" id="contactInput" type="text" placeholder="Mail, WhatsApp, Insta oder was für dich passt" />
-              <textarea class="textarea" id="notesInput" placeholder="Optional: Noch ein Gedanke, Wunsch oder Hinweis?" style="margin-top:10px;"></textarea>
-              <div class="contact-tip" style="margin-top:6px;">Ganz optional. Keine langen Erklärungen nötig.</div>
-            </div>
-
-            <div class="share-box" id="feedbackBox">
-              <h4>Wie war die Umfrage?</h4>
-              <div class="btn-row">
-                <button type="button" class="btn btn-secondary" id="feedbackUpBtn" onclick="setSurveyFeedback('up')">👍 Hat gepasst</button>
-                <button type="button" class="btn btn-secondary" id="feedbackDownBtn" onclick="setSurveyFeedback('down')">👎 Eher nicht</button>
-              </div>
-              <div class="contact-area" id="feedbackTextArea">
-                <textarea class="textarea" id="feedbackInput" placeholder="Optional: Was war unklar oder hätte besser sein können?"></textarea>
-              </div>
-            </div>
-
-            <div class="share-box">
-              <h4>Weiterleiten</h4>
-              <div class="share-text" id="shareText">Kurze Umfrage zur Arbeitsrealität – anonym und mit kurzer Einordnung am Ende:</div>
-              <div class="btn-row">
-                <button class="btn btn-secondary" onclick="copyShareText()">Text kopieren</button>
-              </div>
-            </div>
-
             <div class="btn-row" style="margin-top:8px;">
-              <button class="btn btn-primary" id="finishBtn" onclick="finishSurvey()" disabled>Abschliessen →</button>
+              <button class="btn btn-primary" onclick="finishSurvey()">Abschliessen →</button>
             </div>
 
           </div>
@@ -1042,9 +1016,27 @@
     <section class="screen" id="screen-thanks">
       <div class="card">
         <h2 class="hero-title" style="font-size:30px;">Danke für deinen Einblick.</h2>
-        <p class="hero-copy">Wenn du magst, melde dich.</p>
-        <div class="btn-row">
-          <button class="btn btn-primary" onclick="restartSurvey()">Neue Runde starten</button>
+
+        <div class="share-box" style="margin-top:24px;">
+          <h4>Kontakt – wenn du möchtest</h4>
+          <input class="input" id="contactInput" type="text" placeholder="Mail, WhatsApp, Insta oder was für dich passt" />
+          <textarea class="textarea" id="notesInput" placeholder="Optional: Noch ein Gedanke, Wunsch oder Hinweis?" style="margin-top:10px;"></textarea>
+          <div class="contact-tip" style="margin-top:6px;">Ganz optional. Keine langen Erklärungen nötig.</div>
+        </div>
+
+        <div class="share-box" id="feedbackBox">
+          <h4>Wie war die Umfrage?</h4>
+          <div class="btn-row">
+            <button type="button" class="btn btn-secondary" id="feedbackUpBtn" onclick="setSurveyFeedback('up')">👍 Hat gepasst</button>
+            <button type="button" class="btn btn-secondary" id="feedbackDownBtn" onclick="setSurveyFeedback('down')">👎 Eher nicht</button>
+          </div>
+          <div class="contact-area" id="feedbackTextArea">
+            <textarea class="textarea" id="feedbackInput" placeholder="Optional: Was war unklar oder hätte besser sein können?"></textarea>
+          </div>
+        </div>
+
+        <div class="btn-row" style="margin-top:4px;">
+          <button class="btn btn-dark" id="enrichBtn" onclick="sendEnrichment(this)">Senden →</button>
         </div>
 
         <div class="share-box" style="margin-top:18px;">
@@ -1055,6 +1047,10 @@
           <div class="btn-row">
             <button class="btn btn-secondary" onclick="copyFinalShareText()">Link kopieren</button>
           </div>
+        </div>
+
+        <div class="btn-row" style="margin-top:18px;">
+          <button class="btn btn-secondary" onclick="restartSurvey()">Neue Runde starten</button>
         </div>
       </div>
     </section>
@@ -2174,11 +2170,17 @@
     }
 
     function finishSurvey() {
-      answers.kontakt = document.getElementById("contactInput").value.trim();
-      answers.notiz = document.getElementById("notesInput").value.trim();
       showScreen("screen-thanks");
       updateFinalShareText();
       sendToBackend();
+    }
+
+    function sendEnrichment(btn) {
+      answers.kontakt = document.getElementById("contactInput").value.trim();
+      answers.notiz = document.getElementById("notesInput").value.trim();
+      sendToBackend();
+      btn.textContent = "Gesendet ✓";
+      btn.disabled = true;
     }
 
     async function sendToBackend() {
@@ -2290,7 +2292,6 @@
       } else {
         document.getElementById("feedbackTextArea").classList.remove("show");
       }
-      document.getElementById("finishBtn").disabled = false;
     }
 
 
@@ -2337,7 +2338,8 @@
       document.getElementById("feedbackDownBtn").classList.remove("selected");
       document.getElementById("feedbackTextArea").classList.remove("show");
       document.getElementById("feedbackInput").value = "";
-      document.getElementById("finishBtn").disabled = true;
+      const enrichBtn = document.getElementById("enrichBtn");
+      if (enrichBtn) { enrichBtn.textContent = "Senden →"; enrichBtn.disabled = false; }
       showScreen("screen-intro");
       document.getElementById("progressFill").style.width = "0%";
       document.getElementById("progressPill").textContent = "0%";
