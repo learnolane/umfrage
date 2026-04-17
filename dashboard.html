@@ -25,8 +25,25 @@
       padding: 24px 16px 60px;
     }
 
+    .page-header {
+      margin-bottom: 28px;
+    }
+
+    .page-header-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      background: var(--accent-light);
+      border-radius: 20px;
+      padding: 3px 12px;
+      margin-bottom: 8px;
+    }
+
     h1 {
-      font-size: 22px;
+      font-size: 26px;
       font-weight: 800;
       margin-bottom: 4px;
     }
@@ -34,7 +51,6 @@
     .subtitle {
       color: var(--muted);
       font-size: 13px;
-      margin-bottom: 28px;
     }
 
     .section-title {
@@ -46,7 +62,7 @@
       margin: 32px 0 12px;
     }
 
-    /* KPI row */
+    /* KPI grid */
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -86,12 +102,6 @@
       border-radius: 14px;
       padding: 18px;
       margin-bottom: 12px;
-    }
-
-    .chart-title {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 14px;
     }
 
     /* Bar chart */
@@ -136,125 +146,71 @@
       flex-shrink: 0;
     }
 
-    /* Feedback cards */
-    .feedback-card {
+    /* Feedback summary */
+    .summary-row {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
-    }
-
-    .feedback-meta {
+      border-radius: 14px;
+      padding: 18px;
       display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 6px;
+      gap: 16px;
       flex-wrap: wrap;
     }
 
-    .feedback-rating {
-      font-size: 18px;
+    .summary-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .summary-label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .summary-value {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--accent);
       line-height: 1;
     }
 
-    .feedback-type {
-      font-size: 12px;
-      color: var(--muted);
-      background: var(--accent-light);
-      border-radius: 6px;
-      padding: 2px 8px;
+    /* Share CTA */
+    .share-cta {
+      background: linear-gradient(135deg, var(--accent) 0%, #a04e20 100%);
+      border-radius: 16px;
+      padding: 24px 20px;
+      margin-top: 32px;
+      color: #fff;
+      text-align: center;
     }
 
-    .feedback-date {
-      font-size: 12px;
-      color: var(--muted);
-      margin-left: auto;
+    .share-cta-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 8px;
     }
 
-    .feedback-text {
+    .share-cta-text {
       font-size: 13px;
-      color: var(--text);
+      opacity: 0.85;
       line-height: 1.5;
+      margin-bottom: 18px;
     }
 
-    .feedback-only-rating {
-      font-size: 13px;
-      color: var(--muted);
-      font-style: italic;
-    }
-
-    /* Contact cards */
-    .contact-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
-    }
-
-    .contact-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
-    }
-
-    .contact-type {
-      font-size: 12px;
-      color: var(--muted);
-      background: var(--accent-light);
-      border-radius: 6px;
-      padding: 2px 8px;
-    }
-
-    .contact-date {
-      font-size: 12px;
-      color: var(--muted);
-      margin-left: auto;
-    }
-
-    .contact-channel-badge {
+    .share-btn {
       display: inline-block;
-      font-size: 12px;
-      font-weight: 700;
+      background: #fff;
       color: var(--accent);
-      background: var(--accent-light);
-      border-radius: 6px;
-      padding: 3px 10px;
-    }
-
-    .contact-value {
       font-size: 14px;
       font-weight: 700;
-      color: var(--text);
-      margin-bottom: 8px;
-      word-break: break-all;
+      border-radius: 10px;
+      padding: 10px 24px;
+      text-decoration: none;
+      transition: opacity 0.15s;
     }
 
-    .contact-email-row {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 8px;
-      word-break: break-all;
-    }
-
-    .contact-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
-    }
-
-    .contact-tag {
-      font-size: 11px;
-      color: var(--muted);
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 2px 10px;
-    }
+    .share-btn:hover { opacity: 0.85; }
 
     .empty-hint {
       font-size: 13px;
@@ -298,10 +254,13 @@
   <div id="loadingState">Daten werden geladen…</div>
 
   <div id="content">
-    <h1>Arbeitsrealität</h1>
-    <div class="subtitle" id="lastUpdated"></div>
+    <div class="page-header">
+      <div class="page-header-label">Live-Ergebnisse</div>
+      <h1>Arbeitsrealität</h1>
+      <div class="subtitle" id="lastUpdated"></div>
+    </div>
 
-    <!-- ── SECTION 1: INSIGHTS ── -->
+    <!-- ── ÜBERBLICK ── -->
     <div class="section-title">Überblick</div>
     <div class="kpi-grid">
       <div class="kpi-card">
@@ -325,6 +284,7 @@
       </div>
     </div>
 
+    <!-- ── CHARTS ── -->
     <div class="section-title">Antworten nach Typ</div>
     <div class="chart-card">
       <div id="chartUserType"></div>
@@ -350,13 +310,32 @@
       <div id="chartDesire"></div>
     </div>
 
-    <!-- ── SECTION 2: RÜCKMELDUNGEN ── -->
+    <!-- ── RÜCKMELDUNGEN ── -->
     <div class="section-title">Rückmeldungen</div>
-    <div id="feedbackList"></div>
+    <div id="feedbackSummary"></div>
 
-    <!-- ── SECTION 3: KONTAKTAUFNAHMEN ── -->
-    <div class="section-title">Kontaktaufnahmen</div>
-    <div id="contactList"></div>
+    <!-- ── KONTAKTINTERESSE ── -->
+    <div class="section-title">Kontaktinteresse</div>
+    <div class="kpi-grid" style="margin-bottom:12px">
+      <div class="kpi-card">
+        <div class="kpi-label">Kontaktaufnahmen</div>
+        <div class="kpi-value" id="kpiContactCount">–</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Kontaktquote</div>
+        <div class="kpi-value" id="kpiContactRate">–</div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div id="chartContactChannel"></div>
+    </div>
+
+    <!-- ── SHARE CTA ── -->
+    <div class="share-cta">
+      <div class="share-cta-title">Kennst du jemanden, dem das passt?</div>
+      <div class="share-cta-text">Diese Umfrage hilft, die Arbeitsrealität sichtbar zu machen. Teile sie mit deinem Netzwerk.</div>
+      <a class="share-btn" href="https://learnolane.github.io/umfrage/" target="_blank">Umfrage teilen →</a>
+    </div>
 
     <button class="refresh-btn" onclick="loadData()">Aktualisieren</button>
   </div>
@@ -372,11 +351,11 @@
     };
 
     const CHANNEL_LABELS = {
-      whatsapp: "WhatsApp",
-      telegram: "Telegram",
+      whatsapp:  "WhatsApp",
+      telegram:  "Telegram",
       instagram: "Instagram",
-      linkedin: "LinkedIn",
-      email: "E-Mail"
+      linkedin:  "LinkedIn",
+      email:     "E-Mail"
     };
 
     function label(key) {
@@ -393,7 +372,7 @@
       return Math.round((vals.reduce((a, b) => a + b, 0) / vals.length) * 10) / 10;
     }
 
-    function renderBars(containerId, data, maxVal, top) {
+    function renderBars(containerId, data, maxVal, top, labelFn) {
       const container = document.getElementById(containerId);
       container.innerHTML = "";
 
@@ -408,13 +387,14 @@
       }
 
       const max = maxVal || entries[0][1];
+      const nameOf = labelFn || label;
 
       entries.forEach(([key, val]) => {
         const pct = Math.round((val / max) * 100);
         const row = document.createElement("div");
         row.className = "bar-row";
         row.innerHTML = `
-          <div class="bar-label" title="${label(key)}">${label(key)}</div>
+          <div class="bar-label" title="${nameOf(key)}">${nameOf(key)}</div>
           <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
           <div class="bar-count">${val}</div>
         `;
@@ -422,7 +402,7 @@
       });
     }
 
-    function renderAvgBars(containerId, data, maxVal) {
+    function renderAvgBars(containerId, data) {
       const container = document.getElementById(containerId);
       container.innerHTML = "";
 
@@ -432,10 +412,8 @@
         return;
       }
 
-      const max = maxVal || 5;
-
       entries.forEach(([key, val]) => {
-        const pct = Math.round((val / max) * 100);
+        const pct = Math.round((val / 5) * 100);
         const row = document.createElement("div");
         row.className = "bar-row";
         row.innerHTML = `
@@ -447,79 +425,47 @@
       });
     }
 
-    function renderFeedback(entries) {
-      const container = document.getElementById("feedbackList");
-      container.innerHTML = "";
+    function renderFeedbackSummary(ratings) {
+      const container = document.getElementById("feedbackSummary");
+      const up    = (ratings && ratings.up)   || 0;
+      const down  = (ratings && ratings.down) || 0;
+      const count = up + down;
 
-      if (!entries || !entries.length) {
+      if (!count) {
         container.innerHTML = '<div class="empty-hint">Noch keine Rückmeldungen vorhanden</div>';
         return;
       }
 
-      entries.forEach(item => {
-        const ratingEmoji = item.feedback_rating === 'up' ? '👍' : item.feedback_rating === 'down' ? '👎' : '';
-        const typeText = TYPE_LABELS[item.user_type] || item.user_type || '';
-        const dateText = item.created_at ? item.created_at.split(' ')[0] : '';
+      const posPct = Math.round((up / count) * 100);
 
-        const card = document.createElement("div");
-        card.className = "feedback-card";
-        card.innerHTML = `
-          <div class="feedback-meta">
-            ${ratingEmoji ? `<span class="feedback-rating">${ratingEmoji}</span>` : ''}
-            ${typeText ? `<span class="feedback-type">${typeText}</span>` : ''}
-            ${dateText ? `<span class="feedback-date">${dateText}</span>` : ''}
+      container.innerHTML = `
+        <div class="summary-row">
+          <div class="summary-item">
+            <span class="summary-label">Gesamt</span>
+            <span class="summary-value">${count}</span>
           </div>
-          ${item.feedback_text
-            ? `<div class="feedback-text">${escHtml(item.feedback_text)}</div>`
-            : `<div class="feedback-only-rating">Nur Bewertung abgegeben</div>`
-          }
-        `;
-        container.appendChild(card);
-      });
+          <div class="summary-item">
+            <span class="summary-label">👍 Positiv</span>
+            <span class="summary-value">${up}</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">👎 Negativ</span>
+            <span class="summary-value">${down}</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Zustimmung</span>
+            <span class="summary-value">${posPct}%</span>
+          </div>
+        </div>
+      `;
     }
 
-    function renderContacts(entries) {
-      const container = document.getElementById("contactList");
-      container.innerHTML = "";
+    function renderContactInterest(count, rate, channelCounts) {
+      document.getElementById("kpiContactCount").textContent = count || 0;
+      document.getElementById("kpiContactRate").textContent =
+        rate != null ? Math.round(rate * 100) + "%" : "–";
 
-      if (!entries || !entries.length) {
-        container.innerHTML = '<div class="empty-hint">Noch keine Kontaktaufnahmen vorhanden</div>';
-        return;
-      }
-
-      entries.forEach(item => {
-        const typeText = TYPE_LABELS[item.user_type] || item.user_type || '';
-        const dateText = item.created_at ? item.created_at.split(' ')[0] : '';
-        const ch = channelLabel(item.contact_channel);
-
-        const tags = [
-          item.primary_blocker ? `Blocker: ${item.primary_blocker.replace(/_/g,' ')}` : null,
-          item.solution_preference ? `Lösung: ${item.solution_preference.replace(/_/g,' ')}` : null,
-          item.primary_desire ? `Wunsch: ${item.primary_desire.replace(/_/g,' ')}` : null
-        ].filter(Boolean);
-
-        const card = document.createElement("div");
-        card.className = "contact-card";
-        card.innerHTML = `
-          <div class="contact-header">
-            ${typeText ? `<span class="contact-type">${typeText}</span>` : ''}
-            ${item.contact_channel ? `<span class="contact-channel-badge">${ch}</span>` : ''}
-            ${dateText ? `<span class="contact-date">${dateText}</span>` : ''}
-          </div>
-          ${item.contact_value ? `<div class="contact-value">${escHtml(item.contact_value)}</div>` : ''}
-          ${item.contact_email ? `<div class="contact-email-row">✉ ${escHtml(item.contact_email)}</div>` : ''}
-          ${tags.length ? `<div class="contact-tags">${tags.map(t => `<span class="contact-tag">${escHtml(t)}</span>`).join('')}</div>` : ''}
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function escHtml(str) {
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+      renderBars("chartContactChannel", channelCounts || {}, null, null, channelLabel);
     }
 
     async function loadData() {
@@ -540,11 +486,11 @@
         const avgF = avg(d.avg_operational_friction);
         document.getElementById("kpiFriction").textContent = avgF !== null ? avgF : "–";
 
-        const up = (d.feedback_rating_counts && d.feedback_rating_counts.up) || 0;
+        const up   = (d.feedback_rating_counts && d.feedback_rating_counts.up)   || 0;
         const down = (d.feedback_rating_counts && d.feedback_rating_counts.down) || 0;
-        const total = up + down;
-        if (total > 0) {
-          document.getElementById("kpiFeedback").textContent = Math.round((up / total) * 100) + "%";
+        const fbTotal = up + down;
+        if (fbTotal > 0) {
+          document.getElementById("kpiFeedback").textContent = Math.round((up / fbTotal) * 100) + "%";
           document.getElementById("kpiFeedbackSub").textContent = `👍 ${up}  👎 ${down}`;
         } else {
           document.getElementById("kpiFeedback").textContent = "–";
@@ -552,16 +498,21 @@
 
         // Charts
         renderBars("chartUserType", d.by_user_type || {});
-        renderAvgBars("chartPressure", d.avg_pressure_level || {}, 5);
+        renderAvgBars("chartPressure", d.avg_pressure_level || {});
         renderBars("chartSolution", d.solution_preference_counts || {});
         renderBars("chartBlocker", d.primary_blocker_counts || {}, null, 5);
         renderBars("chartDesire", d.primary_desire_counts || {}, null, 5);
 
-        // Feedback + Contacts
-        renderFeedback(d.latest_feedback || []);
-        renderContacts(d.contact_requests || []);
+        // Feedback
+        renderFeedbackSummary(d.feedback_rating_counts);
 
-        // Timestamp
+        // Kontaktinteresse
+        renderContactInterest(
+          d.contact_opt_in_count,
+          d.contact_opt_in_rate,
+          d.contact_channel_counts
+        );
+
         document.getElementById("lastUpdated").textContent =
           "Zuletzt geladen: " + new Date().toLocaleTimeString("de-CH");
 
