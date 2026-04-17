@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard – Arbeitsrealität</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5ede0;
+      --card: #fffaf4;
+      --accent: #c0622a;
+      --accent-light: #f0ddd0;
+      --text: #1a1a1a;
+      --muted: #7a6a5a;
+      --border: #e8d8c8;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      padding: 24px 16px 60px;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin: 32px 0 12px;
+    }
+
+    /* KPI row */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .kpi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .kpi-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .kpi-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Chart card */
+    .chart-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 12px;
+    }
+
+    .chart-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    /* Bar chart */
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .bar-label {
+      width: 160px;
+      font-size: 12px;
+      color: var(--muted);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .bar-track {
+      flex: 1;
+      background: var(--accent-light);
+      border-radius: 6px;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 6px;
+      transition: width 0.4s ease;
+    }
+
+    .bar-count {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      width: 32px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* Feedback */
+    .feedback-item {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .empty-hint {
+      font-size: 13px;
+      color: var(--muted);
+      padding: 12px 0;
+    }
+
+    /* Loading / error */
+    #loadingState {
+      text-align: center;
+      padding: 60px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    #content { display: none; }
+
+    .refresh-btn {
+      display: inline-block;
+      margin-top: 20px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .refresh-btn:hover { background: var(--accent-light); }
+
+    @media (min-width: 600px) {
+      body { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
+      .kpi-grid { grid-template-columns: repeat(4, 1fr); }
+      .bar-label { width: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loadingState">Daten werden geladen…</div>
+
+  <div id="content">
+    <h1>Arbeitsrealität</h1>
+    <div class="subtitle" id="lastUpdated"></div>
+
+    <!-- KPIs -->
+    <div class="section-title">Überblick</div>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Antworten</div>
+        <div class="kpi-value" id="kpiTotal">–</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Ø Druck</div>
+        <div class="kpi-value" id="kpiPressure">–</div>
+        <div class="kpi-sub">von 5</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Ø Reibung</div>
+        <div class="kpi-value" id="kpiFriction">–</div>
+        <div class="kpi-sub">von 5</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Feedback</div>
+        <div class="kpi-value" id="kpiFeedback">–</div>
+        <div class="kpi-sub" id="kpiFeedbackSub"></div>
+      </div>
+    </div>
+
+    <!-- By user type -->
+    <div class="section-title">Antworten nach Typ</div>
+    <div class="chart-card">
+      <div id="chartUserType"></div>
+    </div>
+
+    <!-- Pressure by type -->
+    <div class="section-title">Ø Druck pro Typ</div>
+    <div class="chart-card">
+      <div id="chartPressure"></div>
+    </div>
+
+    <!-- Solution preference -->
+    <div class="section-title">Nachfrage nach Lösungstyp</div>
+    <div class="chart-card">
+      <div id="chartSolution"></div>
+    </div>
+
+    <!-- Top blocker -->
+    <div class="section-title">Top Blocker</div>
+    <div class="chart-card">
+      <div id="chartBlocker"></div>
+    </div>
+
+    <!-- Top desire -->
+    <div class="section-title">Top Wünsche</div>
+    <div class="chart-card">
+      <div id="chartDesire"></div>
+    </div>
+
+    <!-- Feedback texts -->
+    <div class="section-title">Letztes Feedback</div>
+    <div id="feedbackList"></div>
+
+    <button class="refresh-btn" onclick="loadData()">Aktualisieren</button>
+  </div>
+
+  <script>
+    const DASHBOARD_URL = "https://script.google.com/macros/s/AKfycbxXt5TSWn8Il7PbG2opvhz8iHk1l1b0GUC6SklWby8Gv0JhAlceu97O0kI7pUH2PRcw/exec";
+
+    const TYPE_LABELS = {
+      employed_happy:  "Angestellt & zufrieden",
+      employed_change: "Will sich verändern",
+      employed_self:   "Will selbständig werden",
+      self_employed:   "Selbständig"
+    };
+
+    function label(key) {
+      return TYPE_LABELS[key] || key.replace(/_/g, ' ');
+    }
+
+    function avg(obj) {
+      const vals = Object.values(obj).filter(v => typeof v === 'number');
+      if (!vals.length) return null;
+      return Math.round((vals.reduce((a, b) => a + b, 0) / vals.length) * 10) / 10;
+    }
+
+    function renderBars(containerId, data, maxVal, top) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+
+      let entries = Object.entries(data)
+        .filter(([, v]) => v > 0)
+        .sort(([, a], [, b]) => b - a);
+
+      if (top) entries = entries.slice(0, top);
+      if (!entries.length) {
+        container.innerHTML = '<div class="empty-hint">Noch keine Daten</div>';
+        return;
+      }
+
+      const max = maxVal || entries[0][1];
+
+      entries.forEach(([key, val]) => {
+        const pct = Math.round((val / max) * 100);
+        const row = document.createElement("div");
+        row.className = "bar-row";
+        row.innerHTML = `
+          <div class="bar-label" title="${label(key)}">${label(key)}</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+          <div class="bar-count">${val}</div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function renderAvgBars(containerId, data, maxVal) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+
+      const entries = Object.entries(data).sort(([, a], [, b]) => b - a);
+      if (!entries.length) {
+        container.innerHTML = '<div class="empty-hint">Noch keine Daten</div>';
+        return;
+      }
+
+      const max = maxVal || 5;
+
+      entries.forEach(([key, val]) => {
+        const pct = Math.round((val / max) * 100);
+        const row = document.createElement("div");
+        row.className = "bar-row";
+        row.innerHTML = `
+          <div class="bar-label" title="${label(key)}">${label(key)}</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+          <div class="bar-count">${val}</div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    async function loadData() {
+      document.getElementById("loadingState").textContent = "Daten werden geladen…";
+      document.getElementById("loadingState").style.display = "block";
+      document.getElementById("content").style.display = "none";
+
+      try {
+        const res = await fetch(DASHBOARD_URL);
+        const d = await res.json();
+
+        // KPIs
+        document.getElementById("kpiTotal").textContent = d.total_responses || 0;
+
+        const avgP = avg(d.avg_pressure_level);
+        document.getElementById("kpiPressure").textContent = avgP !== null ? avgP : "–";
+
+        const avgF = avg(d.avg_operational_friction);
+        document.getElementById("kpiFriction").textContent = avgF !== null ? avgF : "–";
+
+        const up = d.feedback_rating_counts.up || 0;
+        const down = d.feedback_rating_counts.down || 0;
+        const total = up + down;
+        if (total > 0) {
+          document.getElementById("kpiFeedback").textContent = Math.round((up / total) * 100) + "%";
+          document.getElementById("kpiFeedbackSub").textContent = `👍 ${up}  👎 ${down}`;
+        } else {
+          document.getElementById("kpiFeedback").textContent = "–";
+        }
+
+        // Charts
+        renderBars("chartUserType", d.by_user_type);
+        renderAvgBars("chartPressure", d.avg_pressure_level, 5);
+        renderBars("chartSolution", d.solution_preference_counts);
+        renderBars("chartBlocker", d.primary_blocker_counts, null, 5);
+        renderBars("chartDesire", d.primary_desire_counts, null, 5);
+
+        // Feedback texts
+        const feedbackList = document.getElementById("feedbackList");
+        feedbackList.innerHTML = "";
+        if (d.latest_feedback && d.latest_feedback.length) {
+          d.latest_feedback.forEach(text => {
+            const div = document.createElement("div");
+            div.className = "feedback-item";
+            div.textContent = text;
+            feedbackList.appendChild(div);
+          });
+        } else {
+          feedbackList.innerHTML = '<div class="empty-hint">Noch kein Text-Feedback vorhanden</div>';
+        }
+
+        // Timestamp
+        document.getElementById("lastUpdated").textContent =
+          "Zuletzt geladen: " + new Date().toLocaleTimeString("de-CH");
+
+        document.getElementById("loadingState").style.display = "none";
+        document.getElementById("content").style.display = "block";
+
+      } catch (err) {
+        document.getElementById("loadingState").textContent =
+          "Fehler beim Laden. Bitte Seite neu laden.";
+        console.error(err);
+      }
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
