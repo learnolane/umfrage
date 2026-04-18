@@ -8,13 +8,25 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #f5ede0;
-      --card: #fffaf4;
-      --accent: #c0622a;
+      --bg:           #f5ede0;
+      --card:         #fffaf4;
+      --accent:       #c0622a;
       --accent-light: #f0ddd0;
-      --text: #1a1a1a;
-      --muted: #7a6a5a;
-      --border: #e8d8c8;
+      --text:         #1a1a1a;
+      --muted:        #7a6a5a;
+      --border:       #e8d8c8;
+      --green:        #2d7a56;
+      --green-soft:   #e8f5ee;
+      --green-border: #c0dece;
+      --amber:        #a05010;
+      --amber-soft:   #fdf2e0;
+      --amber-border: #ecd0a0;
+      --blue:         #3848a8;
+      --blue-soft:    #eaedff;
+      --blue-border:  #c8cff0;
+      --purple:       #6830a0;
+      --purple-soft:  #f0e8ff;
+      --purple-border:#d8c0f0;
     }
 
     body {
@@ -22,511 +34,684 @@
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       font-size: 15px;
-      padding: 24px 16px 60px;
+      padding: 24px 16px 72px;
     }
 
-    .page-header {
-      margin-bottom: 28px;
-    }
-
+    .page-header { margin-bottom: 28px; }
     .page-header-label {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      background: var(--accent-light);
-      border-radius: 20px;
-      padding: 3px 12px;
-      margin-bottom: 8px;
+      display: inline-block; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .1em;
+      color: var(--accent); background: var(--accent-light);
+      border-radius: 20px; padding: 3px 12px; margin-bottom: 8px;
     }
-
-    h1 {
-      font-size: 26px;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-
-    .subtitle {
-      color: var(--muted);
-      font-size: 13px;
-    }
+    h1 { font-size: 26px; font-weight: 800; margin-bottom: 4px; }
+    .subtitle { color: var(--muted); font-size: 13px; }
 
     .section-title {
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      margin: 32px 0 12px;
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--muted); margin: 32px 0 12px;
     }
 
-    /* KPI grid */
+    /* ── KPI Grid ── */
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
     }
-
     .kpi-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 16px;
     }
+    .kpi-label  { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    .kpi-value  { font-size: 28px; font-weight: 800; color: var(--accent); line-height: 1; }
+    .kpi-sub    { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .kpi-value.green  { color: var(--green); }
 
-    .kpi-label {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .kpi-value {
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--accent);
-      line-height: 1;
-    }
-
-    .kpi-sub {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-
-    /* Chart card */
+    /* ── Chart card ── */
     .chart-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px;
-      margin-bottom: 12px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px; margin-bottom: 12px;
     }
 
-    /* Bar chart */
+    /* ── Bar rows ── */
     .bar-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
     }
-
+    .bar-row:last-child { margin-bottom: 0; }
     .bar-label {
-      width: 160px;
-      font-size: 12px;
-      color: var(--muted);
-      flex-shrink: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      width: 160px; font-size: 12px; color: var(--muted);
+      flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-
     .bar-track {
-      flex: 1;
-      background: var(--accent-light);
-      border-radius: 6px;
-      height: 10px;
-      overflow: hidden;
+      flex: 1; background: var(--accent-light); border-radius: 6px; height: 10px; overflow: hidden;
     }
-
-    .bar-fill {
-      height: 100%;
-      background: var(--accent);
-      border-radius: 6px;
-      transition: width 0.4s ease;
-    }
-
+    .bar-fill         { height: 100%; border-radius: 6px; transition: width .4s ease; background: var(--accent); }
+    .bar-fill.problem { background: linear-gradient(90deg, #e08030, #c03020); }
+    .bar-fill.good    { background: linear-gradient(90deg, #60c090, #2d7a56); }
     .bar-count {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text);
-      width: 32px;
-      text-align: right;
-      flex-shrink: 0;
+      font-size: 12px; font-weight: 700; color: var(--text);
+      width: 36px; text-align: right; flex-shrink: 0;
     }
 
-    /* Feedback summary */
+    /* ── 2-col chart grid ── */
+    .chart-grid-2 { display: grid; gap: 12px; }
+
+    /* ── Group cards ── */
+    .group-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; margin-bottom: 12px;
+    }
+    .group-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 18px; font-size: 13px; font-weight: 700;
+    }
+    .group-header.eh { background: var(--green-soft);  color: var(--green);  border-bottom: 1px solid var(--green-border); }
+    .group-header.ec { background: var(--amber-soft);  color: var(--amber);  border-bottom: 1px solid var(--amber-border); }
+    .group-header.es { background: var(--blue-soft);   color: var(--blue);   border-bottom: 1px solid var(--blue-border); }
+    .group-header.se { background: var(--purple-soft); color: var(--purple); border-bottom: 1px solid var(--purple-border); }
+    .group-body { padding: 16px 18px; }
+    .n-badge { font-size: 11px; font-weight: 400; opacity: .65; margin-left: 4px; }
+
+    /* ── Sub-titles inside cards ── */
+    .sub-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--muted); margin: 16px 0 8px;
+    }
+    .sub-title:first-child { margin-top: 0; }
+
+    /* ── Signal pills (investment readiness) ── */
+    .signal-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .signal-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 99px; font-size: 13px; font-weight: 700;
+    }
+    .signal-pill.high { background: var(--green-soft); color: var(--green); }
+    .signal-pill.mid  { background: var(--amber-soft); color: var(--amber); }
+    .signal-pill.low  { background: #fee8e0; color: #b02010; }
+
+    /* ── Feedback summary ── */
     .summary-row {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px;
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px; display: flex; gap: 16px; flex-wrap: wrap;
     }
+    .summary-item { display: flex; flex-direction: column; gap: 4px; }
+    .summary-label { font-size: 12px; color: var(--muted); }
+    .summary-value { font-size: 26px; font-weight: 800; color: var(--accent); line-height: 1; }
 
-    .summary-item {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .summary-label {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .summary-value {
-      font-size: 26px;
-      font-weight: 800;
-      color: var(--accent);
-      line-height: 1;
-    }
-
-    /* Share CTA */
+    /* ── Share CTA ── */
     .share-cta {
       background: linear-gradient(135deg, var(--accent) 0%, #a04e20 100%);
-      border-radius: 16px;
-      padding: 24px 20px;
-      margin-top: 32px;
-      color: #fff;
-      text-align: center;
+      border-radius: 16px; padding: 24px 20px; margin-top: 32px; color: #fff; text-align: center;
     }
-
-    .share-cta-title {
-      font-size: 17px;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-
-    .share-cta-text {
-      font-size: 13px;
-      opacity: 0.85;
-      line-height: 1.5;
-      margin-bottom: 18px;
-    }
-
+    .share-cta-title { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+    .share-cta-text  { font-size: 13px; opacity: .85; line-height: 1.5; margin-bottom: 18px; }
     .share-btn {
-      display: inline-block;
-      background: #fff;
-      color: var(--accent);
-      font-size: 14px;
-      font-weight: 700;
-      border-radius: 10px;
-      padding: 10px 24px;
-      text-decoration: none;
-      transition: opacity 0.15s;
+      display: inline-block; background: #fff; color: var(--accent);
+      font-size: 14px; font-weight: 700; border-radius: 10px;
+      padding: 10px 24px; text-decoration: none; transition: opacity .15s;
     }
+    .share-btn:hover { opacity: .85; }
 
-    .share-btn:hover { opacity: 0.85; }
+    .empty-hint { font-size: 13px; color: var(--muted); padding: 8px 0; }
 
-    .empty-hint {
-      font-size: 13px;
-      color: var(--muted);
-      padding: 12px 0;
-    }
-
-    /* Loading / error */
-    #loadingState {
-      text-align: center;
-      padding: 60px 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
+    /* ── Loading / error ── */
+    #loadingState { text-align: center; padding: 60px 0; color: var(--muted); font-size: 14px; }
     #content { display: none; }
-
     .refresh-btn {
-      display: inline-block;
-      margin-top: 20px;
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 8px 16px;
-      font-size: 13px;
-      color: var(--muted);
-      cursor: pointer;
+      display: inline-block; margin-top: 20px; background: none;
+      border: 1px solid var(--border); border-radius: 8px; padding: 8px 16px;
+      font-size: 13px; color: var(--muted); cursor: pointer;
     }
-
     .refresh-btn:hover { background: var(--accent-light); }
 
     @media (min-width: 600px) {
-      body { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
+      body { max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }
       .kpi-grid { grid-template-columns: repeat(4, 1fr); }
       .bar-label { width: 180px; }
+      .chart-grid-2 { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <div id="loadingState">Daten werden geladen…</div>
+<div id="loadingState">Daten werden geladen…</div>
 
-  <div id="content">
-    <div class="page-header">
-      <div class="page-header-label">Live-Ergebnisse</div>
-      <h1>Arbeitsrealität</h1>
-      <div class="subtitle" id="lastUpdated"></div>
-    </div>
-
-    <!-- ── ÜBERBLICK ── -->
-    <div class="section-title">Überblick</div>
-    <div class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-label">Antworten</div>
-        <div class="kpi-value" id="kpiTotal">–</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Ø Druck</div>
-        <div class="kpi-value" id="kpiPressure">–</div>
-        <div class="kpi-sub">von 5</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Ø Reibung</div>
-        <div class="kpi-value" id="kpiFriction">–</div>
-        <div class="kpi-sub">von 5</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Feedback</div>
-        <div class="kpi-value" id="kpiFeedback">–</div>
-        <div class="kpi-sub" id="kpiFeedbackSub"></div>
-      </div>
-    </div>
-
-    <!-- ── CHARTS ── -->
-    <div class="section-title">Antworten nach Typ</div>
-    <div class="chart-card">
-      <div id="chartUserType"></div>
-    </div>
-
-    <div class="section-title">Ø Druck pro Typ</div>
-    <div class="chart-card">
-      <div id="chartPressure"></div>
-    </div>
-
-    <div class="section-title">Nachfrage nach Lösungstyp</div>
-    <div class="chart-card">
-      <div id="chartSolution"></div>
-    </div>
-
-    <div class="section-title">Top Blocker</div>
-    <div class="chart-card">
-      <div id="chartBlocker"></div>
-    </div>
-
-    <div class="section-title">Top Wünsche</div>
-    <div class="chart-card">
-      <div id="chartDesire"></div>
-    </div>
-
-    <!-- ── RÜCKMELDUNGEN ── -->
-    <div class="section-title">Rückmeldungen</div>
-    <div id="feedbackSummary"></div>
-
-    <!-- ── KONTAKTINTERESSE ── -->
-    <div class="section-title">Kontaktinteresse</div>
-    <div class="kpi-grid" style="margin-bottom:12px">
-      <div class="kpi-card">
-        <div class="kpi-label">Kontaktaufnahmen</div>
-        <div class="kpi-value" id="kpiContactCount">–</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Kontaktquote</div>
-        <div class="kpi-value" id="kpiContactRate">–</div>
-      </div>
-    </div>
-    <div class="chart-card">
-      <div id="chartContactChannel"></div>
-    </div>
-
-    <!-- ── SHARE CTA ── -->
-    <div class="share-cta">
-      <div class="share-cta-title">Kennst du jemanden, dem das passt?</div>
-      <div class="share-cta-text">Diese Umfrage hilft, die Arbeitsrealität sichtbar zu machen. Teile sie mit deinem Netzwerk.</div>
-      <a class="share-btn" href="https://learnolane.github.io/umfrage/" target="_blank">Umfrage teilen →</a>
-    </div>
-
-    <button class="refresh-btn" onclick="loadData()">Aktualisieren</button>
+<div id="content">
+  <div class="page-header">
+    <div class="page-header-label">Live-Ergebnisse</div>
+    <h1>Arbeitsrealität</h1>
+    <div class="subtitle" id="lastUpdated"></div>
   </div>
 
-  <script>
-    const DASHBOARD_URL = "https://script.google.com/macros/s/AKfycbxXt5TSWn8Il7PbG2opvhz8iHk1l1b0GUC6SklWby8Gv0JhAlceu97O0kI7pUH2PRcw/exec";
+  <!-- ── ÜBERBLICK ── -->
+  <div class="section-title">Überblick</div>
+  <div class="kpi-grid" style="margin-bottom:12px">
+    <div class="kpi-card">
+      <div class="kpi-label">Antworten</div>
+      <div class="kpi-value" id="kpiTotal">–</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Ø Druck</div>
+      <div class="kpi-value" id="kpiPressure">–</div>
+      <div class="kpi-sub">von 5</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Feedback</div>
+      <div class="kpi-value" id="kpiFeedback">–</div>
+      <div class="kpi-sub" id="kpiFeedbackSub"></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Lösungsoffen</div>
+      <div class="kpi-value green" id="kpiOpenness">–</div>
+      <div class="kpi-sub">offen für Lösung</div>
+    </div>
+  </div>
 
-    const TYPE_LABELS = {
-      employed_happy:  "Angestellt & zufrieden",
-      employed_change: "Will sich verändern",
-      employed_self:   "Will selbständig werden",
-      self_employed:   "Selbständig"
-    };
+  <!-- ── TEILNEHMENDE ── -->
+  <div class="section-title">Wer nimmt teil</div>
+  <div class="chart-card">
+    <div class="sub-title">Nach Gruppe</div>
+    <div id="chartUserType"></div>
+    <div class="sub-title">Nach Bereich</div>
+    <div id="chartBereich"></div>
+    <div class="sub-title">Nach Altersgruppe</div>
+    <div id="chartAlter"></div>
+  </div>
 
-    const CHANNEL_LABELS = {
-      whatsapp:  "WhatsApp",
-      telegram:  "Telegram",
-      instagram: "Instagram",
-      linkedin:  "LinkedIn",
-      email:     "E-Mail"
-    };
+  <!-- ── DRUCK ── -->
+  <div class="section-title">Druck & Intensität</div>
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <div class="sub-title" style="margin-top:0">Ø Druck nach Gruppe</div>
+      <div id="chartPressureGruppe"></div>
+    </div>
+    <div class="chart-card">
+      <div class="sub-title" style="margin-top:0">Ø Druck nach Alter</div>
+      <div id="chartPressureAlter"></div>
+    </div>
+  </div>
 
-    function label(key) {
-      return TYPE_LABELS[key] || key.replace(/_/g, ' ');
-    }
+  <!-- ── WAS LÄUFT GUT ── -->
+  <div class="section-title">Was läuft gut</div>
+  <div class="group-card">
+    <div class="group-header eh">
+      🙂 Angestellt &amp; zufrieden
+      <span class="n-badge" id="ehNBadge"></span>
+    </div>
+    <div class="group-body">
+      <div class="sub-title">Warum der Job passt</div>
+      <div id="chartEhAttraction"></div>
+      <div class="sub-title">Was täglich hilft</div>
+      <div id="chartEhBestPractice"></div>
+      <div class="sub-title">Ungenutztes Potenzial (Skala 1–5, höher = mehr Potenzial)</div>
+      <div id="chartEh8Avg"></div>
+      <div class="sub-title">Was trotzdem nervt</div>
+      <div id="chartEhAnnoyance"></div>
+    </div>
+  </div>
 
-    function channelLabel(key) {
-      return CHANNEL_LABELS[key] || key;
-    }
+  <!-- ── PROBLEME NACH GRUPPE ── -->
+  <div class="section-title">Wo es hakt – nach Gruppe</div>
 
-    function avg(obj) {
-      const vals = Object.values(obj).filter(v => typeof v === 'number');
-      if (!vals.length) return null;
-      return Math.round((vals.reduce((a, b) => a + b, 0) / vals.length) * 10) / 10;
-    }
+  <!-- EC -->
+  <div class="group-card">
+    <div class="group-header ec">
+      🔄 Will sich beruflich verändern
+      <span class="n-badge" id="ecNBadge"></span>
+    </div>
+    <div class="group-body">
+      <div class="sub-title">Hauptproblem im aktuellen Job</div>
+      <div id="chartEcMainIssue"></div>
+      <div class="sub-title">Was hält sie fest</div>
+      <div id="chartEcBlocker"></div>
+      <div class="sub-title">Problemfelder (Skala 1–5, höher = grösseres Problem)</div>
+      <div id="chartEc6Avg"></div>
+    </div>
+  </div>
 
-    function renderBars(containerId, data, maxVal, top, labelFn) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = "";
+  <!-- ES -->
+  <div class="group-card">
+    <div class="group-header es">
+      🚀 Will selbständig werden
+      <span class="n-badge" id="esNBadge"></span>
+    </div>
+    <div class="group-body">
+      <div class="sub-title">Haupttreiber Richtung Selbständigkeit</div>
+      <div id="chartEsMainDriver"></div>
+      <div class="sub-title">Was blockiert aktuell am stärksten</div>
+      <div id="chartEsBlocker"></div>
+      <div class="sub-title">Wo fehlt am meisten (Skala 1–5, höher = grössere Lücke)</div>
+      <div id="chartEs7Avg"></div>
+    </div>
+  </div>
 
-      let entries = Object.entries(data)
-        .filter(([, v]) => v > 0)
-        .sort(([, a], [, b]) => b - a);
+  <!-- SE -->
+  <div class="group-card">
+    <div class="group-header se">
+      🛠️ Selbständige
+      <span class="n-badge" id="seNBadge"></span>
+    </div>
+    <div class="group-body">
+      <div class="sub-title">Wie läuft es gerade</div>
+      <div id="chartSeStatus"></div>
+      <div class="sub-title">Wo geht Zeit & Nerven verloren</div>
+      <div id="chartSeBlocker"></div>
+      <div class="sub-title">Was am wertvollsten wäre</div>
+      <div id="chartSeMainNeed"></div>
+      <div class="sub-title">Verbesserungspotenzial (Skala 1–5, höher = mehr Bedarf)</div>
+      <div id="chartSe6Avg"></div>
+    </div>
+  </div>
 
-      if (top) entries = entries.slice(0, top);
-      if (!entries.length) {
-        container.innerHTML = '<div class="empty-hint">Noch keine Daten</div>';
-        return;
+  <!-- ── LÖSUNGSBEDARF ── -->
+  <div class="section-title">Lösungsbedarf & Investitionsbereitschaft</div>
+
+  <div class="chart-card">
+    <div class="sub-title" style="margin-top:0">Gewünschte Lösungsform (gesamt)</div>
+    <div id="chartSolutionOverall"></div>
+  </div>
+
+  <div class="chart-card">
+    <div class="sub-title" style="margin-top:0">Gewünschte Form nach Gruppe</div>
+    <div id="chartSolutionByGruppe"></div>
+  </div>
+
+  <div class="chart-card">
+    <div class="sub-title" style="margin-top:0">Offenheit für eine Lösung</div>
+    <div id="investSignalRow" class="signal-row"></div>
+    <div id="chartToolOpenness"></div>
+    <div class="sub-title">Investitionsbereitschaft (Zeit / Geld)</div>
+    <div id="chartSupportReadiness"></div>
+  </div>
+
+  <!-- ── RÜCKMELDUNGEN ── -->
+  <div class="section-title">Rückmeldungen</div>
+  <div id="feedbackSummary"></div>
+
+  <!-- ── KONTAKTINTERESSE ── -->
+  <div class="section-title">Kontaktinteresse</div>
+  <div class="kpi-grid" style="margin-bottom:12px">
+    <div class="kpi-card">
+      <div class="kpi-label">Opt-ins</div>
+      <div class="kpi-value" id="kpiContactCount">–</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Quote</div>
+      <div class="kpi-value" id="kpiContactRate">–</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div id="chartContactChannel"></div>
+  </div>
+
+  <!-- ── SHARE CTA ── -->
+  <div class="share-cta">
+    <div class="share-cta-title">Kennst du jemanden, dem das passt?</div>
+    <div class="share-cta-text">Diese Umfrage hilft, die Arbeitsrealität sichtbar zu machen. Teile sie mit deinem Netzwerk.</div>
+    <a class="share-btn" href="https://learnolane.github.io/umfrage/" target="_blank">Umfrage teilen →</a>
+  </div>
+
+  <button class="refresh-btn" onclick="loadData()">Aktualisieren</button>
+</div>
+
+<script>
+  const DASHBOARD_URL = "https://script.google.com/macros/s/AKfycbxXt5TSWn8Il7PbG2opvhz8iHk1l1b0GUC6SklWby8Gv0JhAlceu97O0kI7pUH2PRcw/exec";
+
+  // ── Label-Maps ──────────────────────────────────────────────────────────
+  const L = {
+    // Gruppen
+    employed_happy:  "Angestellt & zufrieden",
+    employed_change: "Will sich verändern",
+    employed_self:   "Will selbständig werden",
+    self_employed:   "Selbständig",
+    // Bereich
+    handwerk_bau:           "Handwerk / Bau",
+    gewerbe_produktion:     "Gewerbe / Produktion",
+    dienstleistung:         "Dienstleistung",
+    kreativ:                "Kreativ / Design",
+    sozial_gesundheit_pflege: "Sozial / Gesundheit",
+    bildung_coaching:       "Bildung / Coaching",
+    andere:                 "Andere",
+    // Alter
+    "18_25": "18–25", "26_35": "26–35", "36_45": "36–45",
+    "46_55": "46–55", "56_65": "56–65",
+    // EH Attraction
+    sicherheit:              "Sicherheit & fixes Einkommen",
+    gutes_team:              "Gutes Team & Umfeld",
+    interessante_arbeit:     "Die Arbeit macht Sinn",
+    freiheit_verantwortung:  "Freiheit & Verantwortung",
+    gute_bedingungen:        "Lohn / Bedingungen stimmen",
+    // EH Best Practice (eh_2)
+    klare_prozesse:          "Klare Prozesse",
+    gute_fuehrung:           "Klare Führung",
+    digitale_tools:          "Digitale Tools",
+    gute_planung:            "Saubere Planung",
+    selbststaendigkeit_im_job: "Eigenverantwortung",
+    stabiler_rahmen:         "Stabiler Rahmen",
+    // EH Annoyance
+    zu_viele_meetings:       "Zu viele Meetings",
+    langsame_entscheidungen: "Langsame Entscheidungen",
+    unnoetige_admin:         "Unnötige Bürokratie",
+    ineffiziente_tools:      "Ineffiziente Tools",
+    politische_spiele:       "Interne Spielchen",
+    zu_wenig_entwicklung:    "Zu wenig Entwicklung",
+    // EH 8 bars
+    eh_8_strategie:    "Strategie",
+    eh_8_kommunikation:"Kommunikation",
+    eh_8_tools:        "Tools / Digitalisierung",
+    eh_8_ablauf:       "Abläufe / Effizienz",
+    // EC Main Issue
+    job_inhalt:              "Die Arbeit selbst",
+    team_kultur:             "Team / Führung / Kultur",
+    keine_entwicklung:       "Zu wenig Entwicklung",
+    zu_wenig_lohn:           "Lohn / Wertschätzung",
+    es_passt_einfach_nicht:  "Es passt nicht mehr",
+    // EC / ES Blocker
+    keine_klarheit:          "Zu wenig Klarheit",
+    zu_wenig_energie:        "Zu wenig Energie",
+    fehlender_marktblick:    "Weiss nicht was passt",
+    bequemlichkeit:          "Gewohnheit",
+    keine_zeit:              "Zu wenig Zeit",
+    kein_plan:               "Kein klarer Plan",
+    geld_risiko:             "Geld / Risiko",
+    angst_zu_scheitern:      "Angst zu scheitern",
+    idee_zu_unklar:          "Idee noch zu unklar",
+    keine_kunden_sichtbar:   "Kein Marktgefühl",
+    // EC 6 bars
+    ec_6_problem_markt:      "Orientierung im Markt",
+    ec_6_problem_umsetzung:  "Umsetzung / Aktivwerden",
+    // ES Driver
+    freiheit:          "Mehr Freiheit & Selbstbestimmung",
+    eigenes_aufbauen:  "Etwas Eigenes aufbauen",
+    mehr_verdienen:    "Mehr verdienen",
+    besser_arbeiten:   "Arbeit anders gestalten",
+    raus_aus_system:   "Raus aus dem System",
+    // ES 7 bars
+    es_7_klarheit: "Klarheit",
+    es_7_markt:    "Marktgefühl",
+    es_7_struktur: "Struktur",
+    es_7_mut:      "Mut / Sicherheit",
+    // SE Status
+    laeuft_sehr_gut: "Läuft sehr gut",
+    laeuft_ok:       "Läuft okay",
+    harzig:          "Eher harzig",
+    ueberfordert:    "Oft überfordert",
+    // SE Blocker (se_2)
+    kunden_finden:    "Kunden finden",
+    offerten_preise:  "Offerten / Kalkulation",
+    admin:            "Admin / Papierkram",
+    planung:          "Planung",
+    tools_chaos:      "Tool-Chaos",
+    zahlen_ueberblick:"Zahlen / Finanzen",
+    // SE Main Need
+    mehr_ueberblick:          "Mehr Überblick",
+    mehr_struktur:            "Mehr Struktur",
+    bessere_kundensteuerung:  "Kunden-/Auftragssteuerung",
+    weniger_admin:            "Weniger Admin",
+    // SE 6 bars
+    se_6_analyse:   "Analyse / Überblick",
+    se_6_strategie: "Strategie / Richtung",
+    se_6_effizienz: "Effizienz / Abläufe",
+    se_6_tools:     "Digitale Tools / Systeme",
+    // SE Best Practice (se_9)
+    gute_nachfrage:      "Gute Nachfrage",
+    saubere_struktur:    "Saubere Struktur",
+    gute_tools:          "Gute Tools",
+    persoenliche_disziplin: "Disziplin",
+    zu_viel_auf_einmal:  "Zu viel gleichzeitig",
+    kein_ueberblick:     "Zu wenig Überblick",
+    // Solution Preference
+    tool:                   "Einfaches Tool",
+    beratung:               "Beratung / Analyse",
+    strategie_workshop:     "Strategie / Klarheit",
+    system_vorlagen:        "System / Vorlagen",
+    kombination:            "Kombination",
+    weniger_reibung:        "Weniger Reibung",
+    bessere_tools:          "Bessere digitale Tools",
+    bessere_priorisierung:  "Bessere Priorisierung",
+    gar_nicht_viel:         "Läuft schon gut",
+    klarheit_ueber_richtung:"Klarheit über Richtung",
+    konkreter_plan:         "Konkreter Plan",
+    tool_struktur:          "Strukturierendes Tool",
+    sparring:               "Austausch / Sparring",
+    markt_einblick:         "Marktverständnis",
+    klarer_fahrplan:        "Klarer Fahrplan",
+    erste_kunden:           "Erste Kunden / Aufträge",
+    einfaches_tool:         "Einfaches Tool",
+    zahlen_klarheit:        "Klarheit über Zahlen",
+    analyse:                "Analyse / Klarheit",
+    strategie:              "Strategie / Jobwechselpfad",
+    nichts:                 "Keine Unterstützung",
+    // Tool Openness
+    offen:               "Grundsätzlich offen",
+    nur_wenn_einfach:    "Nur wenn sehr einfach",
+    nur_wenn_relevant:   "Nur wenn direkt relevant",
+    sehr_offen:          "Sehr offen",
+    offen_wenn_einfach:  "Offen wenn einfach",
+    offen_wenn_relevant: "Offen wenn relevant",
+    eher_nicht:          "Eher nicht",
+    // Support Readiness
+    nur_zeit:            "Zeit eher ja",
+    zeit_und_geld:       "Zeit und ggf. Geld",
+    nur_wenn_sehr_klar:  "Nur wenn klarer Nutzen",
+    // Contact
+    whatsapp:  "WhatsApp", telegram: "Telegram", instagram: "Instagram",
+    linkedin:  "LinkedIn", email: "E-Mail", phone: "Telefon", other: "Sonstige"
+  };
+
+  function lbl(key) {
+    return L[key] || String(key).replace(/_/g, ' ');
+  }
+
+  // ── Render-Helfer ───────────────────────────────────────────────────────
+  function renderBars(containerId, data, opts) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    opts = opts || {};
+    let entries = Object.entries(data || {})
+      .filter(([, v]) => v > 0)
+      .sort(([, a], [, b]) => b - a);
+    if (opts.top) entries = entries.slice(0, opts.top);
+    if (!entries.length) { el.innerHTML = '<div class="empty-hint">Noch keine Daten</div>'; return; }
+    const max = opts.maxVal || entries[0][1];
+    const fillClass = opts.fillClass || '';
+    el.innerHTML = entries.map(([k, v]) => {
+      const pct = Math.round(v / max * 100);
+      return `<div class="bar-row">
+        <div class="bar-label" title="${lbl(k)}">${lbl(k)}</div>
+        <div class="bar-track"><div class="bar-fill ${fillClass}" style="width:${pct}%"></div></div>
+        <div class="bar-count">${v}</div>
+      </div>`;
+    }).join('');
+  }
+
+  function renderAvgBars(containerId, data, opts) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    opts = opts || {};
+    const entries = Object.entries(data || {})
+      .filter(([, v]) => v > 0)
+      .sort(([, a], [, b]) => b - a);
+    if (!entries.length) { el.innerHTML = '<div class="empty-hint">Noch keine Daten</div>'; return; }
+    const fillClass = opts.fillClass || '';
+    el.innerHTML = entries.map(([k, v]) => {
+      const pct = Math.round(v / 5 * 100);
+      return `<div class="bar-row">
+        <div class="bar-label" title="${lbl(k)}">${lbl(k)}</div>
+        <div class="bar-track"><div class="bar-fill ${fillClass}" style="width:${pct}%"></div></div>
+        <div class="bar-count">${v.toFixed(1)}</div>
+      </div>`;
+    }).join('');
+  }
+
+  function renderSolutionByGruppe(containerId, data) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    const groups = ['employed_happy','employed_change','employed_self','self_employed'];
+    const groupClass = { employed_happy:'eh', employed_change:'ec', employed_self:'es', self_employed:'se' };
+    let html = '';
+    groups.forEach(g => {
+      const counts = data && data[g];
+      if (!counts || !Object.keys(counts).length) return;
+      const entries = Object.entries(counts).filter(([,v])=>v>0).sort(([,a],[,b])=>b-a).slice(0,4);
+      if (!entries.length) return;
+      const max = entries[0][1];
+      html += `<div style="margin-bottom:14px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px">${lbl(g)}</div>
+        ${entries.map(([k,v])=>{
+          const pct = Math.round(v/max*100);
+          return `<div class="bar-row">
+            <div class="bar-label" title="${lbl(k)}">${lbl(k)}</div>
+            <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+            <div class="bar-count">${v}</div>
+          </div>`;
+        }).join('')}
+      </div>`;
+    });
+    el.innerHTML = html || '<div class="empty-hint">Noch keine Daten</div>';
+  }
+
+  function renderInvestSignals(containerId, toolOpenness, supportReadiness) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    const to = toolOpenness || {};
+    const sr = supportReadiness || {};
+    const highSignal = (to.sehr_offen||0) + (to.offen||0) + (sr.zeit_und_geld||0);
+    const midSignal  = (to.offen_wenn_einfach||0) + (to.nur_wenn_einfach||0) +
+                       (to.offen_wenn_relevant||0) + (to.nur_wenn_relevant||0) + (sr.nur_zeit||0);
+    const lowSignal  = (to.eher_nicht||0) + (sr.eher_nicht||0) + (sr.nur_wenn_sehr_klar||0);
+    let html = '';
+    if (highSignal > 0) html += `<span class="signal-pill high">✓ Bereit: ${highSignal}</span>`;
+    if (midSignal  > 0) html += `<span class="signal-pill mid">~ Bedingt offen: ${midSignal}</span>`;
+    if (lowSignal  > 0) html += `<span class="signal-pill low">✗ Eher nicht: ${lowSignal}</span>`;
+    el.innerHTML = html;
+  }
+
+  function renderFeedbackSummary(ratings) {
+    const el = document.getElementById('feedbackSummary');
+    const up   = (ratings && ratings.up)   || 0;
+    const down = (ratings && ratings.down) || 0;
+    const count = up + down;
+    if (!count) { el.innerHTML = '<div class="empty-hint">Noch keine Rückmeldungen</div>'; return; }
+    const pct = Math.round(up / count * 100);
+    el.innerHTML = `<div class="summary-row">
+      <div class="summary-item"><span class="summary-label">Gesamt</span><span class="summary-value">${count}</span></div>
+      <div class="summary-item"><span class="summary-label">👍 Positiv</span><span class="summary-value">${up}</span></div>
+      <div class="summary-item"><span class="summary-label">👎 Negativ</span><span class="summary-value">${down}</span></div>
+      <div class="summary-item"><span class="summary-label">Zustimmung</span><span class="summary-value">${pct}%</span></div>
+    </div>`;
+  }
+
+  function avgOfObj(obj) {
+    const vals = Object.values(obj || {}).filter(v => typeof v === 'number' && v > 0);
+    if (!vals.length) return null;
+    return Math.round(vals.reduce((a,b)=>a+b,0) / vals.length * 10) / 10;
+  }
+
+  function opennessRate(toolOpenness, total) {
+    if (!total) return null;
+    const open = (toolOpenness.sehr_offen||0) + (toolOpenness.offen||0) +
+                 (toolOpenness.offen_wenn_einfach||0) + (toolOpenness.offen_wenn_relevant||0) +
+                 (toolOpenness.nur_wenn_einfach||0) + (toolOpenness.nur_wenn_relevant||0);
+    return Math.round(open / total * 100);
+  }
+
+  // ── Hauptlade-Funktion ──────────────────────────────────────────────────
+  async function loadData() {
+    document.getElementById('loadingState').textContent = 'Daten werden geladen…';
+    document.getElementById('loadingState').style.display = 'block';
+    document.getElementById('content').style.display = 'none';
+
+    try {
+      const res = await fetch(DASHBOARD_URL);
+      const d   = await res.json();
+
+      // ── KPIs ──────────────────────────────────────────
+      document.getElementById('kpiTotal').textContent = d.total_responses || 0;
+
+      const avgP = avgOfObj(d.avg_pressure_level);
+      document.getElementById('kpiPressure').textContent = avgP !== null ? avgP : '–';
+
+      const up   = (d.feedback_rating_counts && d.feedback_rating_counts.up)   || 0;
+      const down = (d.feedback_rating_counts && d.feedback_rating_counts.down) || 0;
+      const fbTotal = up + down;
+      if (fbTotal > 0) {
+        document.getElementById('kpiFeedback').textContent    = Math.round(up/fbTotal*100) + '%';
+        document.getElementById('kpiFeedbackSub').textContent = `👍 ${up}  👎 ${down}`;
       }
 
-      const max = maxVal || entries[0][1];
-      const nameOf = labelFn || label;
+      const openPct = opennessRate(d.tool_openness_counts || {}, d.total_responses);
+      document.getElementById('kpiOpenness').textContent = openPct !== null ? openPct + '%' : '–';
 
-      entries.forEach(([key, val]) => {
-        const pct = Math.round((val / max) * 100);
-        const row = document.createElement("div");
-        row.className = "bar-row";
-        row.innerHTML = `
-          <div class="bar-label" title="${nameOf(key)}">${nameOf(key)}</div>
-          <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
-          <div class="bar-count">${val}</div>
-        `;
-        container.appendChild(row);
-      });
+      // ── N-Badges ──────────────────────────────────────
+      const ut = d.by_user_type || {};
+      const setN = (id, key) => {
+        const el = document.getElementById(id);
+        if (el && ut[key]) el.textContent = `(N=${ut[key]})`;
+      };
+      setN('ehNBadge','employed_happy');
+      setN('ecNBadge','employed_change');
+      setN('esNBadge','employed_self');
+      setN('seNBadge','self_employed');
+
+      // ── Teilnehmende ───────────────────────────────────
+      renderBars('chartUserType', d.by_user_type);
+      renderBars('chartBereich',  d.by_bereich);
+      renderBars('chartAlter',    d.by_alter);
+
+      // ── Druck ──────────────────────────────────────────
+      renderAvgBars('chartPressureGruppe', d.avg_pressure_level);
+      renderAvgBars('chartPressureAlter',  d.pressure_by_alter);
+
+      // ── EH: Was läuft gut ──────────────────────────────
+      renderBars('chartEhAttraction',  d.eh_attraction_counts,  { fillClass: 'good' });
+      renderBars('chartEhBestPractice',d.eh_best_practice_counts,{ fillClass: 'good' });
+      renderAvgBars('chartEh8Avg',     d.eh_8_avg);
+      renderBars('chartEhAnnoyance',   d.eh_annoyance_counts);
+
+      // ── EC: Probleme ───────────────────────────────────
+      renderBars('chartEcMainIssue', d.ec_main_issue_counts, { fillClass: 'problem' });
+      renderBars('chartEcBlocker',   d.ec_blocker_counts,    { fillClass: 'problem' });
+      renderAvgBars('chartEc6Avg',   d.ec_6_avg,             { fillClass: 'problem' });
+
+      // ── ES: Probleme ───────────────────────────────────
+      renderBars('chartEsMainDriver', d.es_main_driver_counts);
+      renderBars('chartEsBlocker',    d.es_blocker_counts,   { fillClass: 'problem' });
+      renderAvgBars('chartEs7Avg',    d.es_7_avg,            { fillClass: 'problem' });
+
+      // ── SE: Probleme ───────────────────────────────────
+      renderBars('chartSeStatus',   d.se_status_counts);
+      renderBars('chartSeBlocker',  d.se_blocker_counts,  { fillClass: 'problem' });
+      renderBars('chartSeMainNeed', d.se_main_need_counts,{ fillClass: 'problem' });
+      renderAvgBars('chartSe6Avg',  d.se_6_avg,           { fillClass: 'problem' });
+
+      // ── Lösungsbedarf ──────────────────────────────────
+      renderBars('chartSolutionOverall', d.solution_preference_counts, { top: 8 });
+      renderSolutionByGruppe('chartSolutionByGruppe', d.solution_by_gruppe);
+      renderInvestSignals('investSignalRow', d.tool_openness_counts, d.support_readiness_counts);
+      renderBars('chartToolOpenness',    d.tool_openness_counts);
+      renderBars('chartSupportReadiness',d.support_readiness_counts);
+
+      // ── Feedback & Kontakt ─────────────────────────────
+      renderFeedbackSummary(d.feedback_rating_counts);
+      document.getElementById('kpiContactCount').textContent = d.contact_opt_in_count || 0;
+      document.getElementById('kpiContactRate').textContent  =
+        d.contact_opt_in_rate != null ? Math.round(d.contact_opt_in_rate * 100) + '%' : '–';
+      renderBars('chartContactChannel', d.contact_channel_counts);
+
+      document.getElementById('lastUpdated').textContent =
+        'Zuletzt geladen: ' + new Date().toLocaleTimeString('de-CH');
+
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+
+    } catch (err) {
+      document.getElementById('loadingState').textContent = 'Fehler beim Laden. Bitte Seite neu laden.';
+      console.error(err);
     }
+  }
 
-    function renderAvgBars(containerId, data) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = "";
-
-      const entries = Object.entries(data).sort(([, a], [, b]) => b - a);
-      if (!entries.length) {
-        container.innerHTML = '<div class="empty-hint">Noch keine Daten</div>';
-        return;
-      }
-
-      entries.forEach(([key, val]) => {
-        const pct = Math.round((val / 5) * 100);
-        const row = document.createElement("div");
-        row.className = "bar-row";
-        row.innerHTML = `
-          <div class="bar-label" title="${label(key)}">${label(key)}</div>
-          <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
-          <div class="bar-count">${val}</div>
-        `;
-        container.appendChild(row);
-      });
-    }
-
-    function renderFeedbackSummary(ratings) {
-      const container = document.getElementById("feedbackSummary");
-      const up    = (ratings && ratings.up)   || 0;
-      const down  = (ratings && ratings.down) || 0;
-      const count = up + down;
-
-      if (!count) {
-        container.innerHTML = '<div class="empty-hint">Noch keine Rückmeldungen vorhanden</div>';
-        return;
-      }
-
-      const posPct = Math.round((up / count) * 100);
-
-      container.innerHTML = `
-        <div class="summary-row">
-          <div class="summary-item">
-            <span class="summary-label">Gesamt</span>
-            <span class="summary-value">${count}</span>
-          </div>
-          <div class="summary-item">
-            <span class="summary-label">👍 Positiv</span>
-            <span class="summary-value">${up}</span>
-          </div>
-          <div class="summary-item">
-            <span class="summary-label">👎 Negativ</span>
-            <span class="summary-value">${down}</span>
-          </div>
-          <div class="summary-item">
-            <span class="summary-label">Zustimmung</span>
-            <span class="summary-value">${posPct}%</span>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderContactInterest(count, rate, channelCounts) {
-      document.getElementById("kpiContactCount").textContent = count || 0;
-      document.getElementById("kpiContactRate").textContent =
-        rate != null ? Math.round(rate * 100) + "%" : "–";
-
-      renderBars("chartContactChannel", channelCounts || {}, null, null, channelLabel);
-    }
-
-    async function loadData() {
-      document.getElementById("loadingState").textContent = "Daten werden geladen…";
-      document.getElementById("loadingState").style.display = "block";
-      document.getElementById("content").style.display = "none";
-
-      try {
-        const res = await fetch(DASHBOARD_URL);
-        const d = await res.json();
-
-        // KPIs
-        document.getElementById("kpiTotal").textContent = d.total_responses || 0;
-
-        const avgP = avg(d.avg_pressure_level);
-        document.getElementById("kpiPressure").textContent = avgP !== null ? avgP : "–";
-
-        const avgF = avg(d.avg_operational_friction);
-        document.getElementById("kpiFriction").textContent = avgF !== null ? avgF : "–";
-
-        const up   = (d.feedback_rating_counts && d.feedback_rating_counts.up)   || 0;
-        const down = (d.feedback_rating_counts && d.feedback_rating_counts.down) || 0;
-        const fbTotal = up + down;
-        if (fbTotal > 0) {
-          document.getElementById("kpiFeedback").textContent = Math.round((up / fbTotal) * 100) + "%";
-          document.getElementById("kpiFeedbackSub").textContent = `👍 ${up}  👎 ${down}`;
-        } else {
-          document.getElementById("kpiFeedback").textContent = "–";
-        }
-
-        // Charts
-        renderBars("chartUserType", d.by_user_type || {});
-        renderAvgBars("chartPressure", d.avg_pressure_level || {});
-        renderBars("chartSolution", d.solution_preference_counts || {});
-        renderBars("chartBlocker", d.primary_blocker_counts || {}, null, 5);
-        renderBars("chartDesire", d.primary_desire_counts || {}, null, 5);
-
-        // Feedback
-        renderFeedbackSummary(d.feedback_rating_counts);
-
-        // Kontaktinteresse
-        renderContactInterest(
-          d.contact_opt_in_count,
-          d.contact_opt_in_rate,
-          d.contact_channel_counts
-        );
-
-        document.getElementById("lastUpdated").textContent =
-          "Zuletzt geladen: " + new Date().toLocaleTimeString("de-CH");
-
-        document.getElementById("loadingState").style.display = "none";
-        document.getElementById("content").style.display = "block";
-
-      } catch (err) {
-        document.getElementById("loadingState").textContent =
-          "Fehler beim Laden. Bitte Seite neu laden.";
-        console.error(err);
-      }
-    }
-
-    loadData();
-  </script>
+  loadData();
+</script>
 </body>
 </html>
